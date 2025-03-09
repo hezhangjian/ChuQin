@@ -1,10 +1,14 @@
 <script setup lang="ts">
+import { defineEmits } from 'vue';
+
 interface Tool {
   id: string;
   name: string;
   icon: string;
   description: string;
 }
+
+const emit = defineEmits(['tool-click']);
 
 const tools: Tool[] = [
   {
@@ -42,11 +46,17 @@ const tools: Tool[] = [
     name: '时间戳转换',
     icon: '⏰',
     description: '时间戳与日期转换'
-  }
+  },
+  {
+    id: '7',
+    name: '华为云Token',
+    icon: '🔑',
+    description: '获取华为云访问令牌'
+  },
 ];
 
 const handleToolClick = (tool: Tool) => {
-  console.log('Clicked tool:', tool.name);
+  emit('tool-click', tool);
 };
 </script>
 

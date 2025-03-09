@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
+import { useRouter } from 'vue-router';
 import ToolGrid from './components/ToolGrid.vue'
+
+const router = useRouter();
 
 const greetMsg = ref("");
 const name = ref("");
@@ -10,11 +13,40 @@ async function greet() {
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
   greetMsg.value = await invoke("greet", { name: name.value });
 }
+
+const handleToolClick = (tool: any) => {
+  switch (tool.id) {
+    case '1':
+      router.push('/ai-chat');
+      break;
+    case '2':
+      router.push('/json-formatter');
+      break;
+    case '3':
+      router.push('/md5');
+      break;
+    case '4':
+      router.push('/url-codec');
+      break;
+    case '5':
+      router.push('/hex-converter');
+      break;
+    case '6':
+      router.push('/timestamp');
+      break;
+    case '7':
+      router.push('/huaweicloud-token');
+      break;
+    default:
+      console.warn('Unknown tool:', tool.name);
+  }
+};
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-    <ToolGrid />
+    <router-view v-if="$route.name !== 'home'" />
+    <ToolGrid v-else @tool-click="handleToolClick" />
   </div>
 </template>
 
