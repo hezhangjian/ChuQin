@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import { useRouter } from 'vue-router';
 import ToolGrid from './components/ToolGrid.vue'
+import Settings from './components/Settings.vue';
 
 const router = useRouter();
 
@@ -47,6 +48,7 @@ const handleToolClick = (tool: any) => {
   <div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <router-view v-if="$route.name !== 'home'" />
     <ToolGrid v-else @tool-click="handleToolClick" />
+    <Settings />
   </div>
 </template>
 
