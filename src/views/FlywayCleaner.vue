@@ -1,6 +1,11 @@
 <template>
   <div class="p-6">
-    <h1 class="text-2xl font-bold mb-6">Flyway 记录清理工具</h1>
+    <div class="flex items-center mb-6">
+      <button @click="goBack" class="mr-4 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
+        ← Back
+      </button>
+      <h1 class="text-2xl font-bold">Flyway 记录清理工具</h1>
+    </div>
     <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-md">
       <div class="space-y-4">
         <div class="form-group">
@@ -69,6 +74,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { invoke } from '@tauri-apps/api/core'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const goBack = () => router.push('/')
 
 const config = ref({
   ip: '',

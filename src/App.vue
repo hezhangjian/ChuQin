@@ -20,15 +20,18 @@ const handleToolClick = (tool: any) => {
       router.push('/url-codec');
       break;
     case '5':
-      router.push('/hex-converter');
+      router.push('/base64-converter');
       break;
     case '6':
-      router.push('/timestamp');
+      router.push('/hex-converter');
       break;
     case '7':
-      router.push('/huaweicloud-token');
+      router.push('/timestamp');
       break;
     case '8':
+      router.push('/huaweicloud-token');
+      break;
+    case '9':
       router.push('/flyway-cleaner');
       break;
     default:

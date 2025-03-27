@@ -25,7 +25,7 @@ const tools: Tool[] = [
   },
   {
     id: '3',
-    name: 'MD5加密',
+    name: 'MD5',
     icon: '🔒',
     description: 'MD5哈希计算工具'
   },
@@ -37,24 +37,30 @@ const tools: Tool[] = [
   },
   {
     id: '5',
+    name: 'Base64转换',
+    icon: '📋',
+    description: 'Base64编码/解码工具'
+  },
+  {
+    id: '6',
     name: 'HEX转换',
     icon: '🎨',
     description: '进制转换工具'
   },
   {
-    id: '6',
+    id: '7',
     name: '时间戳转换',
     icon: '⏰',
     description: '时间戳与日期转换'
   },
   {
-    id: '7',
+    id: '8',
     name: '华为云Token',
     icon: '🔑',
     description: '获取华为云访问令牌'
   },
   {
-    id: '8',
+    id: '9',
     name: 'Flyway清理',
     icon: '🧹',
     description: '清理数据库Flyway记录'

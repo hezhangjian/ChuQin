@@ -28,6 +28,11 @@ const routes = [
     component: () => import('../views/UrlCodec.vue')
   },
   {
+    path: '/base64-converter',
+    name: 'base64-converter',
+    component: () => import('../views/Base64Converter.vue')
+  },
+  {
     path: '/hex-converter',
     name: 'hex-converter',
     component: () => import('../views/HexConverter.vue')
