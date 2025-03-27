@@ -41,6 +41,11 @@ const routes = [
     path: '/huaweicloud-token',
     name: 'huaweicloud-token',
     component: () => import('../views/HuaweicloudToken.vue')
+  },
+  {
+    path: '/flyway-cleaner',
+    name: 'flyway-cleaner',
+    component: () => import('../views/FlywayCleaner.vue')
   }
 ];
 

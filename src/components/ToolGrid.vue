@@ -53,6 +53,12 @@ const tools: Tool[] = [
     icon: '🔑',
     description: '获取华为云访问令牌'
   },
+  {
+    id: '8',
+    name: 'Flyway清理',
+    icon: '🧹',
+    description: '清理数据库Flyway记录'
+  },
 ];
 
 const handleToolClick = (tool: Tool) => {

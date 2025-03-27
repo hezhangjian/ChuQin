@@ -1,19 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/core";
 import { useRouter } from 'vue-router';
 import ToolGrid from './components/ToolGrid.vue'
 import Settings from './components/Settings.vue';
 
 const router = useRouter();
-
-const greetMsg = ref("");
-const name = ref("");
-
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: name.value });
-}
 
 const handleToolClick = (tool: any) => {
   switch (tool.id) {
@@ -37,6 +27,9 @@ const handleToolClick = (tool: any) => {
       break;
     case '7':
       router.push('/huaweicloud-token');
+      break;
+    case '8':
+      router.push('/flyway-cleaner');
       break;
     default:
       console.warn('Unknown tool:', tool.name);
