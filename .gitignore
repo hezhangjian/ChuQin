@@ -6,3 +6,6 @@
 .vscode/**
 !.vscode/extensions.json
 **.iml
+
+# npm
+node_modules
