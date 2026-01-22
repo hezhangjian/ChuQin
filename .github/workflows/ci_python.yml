@@ -14,3 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/ruff-action@v3
+  python_mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -e .[dev,test]
+      - run: mypy .

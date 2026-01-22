@@ -6,12 +6,17 @@ readme = "README.md"
 requires-python = ">=3.11"
 
 dependencies = [
+    "pywebview>=6.0.0",
 ]
 
 [project.optional-dependencies]
+build = [
+    "pyinstaller>=6.0.0",
+]
 dev = [
     "mypy",
     "ruff",
+    "types-pyinstaller",
 ]
 test = [
     "pytest",
@@ -24,6 +29,11 @@ Documentation = "https://github.com/git-org-name/git-repo-name#readme"
 
 [tool.mypy]
 python_version = "3.11"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "launcher*"]
+exclude = ["portal*"]
 
 [tool.ruff]
 line-length = 120
