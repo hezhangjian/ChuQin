@@ -1,5 +1,5 @@
 [project]
-name = "pypi-package-name"
+name = "chuqin"
 version = "0.0.1"
 readme = "README.md"
 
@@ -23,9 +23,9 @@ test = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/git-org-name/git-repo-name"
-Repository = "https://github.com/git-org-name/git-repo-name"
-Documentation = "https://github.com/git-org-name/git-repo-name#readme"
+Homepage = "https://github.com/hezhangjian/ChuQin"
+Repository = "https://github.com/hezhangjian/ChuQin"
+Documentation = "https://github.com/hezhangjian/ChuQin#readme"
 
 [tool.mypy]
 python_version = "3.11"

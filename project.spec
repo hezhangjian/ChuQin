@@ -71,7 +71,7 @@ if sys.platform == "darwin":
         a.scripts,
         [],
         exclude_binaries=True,
-        name="pywebview-app-name",
+        name="ChuQin",
         debug=False,
         bootloader_ignore_signals=False,
         strip=False,
@@ -95,12 +95,12 @@ if sys.platform == "darwin":
         strip=False,
         upx=True,
         upx_exclude=[],
-        name="pywebview-app-name",
+        name="ChuQin",
     )
 
     app = BUNDLE(
         coll,
-        name="pywebview-app-name.app",
+        name="ChuQin.app",
         icon=None,  # Add icon path here if you have one: "path/to/icon.icns"
         bundle_identifier=None,
     )
@@ -113,7 +113,7 @@ else:
         a.zipfiles,
         a.datas,
         [],
-        name="pywebview-app-name",
+        name="ChuQin",
         debug=False,
         bootloader_ignore_signals=False,
         strip=False,

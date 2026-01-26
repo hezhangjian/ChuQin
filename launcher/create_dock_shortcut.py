@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create a launcher App for pywebview-app-name that always works, even after rebuilds.
+Create a launcher App for ChuQin that always works, even after rebuilds.
 The launcher dynamically finds the app by path, not by inode.
 
 macOS only - This script only works on macOS.
@@ -20,9 +20,9 @@ if platform.system() != "Darwin":
 # Constants
 SCRIPT_DIR = Path(__file__).parent.resolve()
 PROJECT_ROOT = SCRIPT_DIR.parent.resolve()  # Go up from launcher/ to project root
-APP_NAME = "pywebview-app-name.app"
+APP_NAME = "ChuQin.app"
 TARGET_APP_PATH = PROJECT_ROOT / "dist" / APP_NAME
-LAUNCHER_NAME = "pywebview-app-name Launcher.app"
+LAUNCHER_NAME = "ChuQin Launcher.app"
 LAUNCHER_PATH = SCRIPT_DIR / LAUNCHER_NAME  # Output to launcher folder
 
 
@@ -54,11 +54,11 @@ def create_launcher_app():
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key>
-    <string>pywebview-app-name</string>
+    <string>ChuQin</string>
     <key>CFBundleIdentifier</key>
-    <string>com.pywebview-app-name.launcher</string>
+    <string>com.ChuQin.launcher</string>
     <key>CFBundleName</key>
-    <string>pywebview-app-name Launcher</string>
+    <string>ChuQin Launcher</string>
     <key>CFBundleVersion</key>
     <string>1.0</string>
     <key>CFBundlePackageType</key>
@@ -76,7 +76,7 @@ def create_launcher_app():
     # Create launcher script that dynamically finds the app by path
     # This way it works even after deleting and rebuilding (new inode)
     script_content = f"""#!/bin/bash
-# Launcher script that finds pywebview-app-name.app by path, not by inode
+# Launcher script that finds ChuQin.app by path, not by inode
 # This works even after deleting and rebuilding the app
 
 APP_PATH="{TARGET_APP_PATH}"
@@ -86,13 +86,13 @@ if [ -d "$APP_PATH" ]; then
 else
     # Show error dialog
     osascript <<EOF
-display dialog "pywebview-app-name.app not found at:\\n\\n$APP_PATH\\n\\nPlease build the app first:\\n\\npython3 build.py" buttons {{"OK"}} default button "OK" with icon caution
+display dialog "ChuQin.app not found at:\\n\\n$APP_PATH\\n\\nPlease build the app first:\\n\\npython3 build.py" buttons {{"OK"}} default button "OK" with icon caution
 EOF
     exit 1
 fi
 """
 
-    executable_path = macos_dir / "pywebview-app-name"
+    executable_path = macos_dir / "ChuQin"
     executable_path.write_text(script_content, encoding='utf-8')
     executable_path.chmod(0o755)
 
@@ -103,7 +103,7 @@ fi
 
 def main():
     """Main function."""
-    print("🚀 Creating launcher for pywebview-app-name...")
+    print("🚀 Creating launcher for ChuQin...")
     print(f"   Target: {TARGET_APP_PATH}\n")
 
     if not create_launcher_app():
@@ -114,7 +114,7 @@ def main():
     print("\n📌 Next step:")
     print(f"   1. Find '{LAUNCHER_NAME}' in the launcher folder")
     print("   2. Drag it to your Dock")
-    print("   3. Done! Click it anytime to launch pywebview-app-name")
+    print("   3. Done! Click it anytime to launch ChuQin")
     print("\n💡 This launcher finds the app by PATH, not by inode")
     print("   Works perfectly even after deleting and rebuilding!")
 

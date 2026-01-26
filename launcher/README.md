@@ -10,7 +10,7 @@ This launcher is designed for macOS developers who frequently build and rebuild 
 
 ## How It Works
 
-The launcher is a minimal macOS App bundle that dynamically finds `dist/pywebview-app-name.app` by **path**. This means:
+The launcher is a minimal macOS App bundle that dynamically finds `dist/ChuQin.app` by **path**. This means:
 
 - ✅ Works even after deleting and rebuilding the app (new inode)
 - ✅ Always points to the latest build
@@ -24,18 +24,18 @@ The launcher is a minimal macOS App bundle that dynamically finds `dist/pywebvie
    ```
 
 2. **Add to Dock:**
-   - Find `pywebview-app-name Launcher.app` in the `launcher/` folder
+   - Find `ChuQin Launcher.app` in the `launcher/` folder
    - Drag it to your Dock
    - Done!
 
 3. **Use it:**
-   - Click the Dock icon anytime to launch pywebview-app-name
+   - Click the Dock icon anytime to launch ChuQin
    - Works perfectly even after rebuilding the app
 
 ## Files
 
 - `create_dock_shortcut.py` - Script to build the launcher
-- `pywebview-app-name Launcher.app` - The generated launcher (created after running the script)
+- `ChuQin Launcher.app` - The generated launcher (created after running the script)
 - `DOCK_SHORTCUT_ANALYSIS.md` - Technical analysis of different approaches
 
 ## Notes

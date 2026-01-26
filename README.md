@@ -1,15 +1,10 @@
-# project-name
+# ChuQin
 
-> **Make it your own — a clean foundation to kickstart new projects.**
+## Requirements
 
-This template provides a simple, structured starting point for building new ideas quickly and consistently.
+- Python 3.11+
 
-## Variables
+## Dependencies
 
-> Replace the following variables (e.g., `git-repo-name`) with your project details using your editor's `find-and-replace` tool.
-
-- git-org-name: the Git organization name
-- git-repo-name: the Git repository name
-- npm-package-name: the name of the npm package
-- pypi-package-name: the PyPI package name
-- pywebview-app-name: the name of the pywebview application
+- [Python](https://www.python.org)
+- [pywebview](https://pywebview.flowrl.com)

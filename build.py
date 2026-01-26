@@ -207,15 +207,15 @@ def build_app():
 
         # Show output location
         if current_platform == "windows":
-            exe_path = project_root / "dist" / "pywebview-app-name.exe"
+            exe_path = project_root / "dist" / "ChuQin.exe"
             if exe_path.exists():
                 print_success(f"Executable: {exe_path}")
         elif current_platform == "darwin":
-            app_path = project_root / "dist" / "pywebview-app-name.app"
+            app_path = project_root / "dist" / "ChuQin.app"
             if app_path.exists():
                 print_success(f"Application: {app_path}")
         else:
-            exe_path = project_root / "dist" / "pywebview-app-name"
+            exe_path = project_root / "dist" / "ChuQin"
             if exe_path.exists():
                 print_success(f"Executable: {exe_path}")
 
@@ -230,7 +230,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Build pywebview-app-name PyWebView application",
+        description="Build ChuQin PyWebView application",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -258,7 +258,7 @@ the platform it's running on. For multi-platform builds, use CI/CD services.
 
     print(f"{Colors.HEADER}{Colors.BOLD}")
     print("=" * 60)
-    print("pywebview-app-name PyWebView Build Script")
+    print("ChuQin PyWebView Build Script")
     print("=" * 60)
     print(f"{Colors.ENDC}")
 
