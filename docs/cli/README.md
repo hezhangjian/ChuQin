@@ -19,6 +19,7 @@ For new Cli capabilities, the recommended pattern is:
 ## Examples
 
 - `chuqin version`: Show the installed ChuQin version.
+- `chuqin pdf to-ppt ./demo.pdf`: Convert a PDF into a 16:9 PowerPoint deck.
 
 ## Command Modules
 
@@ -26,4 +27,5 @@ The Cli is split into top-level modules so related subcommands can be grouped un
 
 - **[gitcode](./gitcode.md)**: Commands for GitCode integrations.
 - **[gitee](./gitee.md)**: Commands for Gitee integrations.
+- **[pdf](./pdf.md)**: Commands for converting PDF files into PowerPoint decks.
 - **[volcengine](./volcengine.md)**: Commands for VolcEngine integrations

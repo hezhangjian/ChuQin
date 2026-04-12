@@ -51,6 +51,9 @@ class HuaweiCloudConfig:
 class VolcEngineConfig:
     ak: str = ""
     sk: str = ""
+    visual_host: str = "visual.volcengineapi.com"
+    region: str = "cn-north-1"
+    video_req_key: str = "jimeng_t2v_v30"
 
 
 @dataclass(slots=True)
@@ -125,6 +128,9 @@ def load_config() -> AppConfig:
         volcengine=VolcEngineConfig(
             ak=_get_str(volcengine, "ak"),
             sk=_get_str(volcengine, "sk"),
+            visual_host=_get_str(volcengine, "visual_host") or VolcEngineConfig.visual_host,
+            region=_get_str(volcengine, "region") or VolcEngineConfig.region,
+            video_req_key=_get_str(volcengine, "video_req_key") or VolcEngineConfig.video_req_key,
         ),
         github=GitHubConfig(
             token=_get_str(github, "token"),
@@ -157,6 +163,9 @@ def save_config(config: AppConfig) -> Path:
         "[volcengine]",
         f"ak = {_toml_string(config.volcengine.ak)}",
         f"sk = {_toml_string(config.volcengine.sk)}",
+        f"visual_host = {_toml_string(config.volcengine.visual_host)}",
+        f"region = {_toml_string(config.volcengine.region)}",
+        f"video_req_key = {_toml_string(config.volcengine.video_req_key)}",
         "",
         "[github]",
         f"token = {_toml_string(config.github.token)}",
