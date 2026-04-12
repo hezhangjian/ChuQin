@@ -3,44 +3,28 @@ from pathlib import Path
 
 import webview
 
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-def get_resource_path():
-    """
-    Get the base path for resources.
-    In PyInstaller bundle, use sys._MEIPASS, otherwise use project root.
-    """
-    if getattr(sys, 'frozen', False):
-        # Running as PyInstaller bundle
-        return Path(sys._MEIPASS)
-    else:
-        # Development mode
-        return Path(__file__).parent.parent
+from app.config import get_portal_url, load_config
+from app.services import ApiBridge
 
 
-def get_portal_url():
-    """
-    Get the URL to load the frontend application.
-    Returns the built dist folder if it exists, otherwise starts dev server.
-    """
-    # Get the base path (handles both bundled and development modes)
-    base_path = get_resource_path()
-    dist_dir = base_path / "portal" / "dist"
-    index_html = dist_dir / "index.html"
-
-    return str(index_html.absolute())
-
-
-def main():
+def main() -> None:
+    config = load_config()
     url = get_portal_url()
+    api = ApiBridge(config)
 
-    webview.create_window(
-        title='ChuQin',
+    window = webview.create_window(
+        title="ChuQin",
         url=url,
+        js_api=api,
         width=1440,
         height=900,
-        min_size=(900, 600),
+        min_size=(960, 640),
         resizable=True,
     )
+    api.set_window(window)
 
     webview.start(debug=False)
 

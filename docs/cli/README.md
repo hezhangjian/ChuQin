@@ -13,12 +13,14 @@ The Cli is organized into command groups so each functional area can evolve inde
 For new Cli capabilities, the recommended pattern is:
 
 1. Add a dedicated command group.
-2. Create a dedicated document for that group.
-3. Link the new document from this page.
+2. Document the command where it is easiest for users to find it.
+3. Split details into a dedicated page only when the command area grows large enough to need it.
 
 ## Examples
 
 - `chuqin version`: Show the installed ChuQin version.
+- `chuqin ppt create "AI辅助研发规划"`: Create `./AI辅助研发规划.pptx` in the current directory.
+- `chuqin pdf to-ppt ./demo.pdf`: Convert a PDF into a 16:9 PowerPoint deck.
 
 ## Command Modules
 
@@ -26,4 +28,29 @@ The Cli is split into top-level modules so related subcommands can be grouped un
 
 - **[gitcode](./gitcode.md)**: Commands for GitCode integrations.
 - **[gitee](./gitee.md)**: Commands for Gitee integrations.
+- **[pdf](./pdf.md)**: Commands for converting PDF files into PowerPoint decks.
 - **[volcengine](./volcengine.md)**: Commands for VolcEngine integrations
+
+## PPT
+
+Use `chuqin ppt create` to quickly create a starter PowerPoint deck.
+
+Example:
+
+```bash
+chuqin ppt create "AI辅助研发规划"
+```
+
+This creates `./AI辅助研发规划.pptx` in the current directory. The command uses the provided title as both the cover title and the default output filename stem.
+
+Useful options:
+
+- `-o, --output`: Write the deck to a custom `.pptx` path.
+- `--overwrite`: Replace an existing destination file.
+- `--template`: Use a custom template directory or an existing `.pptx` file.
+
+Default template lookup:
+
+- `CHUQIN_DIR/.chuqin/ppt/templates/default`
+
+If the default template directory does not exist, ChuQin falls back to a small built-in style so `chuqin ppt create "<title>"` still works immediately.
