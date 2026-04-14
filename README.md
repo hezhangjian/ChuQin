@@ -1,5 +1,7 @@
 # ChuQin
 
+**ChuQin** is an AI-native personal assistant.
+
 ## Requirements
 
 - Python 3.11+

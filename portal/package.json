@@ -1,7 +1,7 @@
 {
-  "name": "ChuQin",
+  "name": "chuqin",
   "version": "0.0.1",
-  "private": "true",
+  "private": true,
   "type": "module",
   "scripts": {
     "build": "vite build",
