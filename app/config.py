@@ -47,6 +47,20 @@ class HuaweiCloudConfig:
     password: str = ""
     project_id: str = ""
 
+@dataclass(slots=True)
+class GitHubConfig:
+    token: str = ""
+
+
+@dataclass(slots=True)
+class GiteeConfig:
+    token: str = ""
+
+
+@dataclass(slots=True)
+class GitCodeConfig:
+    token: str = ""
+
 
 @dataclass(slots=True)
 class AppConfig:
@@ -54,6 +68,9 @@ class AppConfig:
     # even when no config file exists yet.
     openai: OpenAIConfig = field(default_factory=OpenAIConfig)
     huaweicloud: HuaweiCloudConfig = field(default_factory=HuaweiCloudConfig)
+    github: GitHubConfig = field(default_factory=GitHubConfig)
+    gitee: GiteeConfig = field(default_factory=GiteeConfig)
+    gitcode: GitCodeConfig = field(default_factory=GitCodeConfig)
 
     @property
     def root_path(self) -> Path:
@@ -82,6 +99,9 @@ def load_config() -> AppConfig:
 
     openai = _get_section(data, "openai")
     huaweicloud = _get_section(data, "huaweicloud")
+    github = _get_section(data, "github")
+    gitee = _get_section(data, "gitee")
+    gitcode = _get_section(data, "gitcode")
 
     return AppConfig(
         openai=OpenAIConfig(
@@ -93,6 +113,15 @@ def load_config() -> AppConfig:
             username=_get_str(huaweicloud, "username"),
             password=_get_str(huaweicloud, "password"),
             project_id=_get_str(huaweicloud, "project_id"),
+        ),
+        github=GitHubConfig(
+            token=_get_str(github, "token"),
+        ),
+        gitee=GiteeConfig(
+            token=_get_str(gitee, "token"),
+        ),
+        gitcode=GitCodeConfig(
+            token=_get_str(gitcode, "token"),
         ),
     )
 
@@ -112,6 +141,15 @@ def save_config(config: AppConfig) -> Path:
         f"username = {_toml_string(config.huaweicloud.username)}",
         f"password = {_toml_string(config.huaweicloud.password)}",
         f"project_id = {_toml_string(config.huaweicloud.project_id)}",
+        "",
+        "[github]",
+        f"token = {_toml_string(config.github.token)}",
+        "",
+        "[gitee]",
+        f"token = {_toml_string(config.gitee.token)}",
+        "",
+        "[gitcode]",
+        f"token = {_toml_string(config.gitcode.token)}",
         "",
     ]
     config_path.write_text("\n".join(lines), encoding="utf-8")
