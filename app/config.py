@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-
 CONFIG_ENV_VAR = "CHUQIN_DIR"
 CONFIG_DIR_NAME = ".chuqin"
 CONFIG_FILE_NAME = "config.toml"
@@ -47,6 +46,13 @@ class HuaweiCloudConfig:
     password: str = ""
     project_id: str = ""
 
+
+@dataclass(slots=True)
+class VolcEngineConfig:
+    ak: str = ""
+    sk: str = ""
+
+
 @dataclass(slots=True)
 class GitHubConfig:
     token: str = ""
@@ -68,6 +74,7 @@ class AppConfig:
     # even when no config file exists yet.
     openai: OpenAIConfig = field(default_factory=OpenAIConfig)
     huaweicloud: HuaweiCloudConfig = field(default_factory=HuaweiCloudConfig)
+    volcengine: VolcEngineConfig = field(default_factory=VolcEngineConfig)
     github: GitHubConfig = field(default_factory=GitHubConfig)
     gitee: GiteeConfig = field(default_factory=GiteeConfig)
     gitcode: GitCodeConfig = field(default_factory=GitCodeConfig)
@@ -99,6 +106,7 @@ def load_config() -> AppConfig:
 
     openai = _get_section(data, "openai")
     huaweicloud = _get_section(data, "huaweicloud")
+    volcengine = _get_section(data, "volcengine")
     github = _get_section(data, "github")
     gitee = _get_section(data, "gitee")
     gitcode = _get_section(data, "gitcode")
@@ -113,6 +121,10 @@ def load_config() -> AppConfig:
             username=_get_str(huaweicloud, "username"),
             password=_get_str(huaweicloud, "password"),
             project_id=_get_str(huaweicloud, "project_id"),
+        ),
+        volcengine=VolcEngineConfig(
+            ak=_get_str(volcengine, "ak"),
+            sk=_get_str(volcengine, "sk"),
         ),
         github=GitHubConfig(
             token=_get_str(github, "token"),
@@ -141,6 +153,10 @@ def save_config(config: AppConfig) -> Path:
         f"username = {_toml_string(config.huaweicloud.username)}",
         f"password = {_toml_string(config.huaweicloud.password)}",
         f"project_id = {_toml_string(config.huaweicloud.project_id)}",
+        "",
+        "[volcengine]",
+        f"ak = {_toml_string(config.volcengine.ak)}",
+        f"sk = {_toml_string(config.volcengine.sk)}",
         "",
         "[github]",
         f"token = {_toml_string(config.github.token)}",
