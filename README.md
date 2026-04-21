@@ -2,6 +2,12 @@
 
 **ChuQin** is an AI-native personal assistant.
 
+## CLI
+
+In addition to the desktop application, ChuQin also provides a `chuqin` command-line tool. It is useful for calling individual capabilities directly from the terminal.
+
+See the CLI [docs](./docs/cli/README.md) for details.
+
 ## Working Directory
 
 ChuQin supports an optional `root_path` as its working directory.
