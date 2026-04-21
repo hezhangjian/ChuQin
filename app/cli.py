@@ -15,7 +15,7 @@ app = typer.Typer(help="ChuQin command line interface.")
 
 @app.callback()
 def cli() -> None:
-    """Root command group for the ChuQin CLI."""
+    """Root command group for the ChuQin Cli."""
 
 
 @app.command()

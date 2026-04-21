@@ -1,12 +1,16 @@
 # ChuQin
 
+![License](https://img.shields.io/badge/license-Apache2.0-green)
+
+English | [简体中文](README_CN.md)
+
 **ChuQin** is an AI-native personal assistant.
 
-## CLI
+## Cli
 
 In addition to the desktop application, ChuQin also provides a `chuqin` command-line tool. It is useful for calling individual capabilities directly from the terminal.
 
-See the CLI [docs](./docs/cli/README.md) for details.
+See the Cli [docs](./docs/cli/README.md) for details.
 
 ## Working Directory
 
