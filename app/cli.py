@@ -5,12 +5,14 @@ import typer
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-    from app import __version__
-else:
-    from app import __version__
 
+from app import __version__
+from app.cli_pdf import register_pdf_commands
+from app.cli_ppt import register_ppt_commands
 
 app = typer.Typer(help="ChuQin command line interface.")
+register_pdf_commands(app)
+register_ppt_commands(app)
 
 
 @app.callback()
