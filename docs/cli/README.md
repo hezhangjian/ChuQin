@@ -13,7 +13,7 @@ The Cli is organized into command groups so each functional area can evolve inde
 For new Cli capabilities, the recommended pattern is:
 
 1. Add a dedicated command group.
-2. Create a dedicated document for that group.
+2. Create a dedicated document for that group when the command area has distinct options or workflows.
 3. Link the new document from this page.
 
 ## Examples
