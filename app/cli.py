@@ -9,10 +9,12 @@ if __package__ in (None, ""):
 from app import __version__
 from app.cli_pdf import register_pdf_commands
 from app.cli_ppt import register_ppt_commands
+from app.cli_word import register_word_commands
 
 app = typer.Typer(help="ChuQin command line interface.")
 register_pdf_commands(app)
 register_ppt_commands(app)
+register_word_commands(app)
 
 
 @app.callback()

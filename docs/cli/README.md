@@ -26,4 +26,7 @@ The Cli is split into top-level modules so related subcommands can be grouped un
 
 - **[gitcode](./gitcode.md)**: Commands for GitCode integrations.
 - **[gitee](./gitee.md)**: Commands for Gitee integrations.
+- **[pdf](./pdf.md)**: Commands for PDF integrations.
+- **[ppt](./ppt.md)**: Commands for PPT integrations.
 - **[volcengine](./volcengine.md)**: Commands for VolcEngine integrations
+- **[word](./word.md)**: Commands for Word integrations
