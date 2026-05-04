@@ -45,6 +45,10 @@ If `--template` is not provided, ChuQin looks for:
 
 - `CHUQIN_DIR/.chuqin/word/templates/default`
 
+If `--template technology` is provided, ChuQin looks for:
+
+- `CHUQIN_DIR/.chuqin/word/templates/technology`
+
 If that directory does not exist, ChuQin falls back to a small built-in style so `chuqin word create "<title>"` still works immediately.
 
 ### Template Shape
