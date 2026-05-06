@@ -4,7 +4,7 @@
   "description": "Thin Node.js integration layer for the ChuQin Python toolkit",
   "type": "module",
   "bin": {
-    "chuqin-config-js": "./src/cli.js"
+    "chuqin-config-js": "src/cli.js"
   },
   "scripts": {
     "config:show": "node ./src/cli.js show"
