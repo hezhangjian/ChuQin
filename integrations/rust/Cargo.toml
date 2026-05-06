@@ -1,0 +1,10 @@
+[package]
+name = "chuqin"
+version = "0.0.1"
+edition = "2021"
+description = "Thin Rust integration layer for the ChuQin Python toolkit"
+license = "MIT"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
