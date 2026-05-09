@@ -27,7 +27,7 @@ test = [
 ]
 
 [project.scripts]
-chuqin = "app.cli.main"
+chuqin = "python.cli.main"
 
 [project.urls]
 Homepage = "https://github.com/hezhangjian/ChuQin"
@@ -39,7 +39,7 @@ python_version = "3.11"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["app*", "launcher*"]
+include = ["python*", "launcher*"]
 exclude = ["portal*"]
 
 [tool.ruff]

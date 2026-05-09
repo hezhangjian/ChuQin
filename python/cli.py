@@ -6,14 +6,14 @@ import typer
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app import __version__
-from app.gitcode.cli import register_gitcode_commands
-from app.gitee.cli import register_gitee_commands
-from app.outlook.cli import register_outlook_commands
-from app.pdf.cli import register_pdf_commands
-from app.ppt.cli import register_ppt_commands
-from app.volcengine.cli import register_volcengine_commands
-from app.word.cli import register_word_commands
+from python import __version__
+from python.gitcode.cli import register_gitcode_commands
+from python.gitee.cli import register_gitee_commands
+from python.outlook.cli import register_outlook_commands
+from python.pdf.cli import register_pdf_commands
+from python.ppt.cli import register_ppt_commands
+from python.volcengine.cli import register_volcengine_commands
+from python.word.cli import register_word_commands
 
 app = typer.Typer(help="ChuQin command line interface.")
 register_gitcode_commands(app)
