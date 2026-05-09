@@ -1,11 +1,11 @@
 {
-  "name": "chuqin",
+  "name": "chuqin-portal",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite",
+    "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
     "preview": "vite preview"
   },
   "devDependencies": {

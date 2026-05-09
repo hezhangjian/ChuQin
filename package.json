@@ -1,0 +1,14 @@
+{
+  "name": "chuqin-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm tauri dev --config crates/app/tauri.conf.json",
+    "build": "pnpm tauri build --config crates/app/tauri.conf.json",
+    "dev:web": "pnpm --dir portal dev --host 127.0.0.1 --port 1420",
+    "build:web": "pnpm --dir portal build",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  }
+}
