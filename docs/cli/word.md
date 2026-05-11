@@ -2,7 +2,7 @@
 
 The `word` module contains commands for Word-related integrations in ChuQin.
 
-## Create Command
+## `create` Command
 
 Pass the document title directly after `create`:
 
@@ -53,7 +53,7 @@ If that directory does not exist, ChuQin falls back to a small built-in style so
 
 ### Template Shape
 
-The current template recommendation is a directory, for example:
+The template name should map to a directory, for example:
 
 ```text
 .chuqin/word/templates/default/

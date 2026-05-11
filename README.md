@@ -4,26 +4,10 @@
 
 English | [简体中文](README_CN.md)
 
-**ChuQin** is an AI-native personal assistant.
+*ChuQin* is a local-first desktop workspace built around PARA for individual workers.
 
-## Cli
+It provides an immersive workspace experience centered on a user-owned root directory, where projects, resources, and archives can be organized consistently and operated on through an integrated tool area.
 
-In addition to the desktop application, ChuQin also provides a `chuqin` command-line tool. It is useful for calling individual capabilities directly from the terminal.
+The GUI is the primary delivery surface of ChuQin. It is designed to let users work inside their PARA workspace with visible context and reusable tools.
 
-See the Cli [docs](./docs/cli/README.md) for details.
-
-## Working Directory
-
-ChuQin supports an optional `root_path` as its working directory.
-
-- By default, `root_path` uses the current user's home directory.
-- You can override it with the `CHUQIN_DIR` environment variable.
-
-## Requirements
-
-- Python 3.11+
-
-## Dependencies
-
-- [Python](https://www.python.org)
-- [pywebview](https://pywebview.flowrl.com)
+ChuQin also publishes core capabilities and selected tools through a CLI for scripting, automation, and lightweight workflows outside the desktop application.

@@ -2,7 +2,7 @@
 
 The `ppt` module contains commands for PPT-related integrations in ChuQin.
 
-## Create Command
+## `create` Command
 
 Pass the PPT title directly after `create`:
 
@@ -54,7 +54,7 @@ works immediately.
 
 ### Template Shape
 
-The template should be a directory.
+The template name should map to a directory, for example:
 
 ```text
 .chuqin/ppt/templates/default/
