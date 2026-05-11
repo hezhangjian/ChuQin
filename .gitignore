@@ -7,22 +7,28 @@
 !.vscode/extensions.json
 **.iml
 
-# Python virtual environments
+# Node
+
+**/node_modules
+
+# Python
+
+## Python virtual environments
 venv/
 
-# Python Environments
+## Python Environments
 **/.env
 
-# Python bytecode
+## Python bytecode
 __pycache__/
 
-# Python packaging
+## Python packaging
 *.egg-info/
 build/
 dist/
 
-# MyPy
+## MyPy
 **/.mypy_cache
 
-# Ruff
+## Ruff
 **/.ruff_cache
