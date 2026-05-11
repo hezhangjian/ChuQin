@@ -10,4 +10,11 @@ It provides an immersive workspace experience centered on a user-owned root dire
 
 The GUI is the primary delivery surface of ChuQin. It is designed to let users work inside their PARA workspace with visible context and reusable tools.
 
-ChuQin also publishes core capabilities and selected tools through a CLI for scripting, automation, and lightweight workflows outside the desktop application.
+CLI provides command-line capabilities outside the desktop application.
+
+## Documentation
+
+Documentation is organized by delivery surface:
+
+- **[CLI](./docs/cli/README.md)**: Command-line capabilities, modules, and usage notes.
+- **[UI](./docs/ui/README.md)**: Desktop application concepts, workflows, and tool-area documentation.
