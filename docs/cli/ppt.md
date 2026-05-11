@@ -43,11 +43,11 @@ chuqin ppt create "Engineering Planning" --template technology
 
 If `--template` is not provided, ChuQin looks for:
 
-- `CHUQIN_DIR/.chuqin/ppt/templates/default`
+`- `$CHUQIN_DIR/Resources/Templates/PPT/default`
 
 If `--template technology` is provided, ChuQin looks for:
 
-- `CHUQIN_DIR/.chuqin/ppt/templates/technology`
+- `$CHUQIN_DIR/Resources/Templates/PPT/technology`
 
 If that directory does not exist, ChuQin falls back to a small built-in style so `chuqin ppt create "<title>"` still
 works immediately.
@@ -57,6 +57,6 @@ works immediately.
 The template name should map to a directory, for example:
 
 ```text
-.chuqin/ppt/templates/default/
+Resources/Templates/PPT/default/
 └── template.toml
 ```

@@ -43,11 +43,11 @@ chuqin word create "Project Weekly Report" --template technology
 
 If `--template` is not provided, ChuQin looks for:
 
-- `CHUQIN_DIR/.chuqin/word/templates/default`
+- `$CHUQIN_DIR/Resources/Templates/Word/default`
 
 If `--template technology` is provided, ChuQin looks for:
 
-- `CHUQIN_DIR/.chuqin/word/templates/technology`
+- `$CHUQIN_DIR/Resources/Templates/Word/technology`
 
 If that directory does not exist, ChuQin falls back to a small built-in style so `chuqin word create "<title>"` still works immediately.
 
@@ -56,6 +56,6 @@ If that directory does not exist, ChuQin falls back to a small built-in style so
 The template name should map to a directory, for example:
 
 ```text
-.chuqin/word/templates/default/
+$CHUQIN_DIR/Resources/Templates/Word/default/
 └── template.toml
 ```

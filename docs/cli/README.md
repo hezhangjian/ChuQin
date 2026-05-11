@@ -4,7 +4,7 @@ ChuQin CLI provides command-line capabilities outside of the desktop application
 
 It supports direct terminal usage, shell scripting, automation workflows, and lightweight configuration checks without launching the desktop app.
 
-CLI shares the same configuration system as the desktop application. By default, it reads from `CHUQIN_DIR/.chuqin/config.toml`. If `CHUQIN_DIR` is not set, it falls back to the current user's home directory.
+CLI shares the same root directory resolution as the desktop application. By default, paths are resolved from `$CHUQIN_DIR`. If `CHUQIN_DIR` is not set, ChuQin falls back to the current user's home directory.
 
 ## Overview
 
