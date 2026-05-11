@@ -6,3 +6,8 @@ edition.workspace = true
 [lib]
 name = "chuqin_core"
 path = "src/lib.rs"
+
+[dependencies]
+dirs = "6"
+thiserror = "2"
+toml = "1"
