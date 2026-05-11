@@ -3,12 +3,13 @@
 
 # IDE
 .idea/**
+!.idea/icon*
 .vscode/**
 !.vscode/extensions.json
+!.vscode/settings.json
 **.iml
 
 # Node
-
 **/node_modules
 
 # Python
@@ -32,3 +33,6 @@ dist/
 
 ## Ruff
 **/.ruff_cache
+
+# Rust
+target/

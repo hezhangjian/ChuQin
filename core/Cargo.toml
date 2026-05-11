@@ -1,0 +1,8 @@
+[package]
+name = "chuqin-core"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+name = "chuqin_core"
+path = "src/lib.rs"

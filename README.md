@@ -4,7 +4,7 @@
 
 English | [简体中文](README_CN.md)
 
-*ChuQin* is a local-first desktop workspace built around PARA for individual workers.
+**ChuQin** is a local-first desktop workspace built around PARA for individual workers.
 
 It provides an immersive workspace experience centered on a user-owned root directory, where projects, resources, and archives can be organized consistently and operated on through an integrated tool area.
 
