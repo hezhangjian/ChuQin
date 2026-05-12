@@ -48,17 +48,19 @@ button {
   min-width: 0;
   border-bottom: 1px solid var(--panel-border);
   background: var(--panel-background);
+  -webkit-app-region: drag;
 }
 
 .titlebar-actions {
   display: flex;
   align-items: center;
   min-width: 0;
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
 .titlebar-actions.left {
   justify-content: flex-start;
+  padding-left: 78px;
 }
 
 .titlebar-actions.right {
@@ -67,12 +69,14 @@ button {
 
 .titlebar-toggle {
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   border: 0;
   border-radius: 6px;
   background: transparent;
+  -webkit-app-region: no-drag;
+  transform: translateY(1px);
 }
 
 .titlebar-toggle:hover {
@@ -81,8 +85,8 @@ button {
 
 .sidebar-toggle-icon {
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
   border: 2px solid #70747a;
   border-radius: 4px;
   position: relative;
