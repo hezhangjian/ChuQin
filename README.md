@@ -4,13 +4,13 @@
 
 English | [简体中文](README_CN.md)
 
-**ChuQin** is a local-first desktop workspace built around PARA for individual workers.
+**ChuQin** is a local-first desktop app for managing a PARA-oriented filesystem root.
 
-It provides an immersive workspace experience centered on a user-owned root directory, where projects, resources, and archives can be organized consistently and operated on through an integrated tool area.
+It provides an immersive main area experience centered on a user-owned root directory, where projects, resources, and
+archives can be organized consistently and operated on through an integrated tool area.
 
-The GUI is the primary delivery surface of ChuQin. It is designed to let users work inside their PARA workspace with visible context and reusable tools.
-
-CLI provides command-line capabilities outside the desktop application.
+The GUI is the primary delivery surface of ChuQin. It is designed to let users work inside their PARA root with visible
+context and reusable tools. CLI provides command-line capabilities outside the desktop application.
 
 ## Documentation
 

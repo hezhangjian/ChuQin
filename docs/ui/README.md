@@ -1,10 +1,10 @@
 # ChuQin UI
 
-UI documentation covers the desktop application experience, including the app shell, workspace navigation, the main work surface, and tool-panel structure.
+UI documentation covers the desktop application experience, including the app, workspace navigation, the main work surface, and tool-panel structure.
 
 ## Scope
 
-- Desktop app shell structure and navigation.
+- Desktop app structure and navigation.
 - Workspace-oriented interaction flows.
 - `Sidebar`, `MainArea`, and `ToolPanel` responsibilities.
 - Tool-panel behavior and user-facing capabilities.
