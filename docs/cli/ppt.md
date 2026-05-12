@@ -43,7 +43,7 @@ chuqin ppt create "Engineering Planning" --template technology
 
 If `--template` is not provided, ChuQin looks for:
 
-`- `$CHUQIN_DIR/Resources/Templates/PPT/default`
+- `$CHUQIN_DIR/Resources/Templates/PPT/default`
 
 If `--template technology` is provided, ChuQin looks for:
 
