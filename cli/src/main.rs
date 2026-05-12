@@ -3,7 +3,12 @@ mod commands;
 use clap::{Parser, Subcommand};
 
 #[derive(Parser, Debug)]
-#[command(name = "chuqin", version, about = "ChuQin command-line interface")]
+#[command(
+    name = "chuqin",
+    bin_name = "chuqin",
+    version,
+    about = "ChuQin command-line interface"
+)]
 struct Cli {
     #[command(subcommand)]
     command: Command,
