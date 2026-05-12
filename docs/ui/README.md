@@ -1,23 +1,23 @@
 # ChuQin UI
 
-UI documentation covers the desktop application experience, including navigation patterns, main-area tabs, and tool-area workflows.
+UI documentation covers the desktop application experience, including the app shell, workspace navigation, the main work surface, and tool-panel structure.
 
 ## Scope
 
-- Desktop information architecture and navigation.
+- Desktop app shell structure and navigation.
 - Workspace-oriented interaction flows.
-- The central `MainArea` model.
-- Tool-area behavior and user-facing capabilities.
+- `Sidebar`, `MainArea`, and `ToolPanel` responsibilities.
+- Tool-panel behavior and user-facing capabilities.
 
 ## Layout Model
 
-ChuQin uses a three-area desktop layout:
+ChuQin uses a three-component desktop layout:
 
-- **Left file navigation**: a collapsible `CHUQIN_DIR` explorer backed by the local filesystem.
-- **Main area**: the primary tabbed view area. It can show file or folder views, file previews, work surfaces, and tool views.
-- **Right tools panel**: a collapsible list of tool entries.
+- **`Sidebar`**: the collapsible left-side workspace navigation area. It is the place for the `CHUQIN_DIR` explorer and other filesystem-oriented context.
+- **`MainArea`**: the central work surface. It owns the primary tabbed/view area for file and folder views, previews, work surfaces, and tool-opened views.
+- **`ToolPanel`**: the collapsible right-side tool area. It presents built-in tool entries and tool-specific controls.
 
-The left and right panels are supporting context. The main area is the primary interaction surface.
+`Sidebar` and `ToolPanel` provide supporting context and actions. `MainArea` is the primary interaction surface.
 
 ## Subsections
 
