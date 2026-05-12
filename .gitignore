@@ -3,6 +3,8 @@
 
 # IDE
 .idea/**
+!.idea/codeStyles/
+!.idea/codeStyles/**
 !.idea/icon*
 .vscode/**
 !.vscode/extensions.json

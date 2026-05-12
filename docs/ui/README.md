@@ -1,6 +1,6 @@
 # ChuQin UI
 
-UI documentation covers the desktop application experience, including workspace concepts, navigation patterns, and tool-area workflows.
+UI documentation covers the desktop application experience, including navigation patterns, tabbed views, and tool-area workflows.
 
 ## Scope
 
@@ -16,6 +16,8 @@ ChuQin uses a three-area desktop layout:
 - **Left file navigation**: a collapsible `CHUQIN_DIR` explorer backed by the local filesystem.
 - **Central workspace**: the primary tabbed view area. It can show file or folder views, file previews, work surfaces, and tool views.
 - **Right tools panel**: a collapsible list of tool entries.
+
+The left and right panels are supporting context. The central workspace is the main interaction surface.
 
 ## Subsections
 
