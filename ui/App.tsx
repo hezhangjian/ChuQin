@@ -9,8 +9,8 @@ function App() {
 
   return (
     <main className="app-layout" style={appLayout.rootStyle}>
-      <header className="app-titlebar">
-        <div className="titlebar-actions left">
+      <header className="app-titlebar" data-tauri-drag-region>
+        <div className="titlebar-actions left" data-tauri-drag-region>
           <button
             aria-label={appLayout.isLeftCollapsed ? "Show file explorer" : "Hide file explorer"}
             className="titlebar-toggle"
@@ -21,7 +21,7 @@ function App() {
           </button>
         </div>
 
-        <div className="titlebar-actions right">
+        <div className="titlebar-actions right" data-tauri-drag-region>
           <button
             aria-label={appLayout.isRightCollapsed ? "Show tool panel" : "Hide tool panel"}
             className="titlebar-toggle"
