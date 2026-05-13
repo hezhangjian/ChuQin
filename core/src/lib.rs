@@ -1,3 +1,4 @@
+mod config;
 mod context;
 mod error;
 mod fs;
