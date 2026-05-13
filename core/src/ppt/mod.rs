@@ -1,4 +1,3 @@
-mod config;
 mod create;
 mod generator;
 mod templates;

@@ -14,7 +14,6 @@ This creates `./Project Weekly Report.docx` in the current directory.
 
 The provided title is used as:
 
-- The cover title or top-level document title
 - The default output filename stem
 
 ### Options
@@ -34,28 +33,28 @@ chuqin word create "Project Weekly Report" --overwrite
 Use a custom template name:
 
 ```bash
-chuqin word create "Project Weekly Report" --template technology
+chuqin word create "Project Weekly Report" --template report
 ```
 
 ## Templates
 
-### Default Template Lookup
+### Template Lookup Order
 
-If `--template` is not provided, ChuQin looks for:
+1. If `--template report` is provided, ChuQin looks for:
+   - `$CHUQIN_DIR/Resources/Templates/WORD/report.docx`
+2. If the specified template is not found (or no `--template` is given), ChuQin looks for:
+   - `$CHUQIN_DIR/Resources/Templates/WORD/default.docx`
+3. If neither exists, ChuQin generates a built-in default DOCX.
 
-- `$CHUQIN_DIR/Resources/Templates/Word/default`
-
-If `--template technology` is provided, ChuQin looks for:
-
-- `$CHUQIN_DIR/Resources/Templates/Word/technology`
-
-If that directory does not exist, ChuQin falls back to a small built-in style so `chuqin word create "<title>"` still works immediately.
+If a `.docx` template file is found, it is copied directly to the output location.
 
 ### Template Shape
 
-The template name should map to a directory, for example:
+Templates are `.docx` files placed in `$CHUQIN_DIR/Resources/Templates/WORD/`:
 
 ```text
-$CHUQIN_DIR/Resources/Templates/Word/default/
-└── template.toml
+Resources/Templates/WORD/
+├── report.docx
+├── default.docx        # fallback template (used when --template is not specified or not found)
+└── meeting-notes.docx
 ```

@@ -21,12 +21,10 @@ pub fn list_templates(ctx: &AppContext) -> Result<Vec<TemplateInfo>> {
         let entry = entry?;
         let path = entry.path();
 
-        if !path.is_dir() {
-            continue;
-        }
-
-        if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-            templates.push(TemplateInfo { name: name.to_string() });
+        if path.extension().is_some_and(|ext| ext == "docx") {
+            if let Some(name) = path.file_stem().and_then(|n| n.to_str()) {
+                templates.push(TemplateInfo { name: name.to_string() });
+            }
         }
     }
 

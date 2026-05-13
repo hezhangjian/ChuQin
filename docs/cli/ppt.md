@@ -14,7 +14,6 @@ This creates `./Engineering Planning.pptx` in the current directory.
 
 The provided title is used as:
 
-- The cover title in the generated deck
 - The default output filename stem
 
 ### Options
@@ -39,24 +38,23 @@ chuqin ppt create "Engineering Planning" --template technology
 
 ## Templates
 
-### Default Template Lookup
+### Template Lookup Order
 
-If `--template` is not provided, ChuQin looks for:
+1. If `--template technology` is provided, ChuQin looks for:
+   - `$CHUQIN_DIR/Resources/Templates/PPT/technology.pptx`
+2. If the specified template is not found (or no `--template` is given), ChuQin looks for:
+   - `$CHUQIN_DIR/Resources/Templates/PPT/default.pptx`
+3. If neither exists, ChuQin generates a built-in default 16:9 PPTX.
 
-- `$CHUQIN_DIR/Resources/Templates/PPT/default`
-
-If `--template technology` is provided, ChuQin looks for:
-
-- `$CHUQIN_DIR/Resources/Templates/PPT/technology`
-
-If that directory does not exist, ChuQin falls back to a small built-in style so `chuqin ppt create "<title>"` still
-works immediately.
+If a `.pptx` template file is found, it is copied directly to the output location.
 
 ### Template Shape
 
-The template name should map to a directory, for example:
+Templates are `.pptx` files placed in `$CHUQIN_DIR/Resources/Templates/PPT/`:
 
 ```text
-Resources/Templates/PPT/default/
-└── template.toml
+Resources/Templates/PPT/
+├── technology.pptx
+├── default.pptx        # fallback template (used when --template is not specified or not found)
+└── minimal.pptx
 ```
