@@ -539,10 +539,12 @@ dependencies = [
 name = "chuqin-core"
 version = "0.0.1"
 dependencies = [
+ "chrono",
  "dirs",
  "serde",
  "thiserror 2.0.18",
  "toml 1.1.2+spec-1.1.0",
+ "walkdir",
  "zip",
 ]
 
