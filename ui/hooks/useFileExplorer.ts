@@ -13,12 +13,14 @@ export type DirectoryState = {
 };
 
 export type FileExplorerState = {
+  chuqinRootPath: string;
   nodes: TreeNode[];
   directoryStates: Record<string, DirectoryState>;
   selectedPath?: string;
   isLoadingRoot: boolean;
   rootError?: string;
   getDirectoryState: (path: string) => DirectoryState;
+  refreshRoot: () => Promise<void>;
   selectNode: (node: TreeNode) => void;
   toggleDirectory: (node: TreeNode) => Promise<void>;
 };
@@ -52,42 +54,41 @@ export function useFileExplorer(): FileExplorerState {
   const [selectedPath, setSelectedPath] = useState<string>();
   const [isLoadingRoot, setIsLoadingRoot] = useState(true);
   const [rootError, setRootError] = useState<string>();
+  const [chuqinRootPath, setChuqinRootPath] = useState('');
 
   const loadDirectory = useCallback(async (path?: string) => {
     const entries = await invoke<TreeNode[]>('files_list', {path});
     return entries;
   }, []);
 
+  const refreshRoot = useCallback(async () => {
+    setIsLoadingRoot(true);
+    setRootError(undefined);
+
+    try {
+      const [rootPath, entries] = await Promise.all([invoke<string>('files_root'), loadDirectory()]);
+      setChuqinRootPath(rootPath);
+      setNodes(entries);
+    } catch (error) {
+      setRootError(error instanceof Error ? error.message : String(error));
+    } finally {
+      setIsLoadingRoot(false);
+    }
+  }, [loadDirectory]);
+
   useEffect(() => {
     let isActive = true;
 
-    async function loadRoot() {
-      setIsLoadingRoot(true);
-      setRootError(undefined);
-
-      try {
-        const entries = await loadDirectory();
-
-        if (isActive) {
-          setNodes(entries);
-        }
-      } catch (error) {
-        if (isActive) {
-          setRootError(error instanceof Error ? error.message : String(error));
-        }
-      } finally {
-        if (isActive) {
-          setIsLoadingRoot(false);
-        }
+    void refreshRoot().finally(() => {
+      if (!isActive) {
+        return;
       }
-    }
-
-    void loadRoot();
+    });
 
     return () => {
       isActive = false;
     };
-  }, [loadDirectory]);
+  }, [refreshRoot]);
 
   const getDirectoryState = useCallback(
     (path: string) => getDirectoryStateFromRecord(directoryStates, path),
@@ -156,12 +157,14 @@ export function useFileExplorer(): FileExplorerState {
   );
 
   return {
+    chuqinRootPath,
     nodes,
     directoryStates,
     selectedPath,
     isLoadingRoot,
     rootError,
     getDirectoryState,
+    refreshRoot,
     selectNode,
     toggleDirectory,
   };

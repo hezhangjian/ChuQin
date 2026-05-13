@@ -1,11 +1,37 @@
+import {openPath} from '@tauri-apps/plugin-opener';
 import {MainArea} from './components/main-area/MainArea';
 import {Sidebar} from './components/sidebar/Sidebar';
 import {ToolPanel} from './components/tools/ToolPanel';
 import {useAppLayout} from './hooks/useAppLayout';
+import {useFileExplorer} from './hooks/useFileExplorer';
+import {useMainAreaTabs} from './hooks/useMainAreaTabs';
+import {getAbsoluteFilePath, getFileOpenMode} from './lib/fileHandlers';
 import './App.css';
 
 function App() {
   const appLayout = useAppLayout();
+  const fileExplorer = useFileExplorer();
+  const mainAreaTabs = useMainAreaTabs();
+
+  async function selectNode(node: Parameters<typeof fileExplorer.selectNode>[0]) {
+    fileExplorer.selectNode(node);
+
+    if (node.is_dir) {
+      await fileExplorer.toggleDirectory(node);
+      return;
+    }
+
+    if (getFileOpenMode(node) === 'external') {
+      try {
+        await openPath(getAbsoluteFilePath(fileExplorer.chuqinRootPath, node.path));
+      } catch (error) {
+        console.error(error);
+      }
+      return;
+    }
+
+    mainAreaTabs.openFile(node);
+  }
 
   return (
     <main className="app-layout" style={appLayout.rootStyle}>
@@ -17,7 +43,7 @@ function App() {
             onClick={appLayout.toggleLeftCollapsed}
             type="button"
           >
-            <span className="sidebar-toggle-icon left" aria-hidden="true"/>
+            <span className="sidebar-toggle-icon left" aria-hidden="true" />
           </button>
         </div>
 
@@ -28,14 +54,29 @@ function App() {
             onClick={appLayout.toggleRightCollapsed}
             type="button"
           >
-            <span className="sidebar-toggle-icon right" aria-hidden="true"/>
+            <span className="sidebar-toggle-icon right" aria-hidden="true" />
           </button>
         </div>
       </header>
 
-      {appLayout.isLeftCollapsed ? null : <Sidebar/>}
-      <MainArea/>
-      {appLayout.isRightCollapsed ? null : <ToolPanel/>}
+      {appLayout.isLeftCollapsed ? null : (
+        <Sidebar
+          directoryStates={fileExplorer.directoryStates}
+          isLoadingRoot={fileExplorer.isLoadingRoot}
+          nodes={fileExplorer.nodes}
+          onSelect={selectNode}
+          rootError={fileExplorer.rootError}
+          selectedPath={fileExplorer.selectedPath}
+        />
+      )}
+      <MainArea
+        activeTab={mainAreaTabs.activeTab}
+        activeTabId={mainAreaTabs.activeTabId}
+        onCloseTab={mainAreaTabs.closeTab}
+        onSelectTab={mainAreaTabs.selectTab}
+        tabs={mainAreaTabs.tabs}
+      />
+      {appLayout.isRightCollapsed ? null : <ToolPanel />}
     </main>
   );
 }

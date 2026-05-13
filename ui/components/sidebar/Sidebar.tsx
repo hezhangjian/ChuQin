@@ -1,5 +1,5 @@
 import type {CSSProperties} from 'react';
-import {getDirectoryStateFromRecord, useFileExplorer} from '../../hooks/useFileExplorer';
+import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
 import type {DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
 
 function FileTreeRow({
@@ -9,7 +9,6 @@ function FileTreeRow({
   directoryStates,
   isSelected,
   onSelect,
-  onToggle,
   selectedPath,
 }: {
   depth: number;
@@ -18,7 +17,6 @@ function FileTreeRow({
   directoryStates: Record<string, DirectoryState>;
   isSelected: boolean;
   onSelect: (node: TreeNode) => void;
-  onToggle: (node: TreeNode) => void;
   selectedPath?: string;
 }) {
   const isOpen = node.is_dir && directoryState.expanded;
@@ -30,10 +28,6 @@ function FileTreeRow({
         className={`file-tree-row${isSelected ? ' selected' : ''}`}
         onClick={() => {
           onSelect(node);
-
-          if (node.is_dir) {
-            onToggle(node);
-          }
         }}
         style={{'--tree-depth': depth} as CSSProperties}
         type="button"
@@ -62,7 +56,6 @@ function FileTreeRow({
           directoryStates={directoryStates}
           nodes={node.children}
           onSelect={onSelect}
-          onToggle={onToggle}
           selectedPath={selectedPath}
         />
       ) : null}
@@ -75,14 +68,12 @@ function FileTreeList({
   directoryStates,
   nodes,
   onSelect,
-  onToggle,
   selectedPath,
 }: {
   depth: number;
   directoryStates?: Record<string, DirectoryState>;
   nodes: TreeNode[];
   onSelect: (node: TreeNode) => void;
-  onToggle: (node: TreeNode) => void;
   selectedPath?: string;
 }) {
   const states = directoryStates ?? {};
@@ -98,7 +89,6 @@ function FileTreeList({
           key={node.path}
           node={node}
           onSelect={onSelect}
-          onToggle={onToggle}
           selectedPath={selectedPath}
         />
       ))}
@@ -106,22 +96,33 @@ function FileTreeList({
   );
 }
 
-export function Sidebar() {
-  const fileExplorer = useFileExplorer();
-
+export function Sidebar({
+  directoryStates,
+  isLoadingRoot,
+  nodes,
+  onSelect,
+  rootError,
+  selectedPath,
+}: {
+  directoryStates: Record<string, DirectoryState>;
+  isLoadingRoot: boolean;
+  nodes: TreeNode[];
+  onSelect: (node: TreeNode) => void;
+  rootError?: string;
+  selectedPath?: string;
+}) {
   return (
     <aside className="sidebar" aria-label="Left sidebar">
       <nav className="file-tree" aria-label="Files">
-        {fileExplorer.rootError ? <p className="file-tree-root-message">{fileExplorer.rootError}</p> : null}
-        {fileExplorer.isLoadingRoot ? <p className="file-tree-root-message">Loading...</p> : null}
-        {!fileExplorer.isLoadingRoot && !fileExplorer.rootError ? (
+        {rootError ? <p className="file-tree-root-message">{rootError}</p> : null}
+        {isLoadingRoot ? <p className="file-tree-root-message">Loading...</p> : null}
+        {!isLoadingRoot && !rootError ? (
           <FileTreeList
             depth={0}
-            directoryStates={fileExplorer.directoryStates}
-            nodes={fileExplorer.nodes}
-            onSelect={fileExplorer.selectNode}
-            onToggle={fileExplorer.toggleDirectory}
-            selectedPath={fileExplorer.selectedPath}
+            directoryStates={directoryStates}
+            nodes={nodes}
+            onSelect={onSelect}
+            selectedPath={selectedPath}
           />
         ) : null}
       </nav>

@@ -24,7 +24,10 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             commands::files::files_delete,
             commands::files::files_list,
+            commands::files::files_read_text,
             commands::files::files_rename,
+            commands::files::files_root,
+            commands::files::files_write_text,
             commands::ppt::ppt_create,
             commands::ppt::ppt_templates,
             commands::word::word_create,
