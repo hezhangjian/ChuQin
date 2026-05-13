@@ -26,9 +26,7 @@ pub fn list_ppt_templates(ctx: &AppContext) -> Result<Vec<PptTemplateInfo>> {
         }
 
         if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-            templates.push(PptTemplateInfo {
-                name: name.to_string(),
-            });
+            templates.push(PptTemplateInfo { name: name.to_string() });
         }
     }
 

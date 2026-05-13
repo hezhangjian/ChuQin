@@ -26,9 +26,7 @@ pub fn list_word_templates(ctx: &AppContext) -> Result<Vec<WordTemplateInfo>> {
         }
 
         if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-            templates.push(WordTemplateInfo {
-                name: name.to_string(),
-            });
+            templates.push(WordTemplateInfo { name: name.to_string() });
         }
     }
 

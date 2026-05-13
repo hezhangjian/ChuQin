@@ -4,7 +4,7 @@
 //! path traversal protection. These are the system boundary between
 //! the frontend and the core file operations.
 
-use chuqin_core::{delete_path, list_directory, rename_path, FileNode};
+use chuqin_core::{FileNode, delete_path, list_directory, rename_path};
 use tauri::State;
 
 use crate::AppState;
@@ -48,11 +48,7 @@ pub fn files_list(state: State<AppState>, path: Option<String>) -> Result<Vec<Fi
 /// Returns error if path is invalid, outside root, doesn't exist,
 /// or if new_name contains path separators.
 #[tauri::command]
-pub fn files_rename(
-    state: State<AppState>,
-    old_path: String,
-    new_name: String,
-) -> Result<(), String> {
+pub fn files_rename(state: State<AppState>, old_path: String, new_name: String) -> Result<(), String> {
     let ctx = state.context.lock().map_err(|e| e.to_string())?;
     rename_path(&ctx, &old_path, &new_name).map_err(|e| e.to_string())
 }

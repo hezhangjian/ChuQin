@@ -1,5 +1,5 @@
 use crate::Command;
-use chuqin_core::{load_context, Error};
+use chuqin_core::{Error, load_context};
 
 pub fn run(command: Command) -> Result<(), Error> {
     let ctx = load_context()?;
