@@ -34,3 +34,8 @@ This repository is organized as:
   - Example: `feat(core): add zip utilities for archive operations`
 - All commits must be signed-off using the `-s` flag (`git commit -s`).
 - When listing parallel items with no specific logical relationship, sort them alphabetically.
+
+## Implementation Guidance
+
+- Implement features elegantly and with extensibility in mind. Split code into focused files/modules when that keeps the
+  design clearer, reduces coupling, or makes future feature types easier to add.
