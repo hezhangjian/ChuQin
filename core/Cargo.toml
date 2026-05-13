@@ -12,3 +12,4 @@ dirs = "6"
 serde = { version = "1", features = ["derive"] }
 thiserror = "2"
 toml = "1"
+zip = { version = "8", default-features = false, features = ["deflate"] }

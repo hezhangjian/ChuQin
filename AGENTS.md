@@ -16,3 +16,11 @@ This repository is organized as:
 - `desktop/`: Tauri v2 desktop backend, depending on `chuqin-core`.
 - `ui/`: React + TypeScript frontend for the desktop app.
 - `docs/`: product and command documentation.
+
+## Code Style
+
+- All code comments must be written in English.
+- Commit messages must follow [Conventional Commits](https://www.conventionalcommits.org/) specification:
+  - Format: `<type>(<scope>): <description>`
+  - Common types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `build`
+  - Example: `feat(core): add zip utilities for archive operations`

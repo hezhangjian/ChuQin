@@ -11,4 +11,6 @@ pub enum Error {
     InvalidPath(String),
     #[error("Path not found: {0}")]
     PathNotFound(String),
+    #[error("Zip error: {0}")]
+    Zip(#[from] zip::result::ZipError),
 }
