@@ -127,6 +127,104 @@ button {
   border-right: 1px solid var(--panel-border);
 }
 
+.file-tree {
+  height: 100%;
+  overflow: auto;
+  padding: 14px 8px 18px 7px;
+  color: #1f1f1f;
+}
+
+.file-tree-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.file-tree-item {
+  min-width: 0;
+}
+
+.file-tree-row {
+  --tree-indent: calc(var(--tree-depth) * 24px);
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 8px 0 calc(4px + var(--tree-indent));
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #202124;
+  text-align: left;
+}
+
+.file-tree-row:hover {
+  background: #efefef;
+}
+
+.file-tree-row.selected {
+  background: #f1f1f1;
+}
+
+.file-tree-chevron {
+  width: 9px;
+  height: 9px;
+  border-color: #a5a7aa;
+  border-style: solid;
+  border-width: 0 3px 3px 0;
+  transform: rotate(-45deg);
+  transform-origin: 60% 60%;
+  transition:
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.file-tree-row:hover .file-tree-chevron,
+.file-tree-row.selected .file-tree-chevron {
+  border-color: #8f9296;
+}
+
+.file-tree-chevron.expanded {
+  transform: rotate(45deg);
+}
+
+.file-tree-chevron.hidden {
+  visibility: hidden;
+}
+
+.file-tree-name {
+  min-width: 0;
+  overflow: hidden;
+  color: #202124;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-tree-message,
+.file-tree-root-message {
+  margin: 0;
+  color: #8b8f94;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.file-tree-message {
+  --tree-indent: calc(var(--tree-depth) * 24px);
+  padding: 3px 8px 6px calc(30px + var(--tree-indent));
+}
+
+.file-tree-root-message {
+  padding: 0 8px;
+}
+
 .tool-panel {
   grid-column: 3;
   border-left: 1px solid var(--panel-border);
