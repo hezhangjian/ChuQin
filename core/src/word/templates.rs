@@ -5,12 +5,12 @@ use serde::{Deserialize, Serialize};
 use crate::{AppContext, Result};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct PptTemplateInfo {
+pub struct TemplateInfo {
     pub name: String,
 }
 
-pub fn list_ppt_templates(ctx: &AppContext) -> Result<Vec<PptTemplateInfo>> {
-    let templates_path = ctx.templates_dir.join("ppt");
+pub fn list_templates(ctx: &AppContext) -> Result<Vec<TemplateInfo>> {
+    let templates_path = ctx.templates_dir.join("WORD");
 
     if !templates_path.exists() {
         return Ok(Vec::new());
@@ -26,7 +26,7 @@ pub fn list_ppt_templates(ctx: &AppContext) -> Result<Vec<PptTemplateInfo>> {
         }
 
         if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-            templates.push(PptTemplateInfo { name: name.to_string() });
+            templates.push(TemplateInfo { name: name.to_string() });
         }
     }
 

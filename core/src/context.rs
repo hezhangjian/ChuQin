@@ -22,8 +22,8 @@ pub fn load_context() -> Result<AppContext> {
         None
     };
 
-    let resources_dir = root_dir.join("resources");
-    let templates_dir = resources_dir.join("templates");
+    let resources_dir = root_dir.join("Resources");
+    let templates_dir = resources_dir.join("Templates");
 
     Ok(AppContext {
         root_dir,
