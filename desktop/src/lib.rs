@@ -25,6 +25,8 @@ pub fn run() {
             commands::files::files_delete,
             commands::files::files_list,
             commands::files::files_rename,
+            commands::ppt::ppt_templates,
+            commands::word::word_templates,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

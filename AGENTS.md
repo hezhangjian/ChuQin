@@ -16,6 +16,9 @@ This repository is organized as:
 - `desktop/`: Tauri v2 desktop backend, depending on `chuqin-core`.
 - `ui/`: React + TypeScript frontend for the desktop app.
 - `docs/`: product and command documentation.
+  - `docs/commands/`: Tauri command documentation. Update when adding/modifying Tauri commands in `desktop/src/commands/`.
+  - `docs/cli/`: CLI documentation. Update when adding/modifying CLI commands in `cli/src/`.
+  - `docs/ui/`: UI component documentation.
 
 ## Code Style
 

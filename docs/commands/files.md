@@ -1,20 +1,18 @@
-# Tauri Commands
+# files
 
-## files
-
-### files_list
+## files_list
 
 List files and directories.
 
 - `path?: string` - Optional relative path
 
-### files_delete
+## files_delete
 
 Delete a file or directory.
 
 - `path: string` - Relative path
 
-### files_rename
+## files_rename
 
 Rename a file or directory.
 

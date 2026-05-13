@@ -4,3 +4,5 @@
 //! Commands follow REST-style naming: `<resource>_<action>`.
 
 pub mod files;
+pub mod ppt;
+pub mod word;
