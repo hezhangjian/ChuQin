@@ -9,5 +9,6 @@ path = "src/lib.rs"
 
 [dependencies]
 dirs = "6"
+serde = { version = "1", features = ["derive"] }
 thiserror = "2"
 toml = "1"
