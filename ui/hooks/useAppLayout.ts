@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import type { CSSProperties } from "react";
+import {useMemo, useState} from 'react';
+import type {CSSProperties} from 'react';
 
 export type AppLayoutState = {
   rootStyle: CSSProperties;
@@ -16,10 +16,10 @@ export function useAppLayout(): AppLayoutState {
   const rootStyle = useMemo(
     () =>
       ({
-        "--left-panel-width": isLeftCollapsed ? "0px" : "280px",
-        "--right-panel-width": isRightCollapsed ? "0px" : "280px",
+        '--left-panel-width': isLeftCollapsed ? '0px' : '280px',
+        '--right-panel-width': isRightCollapsed ? '0px' : '280px',
       }) as CSSProperties,
-    [isLeftCollapsed, isRightCollapsed],
+    [isLeftCollapsed, isRightCollapsed]
   );
 
   return {

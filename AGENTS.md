@@ -20,6 +20,11 @@ This repository is organized as:
   - `docs/cli/`: CLI documentation. Update when adding/modifying CLI commands in `cli/src/`.
   - `docs/ui/`: UI component documentation.
 
+## Package Manager
+
+- Use `pnpm` for all JavaScript/TypeScript package operations (install, add, remove, run scripts).
+- Never use `npm` or `yarn` commands.
+
 ## Code Style
 
 - All code comments must be written in English.
