@@ -45,6 +45,16 @@ button {
   transition: grid-template-columns 180ms ease;
 }
 
+.app-layout.resizing-panel {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.app-layout.resizing-panel,
+.app-layout.resizing-panel * {
+  transition: none;
+}
+
 .app-titlebar {
   display: grid;
   grid-column: 1 / -1;
@@ -117,6 +127,7 @@ button {
 
 .sidebar,
 .tool-panel {
+  position: relative;
   min-height: 0;
   background: var(--panel-background);
   overflow: hidden;
@@ -228,6 +239,42 @@ button {
 .tool-panel {
   grid-column: 3;
   border-left: 1px solid var(--panel-border);
+}
+
+.panel-resize-handle {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 9px;
+  height: 100%;
+  outline: none;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.panel-resize-handle.left {
+  right: -5px;
+}
+
+.panel-resize-handle.right {
+  left: -5px;
+}
+
+.panel-resize-handle::after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4px;
+  width: 1px;
+  background: transparent;
+  content: '';
+  transition: background 120ms ease;
+}
+
+.panel-resize-handle:hover::after,
+.panel-resize-handle:focus-visible::after,
+.app-layout.resizing-panel .panel-resize-handle::after {
+  background: #8d9299;
 }
 
 .main-area {
@@ -408,6 +455,10 @@ button {
   .main-area,
   .tool-panel {
     min-height: auto;
+  }
+
+  .panel-resize-handle {
+    display: none;
   }
 
   .main-area {

@@ -34,7 +34,7 @@ function App() {
   }
 
   return (
-    <main className="app-layout" style={appLayout.rootStyle}>
+    <main className={`app-layout${appLayout.isResizingPanel ? ' resizing-panel' : ''}`} style={appLayout.rootStyle}>
       <header className="app-titlebar" data-tauri-drag-region>
         <div className="titlebar-actions left" data-tauri-drag-region>
           <button
@@ -64,7 +64,10 @@ function App() {
           directoryStates={fileExplorer.directoryStates}
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
+          onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('left', event)}
+          onResizePointerDown={(event) => appLayout.startPanelResize('left', event)}
           onSelect={selectNode}
+          panelWidth={appLayout.leftPanelWidth}
           rootError={fileExplorer.rootError}
           selectedPath={fileExplorer.selectedPath}
         />
@@ -76,7 +79,13 @@ function App() {
         onSelectTab={mainAreaTabs.selectTab}
         tabs={mainAreaTabs.tabs}
       />
-      {appLayout.isRightCollapsed ? null : <ToolPanel />}
+      {appLayout.isRightCollapsed ? null : (
+        <ToolPanel
+          onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}
+          onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}
+          panelWidth={appLayout.rightPanelWidth}
+        />
+      )}
     </main>
   );
 }

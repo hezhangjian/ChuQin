@@ -1,4 +1,4 @@
-import type {CSSProperties} from 'react';
+import type {CSSProperties, KeyboardEvent, PointerEvent} from 'react';
 import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
 import type {DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
 
@@ -100,14 +100,20 @@ export function Sidebar({
   directoryStates,
   isLoadingRoot,
   nodes,
+  onResizeKeyDown,
+  onResizePointerDown,
   onSelect,
+  panelWidth,
   rootError,
   selectedPath,
 }: {
   directoryStates: Record<string, DirectoryState>;
   isLoadingRoot: boolean;
   nodes: TreeNode[];
+  onResizeKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
+  onResizePointerDown: (event: PointerEvent<HTMLElement>) => void;
   onSelect: (node: TreeNode) => void;
+  panelWidth: number;
   rootError?: string;
   selectedPath?: string;
 }) {
@@ -126,6 +132,18 @@ export function Sidebar({
           />
         ) : null}
       </nav>
+      <div
+        aria-label="Resize file explorer"
+        aria-orientation="vertical"
+        aria-valuemax={520}
+        aria-valuemin={180}
+        aria-valuenow={panelWidth}
+        className="panel-resize-handle left"
+        onKeyDown={onResizeKeyDown}
+        onPointerDown={onResizePointerDown}
+        role="separator"
+        tabIndex={0}
+      />
     </aside>
   );
 }
