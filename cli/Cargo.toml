@@ -8,5 +8,5 @@ name = "chuqin"
 path = "src/main.rs"
 
 [dependencies]
-clap = { version = "4", features = ["derive"] }
 chuqin-core = { path = "../core" }
+clap = { version = "4", features = ["derive"] }

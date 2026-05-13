@@ -1,3 +1,5 @@
+mod ppt;
+
 use crate::Command;
 use chuqin_core::{Error, load_context};
 

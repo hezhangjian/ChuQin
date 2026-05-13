@@ -1,10 +1,13 @@
 use std::io;
+use std::path::PathBuf;
 use thiserror::Error as ThisError;
 
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Debug, ThisError)]
 pub enum Error {
+    #[error("refusing to overwrite existing file: {0}")]
+    AlreadyExists(PathBuf),
     #[error("IO error: {0}")]
     Io(#[from] io::Error),
     #[error("Invalid path: {0}")]
