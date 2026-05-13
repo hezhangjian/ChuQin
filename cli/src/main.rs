@@ -2,6 +2,8 @@ mod commands;
 
 use clap::{Parser, Subcommand};
 
+use commands::{outlook, pdf, ppt, word};
+
 #[derive(Parser, Debug)]
 #[command(
     name = "chuqin",
@@ -17,6 +19,10 @@ struct Cli {
 #[derive(Subcommand, Debug)]
 enum Command {
     Version,
+    Outlook(outlook::OutlookCommand),
+    Pdf(pdf::PdfCommand),
+    Ppt(ppt::PptCommand),
+    Word(word::WordCommand),
 }
 
 fn main() {

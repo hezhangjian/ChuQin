@@ -18,6 +18,8 @@ pub enum Error {
     MissingHomeDir,
     #[error("Path not found: {0}")]
     PathNotFound(String),
+    #[error("PPTX generation error: {0}")]
+    Pptx(#[from] ppt_rs::PptxError),
     #[error("Zip error: {0}")]
     Zip(#[from] zip::result::ZipError),
 }
