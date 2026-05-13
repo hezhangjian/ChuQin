@@ -39,6 +39,13 @@
     <codeStyleSettings language="Markdown">
       <option name="RIGHT_MARGIN" value="120" />
     </codeStyleSettings>
+    <codeStyleSettings language="Rust">
+      <option name="RUST_FORMATTER_TOOL" value="rustfmt" />
+      <option name="USE_RUSTFMT" value="true" />
+      <option name="INDENT_SIZE" value="4" />
+      <option name="CONTINUATION_INDENT_SIZE" value="4" />
+      <option name="TAB_SIZE" value="4" />
+    </codeStyleSettings>
     <codeStyleSettings language="TypeScript">
       <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true" />
       <indentOptions>
