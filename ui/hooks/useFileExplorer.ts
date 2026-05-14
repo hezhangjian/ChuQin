@@ -117,15 +117,6 @@ export function useFileExplorer(): FileExplorerState {
 
       setDirectoryStates((states) => ({
         ...states,
-        [node.path]: {...getDirectoryStateFromRecord(states, node.path), expanded: true, error: undefined},
-      }));
-
-      if (node.children) {
-        return;
-      }
-
-      setDirectoryStates((states) => ({
-        ...states,
         [node.path]: {
           ...getDirectoryStateFromRecord(states, node.path),
           expanded: true,
