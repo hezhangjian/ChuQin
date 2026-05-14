@@ -11,6 +11,7 @@ export type FileMainAreaTab = {
 export type ToolMainAreaTab = {
   id: string;
   title: string;
+  toolId: string;
   type: 'tool';
 };
 

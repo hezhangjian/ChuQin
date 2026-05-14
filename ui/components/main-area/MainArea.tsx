@@ -1,6 +1,7 @@
 import {FileEditor} from './FileEditor';
 import {MainAreaTabs} from './MainAreaTabs';
-import type {MainAreaTab} from '../../types/mainAreaTabs';
+import {ToolWorkspace} from '../tools/ToolWorkspace';
+import type {MainAreaTab} from '../../types';
 
 type MainAreaProps = {
   activeTab: MainAreaTab | undefined;
@@ -23,11 +24,7 @@ function renderTab(tab: MainAreaTab | undefined) {
     return <FileEditor key={tab.path} path={tab.path} />;
   }
 
-  return (
-    <div className="main-area-state empty">
-      <strong>{tab.title}</strong>
-    </div>
-  );
+  return <ToolWorkspace key={tab.toolId} toolId={tab.toolId} />;
 }
 
 export function MainArea({activeTab, activeTabId, onCloseTab, onSelectTab, tabs}: MainAreaProps) {

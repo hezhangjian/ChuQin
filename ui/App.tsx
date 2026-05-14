@@ -137,6 +137,8 @@ function App() {
         <ToolPanel
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}
+          activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
+          onOpenTool={mainAreaTabs.openTool}
           panelWidth={appLayout.rightPanelWidth}
         />
       )}

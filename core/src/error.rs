@@ -16,6 +16,8 @@ pub enum Error {
     ConfigToml(#[from] toml::de::Error),
     #[error("unable to determine the current user's home directory")]
     MissingHomeDir,
+    #[error("{0}")]
+    InvalidInput(String),
     #[error("Path not found: {0}")]
     PathNotFound(String),
     #[error("PPTX generation error: {0}")]

@@ -12,6 +12,7 @@
     "format:check": "prettier --check \"ui/**/*.{ts,tsx,css,json}\""
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.1",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
     "react": "^19.1.0",

@@ -1,6 +1,7 @@
 import {useMemo, useState} from 'react';
 import type {FileNode} from '../types';
 import {getFileOpenMode} from '../lib/fileHandlers';
+import {getBuiltInTool, type BuiltInToolId} from '../lib/tools';
 import type {MainAreaTab} from '../types/mainAreaTabs';
 
 const maxOpenTabs = 10;
@@ -10,6 +11,7 @@ export type MainAreaTabsState = {
   activeTabId: string;
   closeTab: (tabId: string) => void;
   openFile: (node: FileNode) => MainAreaTab | null;
+  openTool: (toolId: BuiltInToolId) => MainAreaTab | null;
   selectTab: (tabId: string) => void;
   tabs: MainAreaTab[];
 };
@@ -57,6 +59,25 @@ export function useMainAreaTabs(): MainAreaTabsState {
     return tab;
   }
 
+  function openTool(toolId: BuiltInToolId) {
+    const tool = getBuiltInTool(toolId);
+
+    if (!tool) {
+      return null;
+    }
+
+    const tab: MainAreaTab = {
+      id: `tool:${tool.id}`,
+      title: tool.title,
+      toolId: tool.id,
+      type: 'tool',
+    };
+
+    openTab(tab);
+
+    return tab;
+  }
+
   function selectTab(tabId: string) {
     setActiveTabId(tabId);
   }
@@ -80,6 +101,7 @@ export function useMainAreaTabs(): MainAreaTabsState {
     activeTabId,
     closeTab,
     openFile,
+    openTool,
     selectTab,
     tabs,
   };
