@@ -1,4 +1,6 @@
 import {openPath} from '@tauri-apps/plugin-opener';
+import {listen} from '@tauri-apps/api/event';
+import {useEffect} from 'react';
 import {MainArea} from './components/main-area/MainArea';
 import {Sidebar} from './components/sidebar/Sidebar';
 import {ToolPanel} from './components/tools/ToolPanel';
@@ -8,10 +10,52 @@ import {useMainAreaTabs} from './hooks/useMainAreaTabs';
 import {getAbsoluteFilePath, getFileOpenMode} from './lib/fileHandlers';
 import './App.css';
 
+const closeActiveTabEvent = 'chuqin://close-active-tab';
+
 function App() {
   const appLayout = useAppLayout();
   const fileExplorer = useFileExplorer();
   const mainAreaTabs = useMainAreaTabs();
+
+  function closeActiveTab() {
+    if (mainAreaTabs.activeTab) {
+      mainAreaTabs.closeTab(mainAreaTabs.activeTab.id);
+    }
+  }
+
+  useEffect(() => {
+    let isDisposed = false;
+    let unlisten: (() => void) | undefined;
+
+    listen(closeActiveTabEvent, closeActiveTab).then((dispose) => {
+      if (isDisposed) {
+        dispose();
+        return;
+      }
+
+      unlisten = dispose;
+    });
+
+    return () => {
+      isDisposed = true;
+      unlisten?.();
+    };
+  }, [mainAreaTabs.activeTab?.id]);
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.metaKey && event.key.toLowerCase() === 'w') {
+        event.preventDefault();
+        closeActiveTab();
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [mainAreaTabs.activeTab?.id]);
 
   async function selectNode(node: Parameters<typeof fileExplorer.selectNode>[0]) {
     fileExplorer.selectNode(node);
