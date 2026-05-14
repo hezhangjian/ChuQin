@@ -11,6 +11,11 @@
 !.vscode/settings.json
 **.iml
 
+# AI Agent
+
+## Claude Code
+.claude
+
 # Node
 **/node_modules
 
