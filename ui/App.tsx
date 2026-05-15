@@ -4,6 +4,7 @@ import {useEffect} from 'react';
 import {MainArea} from './components/main-area/MainArea';
 import {Sidebar} from './components/sidebar/Sidebar';
 import {ToolPanel} from './components/tools/ToolPanel';
+import {WindowControls} from './components/window-controls/WindowControls';
 import {useAppLayout} from './hooks/useAppLayout';
 import {useFileExplorer} from './hooks/useFileExplorer';
 import {useMainAreaTabs} from './hooks/useMainAreaTabs';
@@ -12,10 +13,15 @@ import './App.css';
 
 const closeActiveTabEvent = 'chuqin://close-active-tab';
 
+function isWindowsPlatform() {
+  return navigator.userAgent.includes('Windows');
+}
+
 function App() {
   const appLayout = useAppLayout();
   const fileExplorer = useFileExplorer();
   const mainAreaTabs = useMainAreaTabs();
+  const isWindows = isWindowsPlatform();
 
   function closeActiveTab() {
     if (mainAreaTabs.activeTab) {
@@ -78,7 +84,10 @@ function App() {
   }
 
   return (
-    <main className={`app-layout${appLayout.isResizingPanel ? ' resizing-panel' : ''}`} style={appLayout.rootStyle}>
+    <main
+      className={`app-layout${isWindows ? ' is-windows' : ''}${appLayout.isResizingPanel ? ' resizing-panel' : ''}`}
+      style={appLayout.rootStyle}
+    >
       <header className="app-titlebar" data-tauri-drag-region>
         <div className="titlebar-actions left" data-tauri-drag-region>
           <button
@@ -100,6 +109,7 @@ function App() {
           >
             <span className="sidebar-toggle-icon right" aria-hidden="true" />
           </button>
+          {isWindows ? <WindowControls /> : null}
         </div>
       </header>
 

@@ -7,7 +7,6 @@ mod commands;
 use chuqin_core::AppContext;
 use std::sync::Mutex;
 use tauri::Emitter;
-use tauri::menu::{MenuBuilder, MenuItemBuilder, SubmenuBuilder};
 
 const CLOSE_ACTIVE_TAB_EVENT: &str = "chuqin://close-active-tab";
 const CLOSE_TAB_MENU_ID: &str = "close_active_tab";
@@ -27,46 +26,63 @@ pub fn run() {
             context: Mutex::new(context),
         })
         .setup(|app| {
-            let handle = app.handle();
-            let close_tab = MenuItemBuilder::with_id(CLOSE_TAB_MENU_ID, "Close Tab")
-                .accelerator("CmdOrCtrl+W")
-                .build(handle)?;
-            let app_menu = SubmenuBuilder::new(handle, "chuqin")
-                .about(None)
-                .separator()
-                .services()
-                .separator()
-                .hide()
-                .hide_others()
-                .show_all()
-                .separator()
-                .quit()
-                .build()?;
-            let file_menu = SubmenuBuilder::new(handle, "File").item(&close_tab).build()?;
-            let edit_menu = SubmenuBuilder::new(handle, "Edit")
-                .undo()
-                .redo()
-                .separator()
-                .cut()
-                .copy()
-                .paste()
-                .select_all()
-                .build()?;
-            let window_menu = SubmenuBuilder::new(handle, "Window")
-                .minimize()
-                .maximize()
-                .fullscreen()
-                .separator()
-                .bring_all_to_front()
-                .build()?;
-            let menu = MenuBuilder::new(handle)
-                .item(&app_menu)
-                .item(&file_menu)
-                .item(&edit_menu)
-                .item(&window_menu)
-                .build()?;
+            #[cfg(not(target_os = "windows"))]
+            {
+                use tauri::menu::{MenuBuilder, MenuItemBuilder, SubmenuBuilder};
 
-            app.set_menu(menu)?;
+                let handle = app.handle();
+                let close_tab = MenuItemBuilder::with_id(CLOSE_TAB_MENU_ID, "Close Tab")
+                    .accelerator("CmdOrCtrl+W")
+                    .build(handle)?;
+                let app_menu = SubmenuBuilder::new(handle, "chuqin")
+                    .about(None)
+                    .separator()
+                    .services()
+                    .separator()
+                    .hide()
+                    .hide_others()
+                    .show_all()
+                    .separator()
+                    .quit()
+                    .build()?;
+                let file_menu = SubmenuBuilder::new(handle, "File").item(&close_tab).build()?;
+                let edit_menu = SubmenuBuilder::new(handle, "Edit")
+                    .undo()
+                    .redo()
+                    .separator()
+                    .cut()
+                    .copy()
+                    .paste()
+                    .select_all()
+                    .build()?;
+                let window_menu = SubmenuBuilder::new(handle, "Window")
+                    .minimize()
+                    .maximize()
+                    .fullscreen()
+                    .separator()
+                    .bring_all_to_front()
+                    .build()?;
+                let menu = MenuBuilder::new(handle)
+                    .item(&app_menu)
+                    .item(&file_menu)
+                    .item(&edit_menu)
+                    .item(&window_menu)
+                    .build()?;
+
+                app.set_menu(menu)?;
+            }
+
+            #[cfg(target_os = "windows")]
+            {
+                use tauri::Manager;
+                use tauri::window::{Effect, EffectsBuilder};
+
+                if let Some(window) = app.get_webview_window("main") {
+                    window.set_decorations(false)?;
+                    window.set_shadow(true)?;
+                    window.set_effects(EffectsBuilder::new().effect(Effect::MicaLight).build())?;
+                }
+            }
 
             Ok(())
         })

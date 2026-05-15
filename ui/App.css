@@ -3,7 +3,7 @@
   --main-area-background: #ffffff;
   --panel-border: #dedee1;
   color: #242629;
-  background: var(--main-area-background);
+  background: transparent;
   font-family:
     Inter,
     ui-sans-serif,
@@ -28,6 +28,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow: hidden;
+  background: transparent;
 }
 
 button {
@@ -43,6 +44,13 @@ button {
   overflow: hidden;
   background: var(--main-area-background);
   transition: grid-template-columns 180ms ease;
+}
+
+.app-layout.is-windows {
+  --panel-background: rgb(246 246 246 / 78%);
+  --main-area-background: rgb(255 255 255 / 86%);
+  --panel-border: rgb(175 178 184 / 42%);
+  background: rgb(255 255 255 / 70%);
 }
 
 .app-layout.resizing-panel {
@@ -69,6 +77,7 @@ button {
 .titlebar-actions {
   display: flex;
   align-items: center;
+  gap: 8px;
   min-width: 0;
   padding: 0 10px;
 }
@@ -78,8 +87,13 @@ button {
   padding-left: 78px;
 }
 
+.app-layout.is-windows .titlebar-actions.left {
+  padding-left: 10px;
+}
+
 .titlebar-actions.right {
   justify-content: flex-end;
+  padding-right: 0;
 }
 
 .titlebar-toggle {
