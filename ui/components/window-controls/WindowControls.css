@@ -1,0 +1,118 @@
+.window-controls {
+  display: flex;
+  align-self: stretch;
+  height: 44px;
+  margin-left: 4px;
+  -webkit-app-region: no-drag;
+}
+
+.window-control {
+  position: relative;
+  display: grid;
+  width: 46px;
+  height: 44px;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1f2328;
+  -webkit-app-region: no-drag;
+}
+
+.window-control:hover {
+  background: rgb(0 0 0 / 8%);
+}
+
+.window-control:active {
+  background: rgb(0 0 0 / 12%);
+}
+
+.window-control:focus-visible {
+  outline: 2px solid #2f6fed;
+  outline-offset: -3px;
+}
+
+.window-control.close:hover {
+  background: #c42b1c;
+  color: #ffffff;
+}
+
+.window-control.close:active {
+  background: #a62015;
+  color: #ffffff;
+}
+
+.window-control-icon {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.window-control-icon.minimize::before {
+  position: absolute;
+  top: 8px;
+  left: 3px;
+  width: 10px;
+  height: 1px;
+  background: currentColor;
+  content: '';
+}
+
+.window-control-icon.maximize::before {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid currentColor;
+  content: '';
+}
+
+.window-control-icon.restore::before,
+.window-control-icon.restore::after {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid currentColor;
+  content: '';
+}
+
+.window-control-icon.restore::before {
+  top: 3px;
+  left: 5px;
+}
+
+.window-control-icon.restore::after {
+  top: 6px;
+  left: 2px;
+  background: rgb(246 246 246 / 88%);
+}
+
+.window-control:hover .window-control-icon.restore::after {
+  background: rgb(232 232 232 / 92%);
+}
+
+.window-control.close:hover .window-control-icon.restore::after {
+  background: #c42b1c;
+}
+
+.window-control-icon.close::before,
+.window-control-icon.close::after {
+  position: absolute;
+  top: 7px;
+  left: 3px;
+  width: 10px;
+  height: 1px;
+  background: currentColor;
+  content: '';
+  transform-origin: center;
+}
+
+.window-control-icon.close::before {
+  transform: rotate(45deg);
+}
+
+.window-control-icon.close::after {
+  transform: rotate(-45deg);
+}
