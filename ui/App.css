@@ -221,6 +221,14 @@ button {
   visibility: hidden;
 }
 
+.file-tree-label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
 .file-tree-name {
   min-width: 0;
   overflow: hidden;
@@ -231,6 +239,21 @@ button {
   line-height: 1.25;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.file-tree-extension {
+  min-width: 34px;
+  color: #a8a8a8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.file-tree-row.selected .file-tree-extension {
+  color: #666;
 }
 
 .file-tree-message,
