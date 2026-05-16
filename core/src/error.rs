@@ -20,6 +20,8 @@ pub enum Error {
     PathNotFound(String),
     #[error("PPTX generation error: {0}")]
     Pptx(#[from] ppt_rs::PptxError),
+    #[error("XLSX generation error: {0}")]
+    Xlsx(#[from] rust_xlsxwriter::XlsxError),
     #[error("Zip error: {0}")]
     Zip(#[from] zip::result::ZipError),
 }
