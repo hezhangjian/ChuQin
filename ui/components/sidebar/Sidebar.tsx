@@ -2,6 +2,23 @@ import type {CSSProperties, KeyboardEvent, PointerEvent} from 'react';
 import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
 import type {DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
 
+function getFileNameParts(node: TreeNode) {
+  if (node.is_dir) {
+    return {extension: '', name: node.name};
+  }
+
+  const extensionStart = node.name.lastIndexOf('.');
+
+  if (extensionStart <= 0 || extensionStart === node.name.length - 1) {
+    return {extension: '', name: node.name};
+  }
+
+  return {
+    extension: node.name.slice(extensionStart + 1).toUpperCase(),
+    name: node.name.slice(0, extensionStart),
+  };
+}
+
 function FileTreeRow({
   depth,
   node,
@@ -20,6 +37,7 @@ function FileTreeRow({
   selectedPath?: string;
 }) {
   const isOpen = node.is_dir && directoryState.expanded;
+  const nameParts = getFileNameParts(node);
 
   return (
     <li className="file-tree-item">
@@ -30,13 +48,21 @@ function FileTreeRow({
           onSelect(node);
         }}
         style={{'--tree-depth': depth} as CSSProperties}
+        title={node.name}
         type="button"
       >
         <span
           className={`file-tree-chevron${isOpen ? ' expanded' : ''}${node.is_dir ? '' : ' hidden'}`}
           aria-hidden="true"
         />
-        <span className="file-tree-name">{node.name}</span>
+        <span className="file-tree-label">
+          <span className="file-tree-name">{nameParts.name}</span>
+          {nameParts.extension ? (
+            <span className="file-tree-extension" aria-label={`File type ${nameParts.extension}`}>
+              {nameParts.extension}
+            </span>
+          ) : null}
+        </span>
       </button>
 
       {directoryState.error ? (
