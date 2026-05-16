@@ -9,6 +9,10 @@ type FileTreeContextMenu = {
   y: number;
 };
 
+const contextMenuHeight = 76;
+const contextMenuWidth = 168;
+const contextMenuViewportMargin = 8;
+
 function getFileNameParts(node: TreeNode) {
   if (node.is_dir) {
     return {extension: '', name: node.name};
@@ -194,7 +198,17 @@ export function Sidebar({
   function showContextMenu(event: MouseEvent, node: TreeNode) {
     event.preventDefault();
     event.stopPropagation();
-    setContextMenu({node, x: event.clientX, y: event.clientY});
+    setContextMenu({
+      node,
+      x: Math.max(
+        contextMenuViewportMargin,
+        Math.min(event.clientX, window.innerWidth - contextMenuWidth - contextMenuViewportMargin)
+      ),
+      y: Math.max(
+        contextMenuViewportMargin,
+        Math.min(event.clientY, window.innerHeight - contextMenuHeight - contextMenuViewportMargin)
+      ),
+    });
   }
 
   return (
@@ -229,10 +243,9 @@ export function Sidebar({
             role="menuitem"
             type="button"
           >
-            Rename
+            重命名
           </button>
           <button
-            className="danger"
             onClick={() => {
               onDelete(contextMenu.node);
               setContextMenu(undefined);
@@ -240,7 +253,7 @@ export function Sidebar({
             role="menuitem"
             type="button"
           >
-            Delete
+            删除
           </button>
         </div>
       ) : null}

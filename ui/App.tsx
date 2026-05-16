@@ -205,7 +205,7 @@ function App() {
             }}
             role="dialog"
           >
-            <h2>Rename</h2>
+            <h2>重命名</h2>
             <input
               autoFocus
               className="file-action-input"
@@ -221,10 +221,10 @@ function App() {
                 }}
                 type="button"
               >
-                Cancel
+                取消
               </button>
               <button className="primary" disabled={!renameValue.trim()} type="submit">
-                Rename
+                重命名
               </button>
             </div>
           </form>
@@ -233,9 +233,9 @@ function App() {
       {deleteTarget ? (
         <div className="file-action-backdrop" role="presentation">
           <div aria-label="Delete item" className="file-action-dialog" role="dialog">
-            <h2>Delete</h2>
+            <h2>删除</h2>
             <p>
-              Delete {deleteTarget.is_dir ? 'folder' : 'file'} <strong>{deleteTarget.name}</strong>?
+              删除{deleteTarget.is_dir ? '文件夹' : '文件'} <strong>{deleteTarget.name}</strong>?
             </p>
             {fileActionError ? <p className="file-action-error">{fileActionError}</p> : null}
             <div className="file-action-buttons">
@@ -246,10 +246,10 @@ function App() {
                 }}
                 type="button"
               >
-                Cancel
+                取消
               </button>
               <button className="danger" onClick={() => void deleteNode()} type="button">
-                Delete
+                删除
               </button>
             </div>
           </div>
