@@ -12,6 +12,7 @@ CLI is organized into command groups.
 
 ## Examples
 
+- `chuqin excel create "Project Tracker"`: Create `./Project Tracker.xlsx` in the current directory.
 - `chuqin version`: Show the installed ChuQin version.
 - `chuqin pdf to-ppt ./demo.pdf`: Convert a PDF into a 16:9 PowerPoint deck.
 - `chuqin ppt create "Engineering Planning"`: Create `./Engineering Planning.pptx` in the current directory.
@@ -20,6 +21,7 @@ CLI is organized into command groups.
 
 CLI currently includes the following modules:
 
+- **[excel](./excel.md)**: Commands for Excel integrations.
 - **[gitcode](./gitcode.md)**: Commands for GitCode integrations.
 - **[gitee](./gitee.md)**: Commands for Gitee integrations.
 - **[outlook](./outlook.md)**: Commands for Outlook integrations.

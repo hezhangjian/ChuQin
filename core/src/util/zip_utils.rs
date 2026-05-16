@@ -1,5 +1,4 @@
 use std::fs::File;
-use std::io::Write;
 use std::path::{Path, PathBuf};
 
 use zip::CompressionMethod;
@@ -25,25 +24,6 @@ pub fn write_zip_archive(archive_path: &Path, base_dir: &Path, files: &[PathBuf]
 
         let mut input = File::open(path)?;
         std::io::copy(&mut input, &mut zip)?;
-    }
-
-    zip.finish()?;
-    Ok(())
-}
-
-/// Writes in-memory string content directly to a zip archive.
-///
-/// # Arguments
-/// - `output_path`: Output path for the zip file
-/// - `entries`: List of (filename, content) tuples representing zip entries
-pub fn write_zip_entries(output_path: &Path, entries: Vec<(String, String)>) -> Result<()> {
-    let file = File::create(output_path)?;
-    let mut zip = ZipWriter::new(file);
-    let options = SimpleFileOptions::default().compression_method(CompressionMethod::Deflated);
-
-    for (name, content) in entries {
-        zip.start_file(name, options)?;
-        zip.write_all(content.as_bytes())?;
     }
 
     zip.finish()?;

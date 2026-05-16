@@ -1,6 +1,7 @@
 mod config;
 mod context;
 mod error;
+pub mod excel;
 mod fs;
 mod outlook;
 pub mod ppt;

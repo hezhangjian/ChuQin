@@ -12,6 +12,7 @@ chrono = { version = "0.4", default-features = false, features = ["clock"] }
 dirs = "6"
 docx-rs = "0.4"
 ppt-rs = "0.2"
+rust_xlsxwriter = "0.95"
 serde = { version = "1", features = ["derive"] }
 thiserror = "2"
 toml = "1"

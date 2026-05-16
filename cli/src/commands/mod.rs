@@ -1,3 +1,4 @@
+pub mod excel;
 pub mod outlook;
 pub mod pdf;
 pub mod ppt;
@@ -13,6 +14,7 @@ pub fn run(command: Command) -> Result<(), Error> {
         Command::Version => {
             println!("{}", env!("CARGO_PKG_VERSION"));
         }
+        Command::Excel(command) => excel::run(&ctx, command)?,
         Command::Outlook(command) => outlook::run(&ctx, command)?,
         Command::Pdf(command) => pdf::run(&ctx, command)?,
         Command::Ppt(command) => ppt::run(&ctx, command)?,
