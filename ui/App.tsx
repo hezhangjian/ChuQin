@@ -1,12 +1,13 @@
 import {openPath} from '@tauri-apps/plugin-opener';
 import {listen} from '@tauri-apps/api/event';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {MainArea} from './components/main-area/MainArea';
 import {Sidebar} from './components/sidebar/Sidebar';
 import {ToolPanel} from './components/tools/ToolPanel';
 import {WindowControls} from './components/window-controls/WindowControls';
 import {useAppLayout} from './hooks/useAppLayout';
 import {useFileExplorer} from './hooks/useFileExplorer';
+import type {TreeNode} from './hooks/useFileExplorer';
 import {useMainAreaTabs} from './hooks/useMainAreaTabs';
 import {getAbsoluteFilePath, getFileOpenMode} from './lib/fileHandlers';
 import './App.css';
@@ -22,6 +23,10 @@ function App() {
   const fileExplorer = useFileExplorer();
   const mainAreaTabs = useMainAreaTabs();
   const isWindows = isWindowsPlatform();
+  const [deleteTarget, setDeleteTarget] = useState<TreeNode>();
+  const [fileActionError, setFileActionError] = useState<string>();
+  const [renameTarget, setRenameTarget] = useState<TreeNode>();
+  const [renameValue, setRenameValue] = useState('');
 
   function closeActiveTab() {
     if (mainAreaTabs.activeTab) {
@@ -83,6 +88,53 @@ function App() {
     mainAreaTabs.openFile(node);
   }
 
+  function requestRename(node: TreeNode) {
+    setFileActionError(undefined);
+    setRenameTarget(node);
+    setRenameValue(node.name);
+  }
+
+  async function renameNode() {
+    if (!renameTarget) {
+      return;
+    }
+
+    const newName = renameValue.trim();
+    if (!newName || newName === renameTarget.name) {
+      return;
+    }
+
+    try {
+      const newPath = await fileExplorer.renameNode(renameTarget, newName);
+      mainAreaTabs.renamePath(renameTarget.path, newPath, newName);
+      setRenameTarget(undefined);
+      setRenameValue('');
+      setFileActionError(undefined);
+    } catch (error) {
+      setFileActionError(error instanceof Error ? error.message : String(error));
+    }
+  }
+
+  function requestDelete(node: TreeNode) {
+    setFileActionError(undefined);
+    setDeleteTarget(node);
+  }
+
+  async function deleteNode() {
+    if (!deleteTarget) {
+      return;
+    }
+
+    try {
+      await fileExplorer.deleteNode(deleteTarget);
+      mainAreaTabs.closePath(deleteTarget.path);
+      setDeleteTarget(undefined);
+      setFileActionError(undefined);
+    } catch (error) {
+      setFileActionError(error instanceof Error ? error.message : String(error));
+    }
+  }
+
   return (
     <main
       className={`app-layout${isWindows ? ' is-windows' : ''}${appLayout.isResizingPanel ? ' resizing-panel' : ''}`}
@@ -118,6 +170,8 @@ function App() {
           directoryStates={fileExplorer.directoryStates}
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
+          onDelete={requestDelete}
+          onRename={requestRename}
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('left', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('left', event)}
           onSelect={selectNode}
@@ -140,6 +194,67 @@ function App() {
           panelWidth={appLayout.rightPanelWidth}
         />
       )}
+      {renameTarget ? (
+        <div className="file-action-backdrop" role="presentation">
+          <form
+            aria-label="Rename item"
+            className="file-action-dialog"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void renameNode();
+            }}
+            role="dialog"
+          >
+            <h2>重命名</h2>
+            <input
+              autoFocus
+              className="file-action-input"
+              onChange={(event) => setRenameValue(event.target.value)}
+              value={renameValue}
+            />
+            {fileActionError ? <p className="file-action-error">{fileActionError}</p> : null}
+            <div className="file-action-buttons">
+              <button
+                onClick={() => {
+                  setRenameTarget(undefined);
+                  setFileActionError(undefined);
+                }}
+                type="button"
+              >
+                取消
+              </button>
+              <button className="primary" disabled={!renameValue.trim()} type="submit">
+                重命名
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : null}
+      {deleteTarget ? (
+        <div className="file-action-backdrop" role="presentation">
+          <div aria-label="Delete item" className="file-action-dialog" role="dialog">
+            <h2>删除</h2>
+            <p>
+              删除{deleteTarget.is_dir ? '文件夹' : '文件'} <strong>{deleteTarget.name}</strong>?
+            </p>
+            {fileActionError ? <p className="file-action-error">{fileActionError}</p> : null}
+            <div className="file-action-buttons">
+              <button
+                onClick={() => {
+                  setDeleteTarget(undefined);
+                  setFileActionError(undefined);
+                }}
+                type="button"
+              >
+                取消
+              </button>
+              <button className="danger" onClick={() => void deleteNode()} type="button">
+                删除
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }

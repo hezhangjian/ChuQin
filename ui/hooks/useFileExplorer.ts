@@ -1,5 +1,5 @@
 import {invoke} from '@tauri-apps/api/core';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import type {FileNode} from '../types';
 
 export type TreeNode = FileNode & {
@@ -17,10 +17,12 @@ export type FileExplorerState = {
   nodes: TreeNode[];
   directoryStates: Record<string, DirectoryState>;
   selectedPath?: string;
+  deleteNode: (node: TreeNode) => Promise<void>;
   isLoadingRoot: boolean;
   rootError?: string;
   getDirectoryState: (path: string) => DirectoryState;
   refreshRoot: () => Promise<void>;
+  renameNode: (node: TreeNode, newName: string) => Promise<string>;
   selectNode: (node: TreeNode) => void;
   toggleDirectory: (node: TreeNode) => Promise<void>;
 };
@@ -48,6 +50,42 @@ function insertChildren(nodes: TreeNode[], path: string, children: TreeNode[]): 
   });
 }
 
+function getParentPath(path: string) {
+  const separatorIndex = path.lastIndexOf('/');
+  return separatorIndex === -1 ? undefined : path.slice(0, separatorIndex);
+}
+
+function getRenamedPath(path: string, newName: string) {
+  const parentPath = getParentPath(path);
+  return parentPath ? `${parentPath}/${newName}` : newName;
+}
+
+function isWithinPath(path: string, parentPath: string) {
+  return path === parentPath || path.startsWith(`${parentPath}/`);
+}
+
+function replacePathPrefix(path: string, oldPath: string, newPath: string) {
+  if (path === oldPath) {
+    return newPath;
+  }
+
+  if (path.startsWith(`${oldPath}/`)) {
+    return `${newPath}${path.slice(oldPath.length)}`;
+  }
+
+  return path;
+}
+
+function renameDirectoryStates(
+  states: Record<string, DirectoryState>,
+  oldPath: string,
+  newPath: string
+): Record<string, DirectoryState> {
+  return Object.fromEntries(
+    Object.entries(states).map(([path, state]) => [replacePathPrefix(path, oldPath, newPath), state])
+  );
+}
+
 export function useFileExplorer(): FileExplorerState {
   const [nodes, setNodes] = useState<TreeNode[]>([]);
   const [directoryStates, setDirectoryStates] = useState<Record<string, DirectoryState>>({});
@@ -55,26 +93,58 @@ export function useFileExplorer(): FileExplorerState {
   const [isLoadingRoot, setIsLoadingRoot] = useState(true);
   const [rootError, setRootError] = useState<string>();
   const [chuqinRootPath, setChuqinRootPath] = useState('');
+  const directoryStatesRef = useRef(directoryStates);
+
+  useEffect(() => {
+    directoryStatesRef.current = directoryStates;
+  }, [directoryStates]);
 
   const loadDirectory = useCallback(async (path?: string) => {
     const entries = await invoke<TreeNode[]>('files_list', {path});
     return entries;
   }, []);
 
+  const loadExpandedTree = useCallback(
+    async (entries: TreeNode[], states: Record<string, DirectoryState>): Promise<TreeNode[]> => {
+      return Promise.all(
+        entries.map(async (node) => {
+          if (!node.is_dir || !getDirectoryStateFromRecord(states, node.path).expanded) {
+            return node;
+          }
+
+          try {
+            const children = await loadDirectory(node.path);
+            return {...node, children: await loadExpandedTree(children, states)};
+          } catch {
+            return node;
+          }
+        })
+      );
+    },
+    [loadDirectory]
+  );
+
+  const refreshTree = useCallback(
+    async (states: Record<string, DirectoryState>) => {
+      const [rootPath, entries] = await Promise.all([invoke<string>('files_root'), loadDirectory()]);
+      setChuqinRootPath(rootPath);
+      setNodes(await loadExpandedTree(entries, states));
+    },
+    [loadDirectory, loadExpandedTree]
+  );
+
   const refreshRoot = useCallback(async () => {
     setIsLoadingRoot(true);
     setRootError(undefined);
 
     try {
-      const [rootPath, entries] = await Promise.all([invoke<string>('files_root'), loadDirectory()]);
-      setChuqinRootPath(rootPath);
-      setNodes(entries);
+      await refreshTree(directoryStatesRef.current);
     } catch (error) {
       setRootError(error instanceof Error ? error.message : String(error));
     } finally {
       setIsLoadingRoot(false);
     }
-  }, [loadDirectory]);
+  }, [refreshTree]);
 
   useEffect(() => {
     let isActive = true;
@@ -98,6 +168,47 @@ export function useFileExplorer(): FileExplorerState {
   const selectNode = useCallback((node: TreeNode) => {
     setSelectedPath(node.path);
   }, []);
+
+  const renameNode = useCallback(
+    async (node: TreeNode, newName: string) => {
+      const trimmedName = newName.trim();
+
+      if (!trimmedName || trimmedName === node.name) {
+        return node.path;
+      }
+
+      await invoke<void>('files_rename', {oldPath: node.path, newName: trimmedName});
+
+      const newPath = getRenamedPath(node.path, trimmedName);
+      const nextDirectoryStates = node.is_dir
+        ? renameDirectoryStates(directoryStates, node.path, newPath)
+        : directoryStates;
+
+      setDirectoryStates(nextDirectoryStates);
+      setSelectedPath((currentPath) =>
+        currentPath ? replacePathPrefix(currentPath, node.path, newPath) : currentPath
+      );
+      await refreshTree(nextDirectoryStates);
+
+      return newPath;
+    },
+    [directoryStates, refreshTree]
+  );
+
+  const deleteNode = useCallback(
+    async (node: TreeNode) => {
+      await invoke<void>('files_delete', {path: node.path});
+
+      const nextDirectoryStates = Object.fromEntries(
+        Object.entries(directoryStates).filter(([path]) => !isWithinPath(path, node.path))
+      );
+
+      setDirectoryStates(nextDirectoryStates);
+      setSelectedPath((currentPath) => (currentPath && isWithinPath(currentPath, node.path) ? undefined : currentPath));
+      await refreshTree(nextDirectoryStates);
+    },
+    [directoryStates, refreshTree]
+  );
 
   const toggleDirectory = useCallback(
     async (node: TreeNode) => {
@@ -152,10 +263,12 @@ export function useFileExplorer(): FileExplorerState {
     nodes,
     directoryStates,
     selectedPath,
+    deleteNode,
     isLoadingRoot,
     rootError,
     getDirectoryState,
     refreshRoot,
+    renameNode,
     selectNode,
     toggleDirectory,
   };

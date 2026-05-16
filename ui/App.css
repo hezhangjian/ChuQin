@@ -256,6 +256,173 @@ button {
   color: #666;
 }
 
+.file-tree-context-menu {
+  position: fixed;
+  z-index: 20;
+  display: grid;
+  min-width: 168px;
+  padding: 6px;
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 12px;
+  background: rgb(248 248 248 / 82%);
+  box-shadow:
+    0 18px 44px rgb(0 0 0 / 20%),
+    0 2px 8px rgb(0 0 0 / 10%);
+  gap: 1px;
+  -webkit-backdrop-filter: blur(28px) saturate(1.35);
+  backdrop-filter: blur(28px) saturate(1.35);
+}
+
+.file-tree-context-menu button {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #202124;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.file-tree-context-menu button:hover,
+.file-tree-context-menu button:focus-visible {
+  outline: none;
+  background: #4d9bff;
+  color: #ffffff;
+}
+
+.app-layout.is-windows .file-tree-context-menu {
+  border-color: rgb(0 0 0 / 14%);
+  border-radius: 10px;
+  background: rgb(250 250 250 / 92%);
+  box-shadow: 0 14px 34px rgb(0 0 0 / 18%);
+}
+
+.file-action-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(18 20 24 / 26%);
+}
+
+.file-action-dialog {
+  display: grid;
+  width: min(360px, 100%);
+  padding: 18px;
+  border: 1px solid #d7d9de;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 44px rgb(20 22 26 / 22%);
+  gap: 14px;
+}
+
+.file-action-dialog h2,
+.file-action-dialog p {
+  margin: 0;
+}
+
+.file-action-dialog h2 {
+  color: #242629;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.file-action-dialog p {
+  color: #525862;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.file-action-dialog strong {
+  color: #242629;
+  font-weight: 650;
+}
+
+.file-action-input {
+  width: 100%;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #c8ccd2;
+  border-radius: 6px;
+  outline: none;
+  color: #242629;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+.file-action-input:focus {
+  border-color: #3e6ae1;
+  box-shadow: 0 0 0 3px rgb(62 106 225 / 14%);
+}
+
+.file-action-error {
+  color: #a13f3f;
+}
+
+.file-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.file-action-buttons button {
+  min-width: 76px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #d7d9de;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #242629;
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+.file-action-buttons button:hover,
+.file-action-buttons button:focus-visible {
+  outline: none;
+  background: #f1f3f5;
+}
+
+.file-action-buttons button.primary {
+  border-color: #3e6ae1;
+  background: #3e6ae1;
+  color: #ffffff;
+}
+
+.file-action-buttons button.primary:hover,
+.file-action-buttons button.primary:focus-visible {
+  background: #3459c5;
+}
+
+.file-action-buttons button.danger {
+  border-color: #c45f5f;
+  background: #b74c4c;
+  color: #ffffff;
+}
+
+.file-action-buttons button.danger:hover,
+.file-action-buttons button.danger:focus-visible {
+  background: #a13f3f;
+}
+
+.file-action-buttons button:disabled {
+  border-color: #d7d9de;
+  background: #eef0f3;
+  color: #8b8f94;
+  cursor: default;
+}
+
 .file-tree-message,
 .file-tree-root-message {
   margin: 0;
