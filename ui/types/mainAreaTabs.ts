@@ -1,5 +1,7 @@
 export type FileTabMode = 'edit';
 
+export type ToolId = 'digest';
+
 export type FileMainAreaTab = {
   id: string;
   mode: FileTabMode;
@@ -11,6 +13,7 @@ export type FileMainAreaTab = {
 export type ToolMainAreaTab = {
   id: string;
   title: string;
+  toolId: ToolId;
   type: 'tool';
 };
 

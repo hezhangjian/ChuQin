@@ -1,10 +1,9 @@
 import {getCurrentWindow} from '@tauri-apps/api/window';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import './WindowControls.css';
 
-const appWindow = getCurrentWindow();
-
 export function WindowControls() {
+  const appWindow = useMemo(() => getCurrentWindow(), []);
   const [isMaximized, setIsMaximized] = useState(false);
 
   const syncMaximizedState = useCallback(async () => {

@@ -1,7 +1,7 @@
 import {useMemo, useState} from 'react';
 import type {FileNode} from '../types';
 import {getFileOpenMode} from '../lib/fileHandlers';
-import type {MainAreaTab} from '../types/mainAreaTabs';
+import type {MainAreaTab, ToolId} from '../types/mainAreaTabs';
 
 const maxOpenTabs = 10;
 
@@ -11,6 +11,7 @@ export type MainAreaTabsState = {
   closeTab: (tabId: string) => void;
   closePath: (path: string) => void;
   openFile: (node: FileNode) => MainAreaTab | null;
+  openTool: (toolId: ToolId) => MainAreaTab;
   renamePath: (oldPath: string, newPath: string, newName: string) => void;
   selectTab: (tabId: string) => void;
   tabs: MainAreaTab[];
@@ -29,6 +30,15 @@ function fileNodeToTab(node: FileNode): MainAreaTab | null {
     path: node.path,
     title: node.name,
     type: 'file',
+  };
+}
+
+function toolIdToTab(toolId: ToolId): MainAreaTab {
+  return {
+    id: `tool:${toolId}`,
+    title: toolId === 'digest' ? '摘要计算' : toolId,
+    toolId,
+    type: 'tool',
   };
 }
 
@@ -76,6 +86,12 @@ export function useMainAreaTabs(): MainAreaTabsState {
       openTab(tab);
     }
 
+    return tab;
+  }
+
+  function openTool(toolId: ToolId) {
+    const tab = toolIdToTab(toolId);
+    openTab(tab);
     return tab;
   }
 
@@ -148,6 +164,7 @@ export function useMainAreaTabs(): MainAreaTabsState {
     closeTab,
     closePath,
     openFile,
+    openTool,
     renamePath,
     selectTab,
     tabs,

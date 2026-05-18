@@ -1,3 +1,4 @@
+import {DigestTool} from './DigestTool';
 import {FileEditor} from './FileEditor';
 import {MainAreaTabs} from './MainAreaTabs';
 import type {MainAreaTab} from '../../types/mainAreaTabs';
@@ -23,11 +24,11 @@ function renderTab(tab: MainAreaTab | undefined) {
     return <FileEditor key={tab.path} path={tab.path} />;
   }
 
-  return (
-    <div className="main-area-state empty">
-      <strong>{tab.title}</strong>
-    </div>
-  );
+  if (tab.toolId === 'digest') {
+    return <DigestTool key={tab.id} />;
+  }
+
+  return null;
 }
 
 export function MainArea({activeTab, activeTabId, onCloseTab, onSelectTab, tabs}: MainAreaProps) {

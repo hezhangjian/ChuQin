@@ -15,7 +15,7 @@ import './App.css';
 const closeActiveTabEvent = 'chuqin://close-active-tab';
 
 function isWindowsPlatform() {
-  return navigator.userAgent.includes('Windows');
+  return navigator.userAgent.includes('Windows') && '__TAURI_INTERNALS__' in window;
 }
 
 function App() {
@@ -189,6 +189,8 @@ function App() {
       />
       {appLayout.isRightCollapsed ? null : (
         <ToolPanel
+          activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
+          onOpenTool={mainAreaTabs.openTool}
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}
           panelWidth={appLayout.rightPanelWidth}
