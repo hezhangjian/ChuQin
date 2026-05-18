@@ -33,6 +33,6 @@ pub fn create_excel(ctx: &AppContext, title: &str, options: &CreateOptions) -> R
         return Ok(output_path);
     }
 
-    write_default_xlsx(&output_path, title)?;
+    write_default_xlsx(&output_path)?;
     Ok(output_path)
 }
