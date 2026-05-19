@@ -721,32 +721,32 @@ button {
   height: 100%;
   min-width: 0;
   overflow: auto;
-  padding: 18px 12px;
-  gap: 14px;
+  padding: 16px 10px;
+  gap: 12px;
 }
 
 .tool-list h2 {
-  margin: 0 8px 4px;
+  margin: 0 6px 2px;
   color: #242629;
-  font-size: 28px;
-  font-weight: 760;
+  font-size: 22px;
+  font-weight: 740;
   letter-spacing: 0;
   line-height: 1.1;
 }
 
 .tool-entry {
   display: grid;
-  grid-template-columns: 38px minmax(0, 1fr);
+  grid-template-columns: 30px minmax(0, 1fr);
   align-items: center;
   width: 100%;
-  min-height: 72px;
-  padding: 0 16px;
+  min-height: 54px;
+  padding: 0 12px;
   border: 1px solid #d9dbe0;
   border-radius: 8px;
   background: #ffffff;
   color: #242629;
   box-shadow: 0 1px 3px rgb(20 22 26 / 10%);
-  gap: 14px;
+  gap: 10px;
   text-align: left;
 }
 
@@ -764,14 +764,14 @@ button {
 
 .tool-entry-icon {
   display: grid;
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   place-items: center;
-  border-radius: 7px;
+  border-radius: 6px;
   background: #edf1ff;
   color: #3e6ae1;
   font:
-    700 20px/1 ui-monospace,
+    700 16px/1 ui-monospace,
     SFMono-Regular,
     Menlo,
     Monaco,
@@ -783,8 +783,8 @@ button {
 .tool-entry span:last-child {
   min-width: 0;
   overflow: hidden;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 680;
   letter-spacing: 0;
   line-height: 1.2;
   text-overflow: ellipsis;

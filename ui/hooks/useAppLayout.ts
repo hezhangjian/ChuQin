@@ -1,8 +1,9 @@
 import {useCallback, useMemo, useState} from 'react';
 import type {CSSProperties, KeyboardEvent as ReactKeyboardEvent, PointerEvent as ReactPointerEvent} from 'react';
 
-const DEFAULT_PANEL_WIDTH = 280;
-const MIN_PANEL_WIDTH = 180;
+const DEFAULT_LEFT_PANEL_WIDTH = 280;
+const DEFAULT_RIGHT_PANEL_WIDTH = 236;
+const MIN_PANEL_WIDTH = 168;
 const MAX_PANEL_WIDTH = 520;
 const MIN_MAIN_AREA_WIDTH = 420;
 
@@ -31,8 +32,8 @@ export function useAppLayout(): AppLayoutState {
   const [isLeftCollapsed, setIsLeftCollapsed] = useState(false);
   const [isRightCollapsed, setIsRightCollapsed] = useState(false);
   const [isResizingPanel, setIsResizingPanel] = useState(false);
-  const [leftPanelWidth, setLeftPanelWidth] = useState(DEFAULT_PANEL_WIDTH);
-  const [rightPanelWidth, setRightPanelWidth] = useState(DEFAULT_PANEL_WIDTH);
+  const [leftPanelWidth, setLeftPanelWidth] = useState(DEFAULT_LEFT_PANEL_WIDTH);
+  const [rightPanelWidth, setRightPanelWidth] = useState(DEFAULT_RIGHT_PANEL_WIDTH);
 
   const rootStyle = useMemo(
     () =>

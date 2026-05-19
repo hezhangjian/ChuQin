@@ -33,7 +33,7 @@ export function ToolPanel({
         aria-label="Resize tool panel"
         aria-orientation="vertical"
         aria-valuemax={520}
-        aria-valuemin={180}
+        aria-valuemin={168}
         aria-valuenow={panelWidth}
         className="panel-resize-handle right"
         onKeyDown={onResizeKeyDown}
