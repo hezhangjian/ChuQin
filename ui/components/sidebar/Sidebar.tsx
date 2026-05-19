@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react';
 import type {CSSProperties, KeyboardEvent, MouseEvent, PointerEvent} from 'react';
 import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
-import type {DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
-import type {AppId} from '../../types/mainAreaTabs';
+import type {CreatableFileKind, DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
+import type {AppId} from '../../types';
 
 type FileTreeContextMenu = {
   node: TreeNode;
@@ -11,8 +11,20 @@ type FileTreeContextMenu = {
 };
 
 const contextMenuHeight = 76;
-const contextMenuWidth = 168;
+const folderContextMenuHeight = 204;
+const contextMenuWidth = 164;
 const contextMenuViewportMargin = 8;
+
+const primaryCreatableFileMenuItems: Array<{kind: CreatableFileKind; label: string}> = [
+  {kind: 'markdown', label: '新建 Markdown'},
+  {kind: 'text', label: '新建 TXT'},
+  {kind: 'ppt', label: '新建 PPT'},
+];
+
+const secondaryCreatableFileMenuItems: Array<{kind: CreatableFileKind; label: string}> = [
+  {kind: 'excel', label: 'Excel 表格'},
+  {kind: 'word', label: 'Word 文档'},
+];
 
 function getFileNameParts(node: TreeNode) {
   if (node.is_dir) {
@@ -146,6 +158,7 @@ export function Sidebar({
   directoryStates,
   isLoadingRoot,
   nodes,
+  onCreateFile,
   onDelete,
   onOpenApp,
   onOpenSettings,
@@ -161,6 +174,7 @@ export function Sidebar({
   directoryStates: Record<string, DirectoryState>;
   isLoadingRoot: boolean;
   nodes: TreeNode[];
+  onCreateFile: (folder: TreeNode, kind: CreatableFileKind) => void;
   onDelete: (node: TreeNode) => void;
   onOpenApp: (appId: AppId) => void;
   onOpenSettings: () => void;
@@ -213,9 +227,17 @@ export function Sidebar({
       ),
       y: Math.max(
         contextMenuViewportMargin,
-        Math.min(event.clientY, window.innerHeight - contextMenuHeight - contextMenuViewportMargin)
+        Math.min(
+          event.clientY,
+          window.innerHeight - (node.is_dir ? folderContextMenuHeight : contextMenuHeight) - contextMenuViewportMargin
+        )
       ),
     });
+  }
+
+  function createFile(folder: TreeNode, kind: CreatableFileKind) {
+    onCreateFile(folder, kind);
+    setContextMenu(undefined);
   }
 
   return (
@@ -273,6 +295,39 @@ export function Sidebar({
           role="menu"
           style={{left: contextMenu.x, top: contextMenu.y}}
         >
+          {contextMenu.node.is_dir ? (
+            <>
+              {primaryCreatableFileMenuItems.map((item) => (
+                <button
+                  key={item.kind}
+                  onClick={() => createFile(contextMenu.node, item.kind)}
+                  role="menuitem"
+                  type="button"
+                >
+                  {item.label}
+                </button>
+              ))}
+              <div className="file-tree-context-submenu">
+                <button aria-haspopup="menu" role="menuitem" type="button">
+                  <span>新建更多</span>
+                  <span aria-hidden="true" className="file-tree-context-submenu-arrow" />
+                </button>
+                <div className="file-tree-context-menu nested" role="menu">
+                  {secondaryCreatableFileMenuItems.map((item) => (
+                    <button
+                      key={item.kind}
+                      onClick={() => createFile(contextMenu.node, item.kind)}
+                      role="menuitem"
+                      type="button"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="file-tree-context-separator" role="separator" />
+            </>
+          ) : null}
           <button
             onClick={() => {
               onRename(contextMenu.node);

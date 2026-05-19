@@ -1,5 +1,6 @@
 import {invoke} from '@tauri-apps/api/core';
 import {useCallback, useEffect, useRef, useState} from 'react';
+import {getAbsoluteFilePath} from '../lib/fileHandlers';
 import type {FileNode} from '../types';
 
 export type TreeNode = FileNode & {
@@ -12,11 +13,14 @@ export type DirectoryState = {
   error?: string;
 };
 
+export type CreatableFileKind = 'excel' | 'markdown' | 'ppt' | 'text' | 'word';
+
 export type FileExplorerState = {
   chuqinRootPath: string;
   nodes: TreeNode[];
   directoryStates: Record<string, DirectoryState>;
   selectedPath?: string;
+  createFile: (folder: TreeNode, kind: CreatableFileKind, fileName: string) => Promise<string>;
   deleteNode: (node: TreeNode) => Promise<void>;
   isLoadingRoot: boolean;
   rootError?: string;
@@ -84,6 +88,47 @@ function renameDirectoryStates(
   return Object.fromEntries(
     Object.entries(states).map(([path, state]) => [replacePathPrefix(path, oldPath, newPath), state])
   );
+}
+
+const creatableFileExtensions: Record<CreatableFileKind, string> = {
+  excel: 'xlsx',
+  markdown: 'md',
+  ppt: 'pptx',
+  text: 'txt',
+  word: 'docx',
+};
+
+const invalidFileNamePattern = /[<>:"/\\|?*]/;
+
+function joinPath(parentPath: string, childName: string) {
+  return parentPath ? `${parentPath}/${childName}` : childName;
+}
+
+function getFileTitle(fileName: string) {
+  return fileName.replace(/\.[^.]+$/, '');
+}
+
+function normalizeCreatableFileName(fileName: string, kind: CreatableFileKind) {
+  const trimmedName = fileName.trim();
+  const extension = creatableFileExtensions[kind];
+
+  if (!trimmedName) {
+    throw new Error('请输入文件名。');
+  }
+
+  if (trimmedName === '.' || trimmedName === '..' || invalidFileNamePattern.test(trimmedName)) {
+    throw new Error('文件名不能包含路径分隔符或特殊字符。');
+  }
+
+  if (!trimmedName.includes('.')) {
+    return `${trimmedName}.${extension}`;
+  }
+
+  if (trimmedName.toLowerCase().endsWith(`.${extension}`)) {
+    return trimmedName;
+  }
+
+  throw new Error(`请选择 .${extension} 文件名。`);
 }
 
 export function useFileExplorer(): FileExplorerState {
@@ -168,6 +213,48 @@ export function useFileExplorer(): FileExplorerState {
   const selectNode = useCallback((node: TreeNode) => {
     setSelectedPath(node.path);
   }, []);
+
+  const createFile = useCallback(
+    async (folder: TreeNode, kind: CreatableFileKind, fileName: string) => {
+      if (!folder.is_dir) {
+        throw new Error('Can only create files inside a folder.');
+      }
+
+      const normalizedFileName = normalizeCreatableFileName(fileName, kind);
+      const entries = await loadDirectory(folder.path);
+      const existingNames = new Set(entries.map((entry) => entry.name.toLowerCase()));
+
+      if (existingNames.has(normalizedFileName.toLowerCase())) {
+        throw new Error(`文件已存在：${normalizedFileName}`);
+      }
+
+      const path = joinPath(folder.path, normalizedFileName);
+
+      if (kind === 'markdown' || kind === 'text') {
+        await invoke<void>('files_write_text', {path, content: ''});
+      } else {
+        const command = kind === 'ppt' ? 'ppt_create' : kind === 'word' ? 'word_create' : 'excel_create';
+        await invoke<string>(command, {
+          title: getFileTitle(normalizedFileName),
+          output: getAbsoluteFilePath(chuqinRootPath, path),
+          overwrite: false,
+          template: null,
+        });
+      }
+
+      const nextDirectoryStates = {
+        ...directoryStates,
+        [folder.path]: {...getDirectoryStateFromRecord(directoryStates, folder.path), expanded: true},
+      };
+
+      setDirectoryStates(nextDirectoryStates);
+      setSelectedPath(path);
+      await refreshTree(nextDirectoryStates);
+
+      return path;
+    },
+    [chuqinRootPath, directoryStates, loadDirectory, refreshTree]
+  );
 
   const renameNode = useCallback(
     async (node: TreeNode, newName: string) => {
@@ -263,6 +350,7 @@ export function useFileExplorer(): FileExplorerState {
     nodes,
     directoryStates,
     selectedPath,
+    createFile,
     deleteNode,
     isLoadingRoot,
     rootError,

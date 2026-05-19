@@ -8,12 +8,28 @@ import {ToolPanel} from './components/tools/ToolPanel';
 import {WindowControls} from './components/window-controls/WindowControls';
 import {useAppLayout} from './hooks/useAppLayout';
 import {useFileExplorer} from './hooks/useFileExplorer';
-import type {TreeNode} from './hooks/useFileExplorer';
+import type {CreatableFileKind, TreeNode} from './hooks/useFileExplorer';
 import {useMainAreaTabs} from './hooks/useMainAreaTabs';
 import {getAbsoluteFilePath, getFileOpenMode} from './lib/fileHandlers';
 import './App.css';
 
 const closeActiveTabEvent = 'chuqin://close-active-tab';
+
+const creatableFileLabels: Record<CreatableFileKind, string> = {
+  excel: 'Excel 表格',
+  markdown: 'Markdown',
+  ppt: 'PPT',
+  text: 'TXT',
+  word: 'Word 文档',
+};
+
+const creatableFileDefaultNames: Record<CreatableFileKind, string> = {
+  excel: '未命名表格.xlsx',
+  markdown: '未命名.md',
+  ppt: '未命名演示文稿.pptx',
+  text: '未命名.txt',
+  word: '未命名文档.docx',
+};
 
 function isWindowsPlatform() {
   return navigator.userAgent.includes('Windows') && '__TAURI_INTERNALS__' in window;
@@ -24,6 +40,8 @@ function App() {
   const fileExplorer = useFileExplorer();
   const mainAreaTabs = useMainAreaTabs();
   const isWindows = isWindowsPlatform();
+  const [createTarget, setCreateTarget] = useState<{folder: TreeNode; kind: CreatableFileKind}>();
+  const [createValue, setCreateValue] = useState('');
   const [deleteTarget, setDeleteTarget] = useState<TreeNode>();
   const [fileActionError, setFileActionError] = useState<string>();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -99,6 +117,36 @@ function App() {
     setFileActionError(undefined);
     setRenameTarget(node);
     setRenameValue(node.name);
+  }
+
+  function requestCreateFile(folder: TreeNode, kind: CreatableFileKind) {
+    setFileActionError(undefined);
+    setCreateTarget({folder, kind});
+    setCreateValue(creatableFileDefaultNames[kind]);
+  }
+
+  async function createFile() {
+    if (!createTarget) {
+      return;
+    }
+
+    try {
+      const path = await fileExplorer.createFile(createTarget.folder, createTarget.kind, createValue);
+      setCreateTarget(undefined);
+      setCreateValue('');
+      setFileActionError(undefined);
+
+      const createdName = path.split('/').pop() ?? createValue.trim();
+      if (createTarget.kind === 'markdown' || createTarget.kind === 'text') {
+        mainAreaTabs.openFile({
+          name: createdName,
+          path,
+          is_dir: false,
+        });
+      }
+    } catch (error) {
+      setFileActionError(error instanceof Error ? error.message : String(error));
+    }
   }
 
   async function renameNode() {
@@ -178,6 +226,7 @@ function App() {
           directoryStates={fileExplorer.directoryStates}
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
+          onCreateFile={requestCreateFile}
           onDelete={requestDelete}
           onOpenApp={mainAreaTabs.openApp}
           onOpenSettings={() => setIsSettingsOpen(true)}
@@ -206,6 +255,44 @@ function App() {
           panelWidth={appLayout.rightPanelWidth}
         />
       )}
+      {createTarget ? (
+        <div className="file-action-backdrop" role="presentation">
+          <form
+            aria-label="Create file"
+            className="file-action-dialog"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void createFile();
+            }}
+            role="dialog"
+          >
+            <h2>新建{creatableFileLabels[createTarget.kind]}</h2>
+            <input
+              autoFocus
+              className="file-action-input"
+              onChange={(event) => setCreateValue(event.target.value)}
+              onFocus={(event) => event.target.select()}
+              value={createValue}
+            />
+            {fileActionError ? <p className="file-action-error">{fileActionError}</p> : null}
+            <div className="file-action-buttons">
+              <button
+                onClick={() => {
+                  setCreateTarget(undefined);
+                  setCreateValue('');
+                  setFileActionError(undefined);
+                }}
+                type="button"
+              >
+                取消
+              </button>
+              <button className="primary" disabled={!createValue.trim()} type="submit">
+                新建
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : null}
       {renameTarget ? (
         <div className="file-action-backdrop" role="presentation">
           <form

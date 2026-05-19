@@ -381,7 +381,7 @@ button {
   position: fixed;
   z-index: 20;
   display: grid;
-  min-width: 168px;
+  min-width: 164px;
   padding: 6px;
   border: 1px solid rgb(0 0 0 / 12%);
   border-radius: 12px;
@@ -397,8 +397,10 @@ button {
 .file-tree-context-menu button {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   min-height: 32px;
-  padding: 0 22px;
+  width: 100%;
+  padding: 0 16px;
   border: 0;
   border-radius: 8px;
   background: transparent;
@@ -407,6 +409,49 @@ button {
   font-weight: 500;
   letter-spacing: 0;
   text-align: left;
+}
+
+.file-tree-context-menu.nested {
+  position: absolute;
+  top: -6px;
+  left: calc(100% + 6px);
+  z-index: 21;
+  display: none;
+  min-width: 142px;
+}
+
+.file-tree-context-submenu {
+  position: relative;
+  min-width: 0;
+}
+
+.file-tree-context-submenu::after {
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 8px;
+  height: 100%;
+  content: '';
+}
+
+.file-tree-context-submenu:hover > .file-tree-context-menu.nested,
+.file-tree-context-submenu:focus-within > .file-tree-context-menu.nested {
+  display: grid;
+}
+
+.file-tree-context-submenu-arrow {
+  width: 8px;
+  height: 8px;
+  border-color: currentColor;
+  border-style: solid;
+  border-width: 2px 2px 0 0;
+  transform: rotate(45deg);
+}
+
+.file-tree-context-separator {
+  height: 1px;
+  margin: 5px 10px;
+  background: rgb(0 0 0 / 10%);
 }
 
 .file-tree-context-menu button:hover,

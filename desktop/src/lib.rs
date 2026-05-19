@@ -96,6 +96,7 @@ pub fn run() {
             commands::config::config_read,
             commands::config::config_update,
             commands::config::config_write,
+            commands::excel::excel_create,
             commands::files::files_delete,
             commands::files::files_list,
             commands::files::files_read_text,
