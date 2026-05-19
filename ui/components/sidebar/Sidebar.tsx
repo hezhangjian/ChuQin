@@ -5,6 +5,7 @@ import type {CreatableFileKind, DirectoryState, TreeNode} from '../../hooks/useF
 import type {AppId} from '../../types';
 
 type FileTreeContextMenu = {
+  canModifyNode: boolean;
   node: TreeNode;
   x: number;
   y: number;
@@ -12,6 +13,7 @@ type FileTreeContextMenu = {
 
 const contextMenuHeight = 76;
 const folderContextMenuHeight = 204;
+const rootContextMenuHeight = 140;
 const contextMenuWidth = 164;
 const contextMenuViewportMargin = 8;
 
@@ -216,10 +218,19 @@ export function Sidebar({
     };
   }, [contextMenu]);
 
-  function showContextMenu(event: MouseEvent, node: TreeNode) {
+  function getContextMenuHeight(node: TreeNode, canModifyNode: boolean) {
+    if (!node.is_dir) {
+      return contextMenuHeight;
+    }
+
+    return canModifyNode ? folderContextMenuHeight : rootContextMenuHeight;
+  }
+
+  function showContextMenu(event: MouseEvent, node: TreeNode, canModifyNode = true) {
     event.preventDefault();
     event.stopPropagation();
     setContextMenu({
+      canModifyNode,
       node,
       x: Math.max(
         contextMenuViewportMargin,
@@ -229,10 +240,18 @@ export function Sidebar({
         contextMenuViewportMargin,
         Math.min(
           event.clientY,
-          window.innerHeight - (node.is_dir ? folderContextMenuHeight : contextMenuHeight) - contextMenuViewportMargin
+          window.innerHeight - getContextMenuHeight(node, canModifyNode) - contextMenuViewportMargin
         )
       ),
     });
+  }
+
+  function showRootContextMenu(event: MouseEvent) {
+    if (event.target instanceof Element && event.target.closest('.file-tree-row')) {
+      return;
+    }
+
+    showContextMenu(event, {children: nodes, is_dir: true, name: 'Files', path: ''}, false);
   }
 
   function createFile(folder: TreeNode, kind: CreatableFileKind) {
@@ -243,7 +262,7 @@ export function Sidebar({
   return (
     <aside className="sidebar" aria-label="Left sidebar">
       <div className="sidebar-scroll">
-        <nav className="file-tree" aria-label="Files">
+        <nav className="file-tree" aria-label="Files" onContextMenu={showRootContextMenu}>
           <h2 className="sidebar-section-title">
             <span>Files</span>
           </h2>
@@ -328,26 +347,30 @@ export function Sidebar({
               <div className="file-tree-context-separator" role="separator" />
             </>
           ) : null}
-          <button
-            onClick={() => {
-              onRename(contextMenu.node);
-              setContextMenu(undefined);
-            }}
-            role="menuitem"
-            type="button"
-          >
-            重命名
-          </button>
-          <button
-            onClick={() => {
-              onDelete(contextMenu.node);
-              setContextMenu(undefined);
-            }}
-            role="menuitem"
-            type="button"
-          >
-            删除
-          </button>
+          {contextMenu.canModifyNode ? (
+            <>
+              <button
+                onClick={() => {
+                  onRename(contextMenu.node);
+                  setContextMenu(undefined);
+                }}
+                role="menuitem"
+                type="button"
+              >
+                重命名
+              </button>
+              <button
+                onClick={() => {
+                  onDelete(contextMenu.node);
+                  setContextMenu(undefined);
+                }}
+                role="menuitem"
+                type="button"
+              >
+                删除
+              </button>
+            </>
+          ) : null}
         </div>
       ) : null}
       <div
