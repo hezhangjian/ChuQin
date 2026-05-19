@@ -145,6 +145,7 @@ export function Sidebar({
   isLoadingRoot,
   nodes,
   onDelete,
+  onOpenSettings,
   onRename,
   onResizeKeyDown,
   onResizePointerDown,
@@ -157,6 +158,7 @@ export function Sidebar({
   isLoadingRoot: boolean;
   nodes: TreeNode[];
   onDelete: (node: TreeNode) => void;
+  onOpenSettings: () => void;
   onRename: (node: TreeNode) => void;
   onResizeKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
   onResizePointerDown: (event: PointerEvent<HTMLElement>) => void;
@@ -227,6 +229,15 @@ export function Sidebar({
           />
         ) : null}
       </nav>
+      <div className="sidebar-settings">
+        <button className="sidebar-settings-button" onClick={onOpenSettings} type="button">
+          <svg className="sidebar-settings-icon" aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" />
+            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 .9-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5.9h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
+          </svg>
+          <span>Settings</span>
+        </button>
+      </div>
       {contextMenu ? (
         <div
           className="file-tree-context-menu"

@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use crate::Result;
 
-use super::model::{AliyunConfig, AppConfig, HuaweiCloudConfig, LlmConfig, TokenConfig};
+use super::model::{AliyunConfig, AppConfig, GiteeConfig, GitcodeConfig, GithubConfig, HuaweiCloudConfig, LlmConfig};
 use super::store::{read_config, write_config};
 
 #[derive(Debug, Clone, Deserialize)]
@@ -18,9 +18,9 @@ pub enum ConfigPatch {
     HuaweiCloud(HuaweiCloudConfigPatch),
 
     // Code hosting
-    Gitcode(TokenConfigPatch),
-    Gitee(TokenConfigPatch),
-    Github(TokenConfigPatch),
+    Gitcode(GitcodeConfigPatch),
+    Gitee(GiteeConfigPatch),
+    Github(GithubConfigPatch),
 }
 
 #[derive(Debug, Clone, Default, Deserialize)]
@@ -49,7 +49,20 @@ pub struct HuaweiCloudConfigPatch {
 // Code hosting
 
 #[derive(Debug, Clone, Default, Deserialize)]
-pub struct TokenConfigPatch {
+pub struct GitcodeConfigPatch {
+    pub username: Option<String>,
+    pub token: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, Deserialize)]
+pub struct GiteeConfigPatch {
+    pub username: Option<String>,
+    pub token: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, Deserialize)]
+pub struct GithubConfigPatch {
+    pub username: Option<String>,
     pub token: Option<String>,
 }
 
@@ -73,9 +86,9 @@ fn apply_patch(config: &mut AppConfig, patch: ConfigPatch) {
         }
 
         // Code hosting
-        ConfigPatch::Gitcode(patch) => apply_token_patch(config.gitcode.get_or_insert_with(Default::default), patch),
-        ConfigPatch::Gitee(patch) => apply_token_patch(config.gitee.get_or_insert_with(Default::default), patch),
-        ConfigPatch::Github(patch) => apply_token_patch(config.github.get_or_insert_with(Default::default), patch),
+        ConfigPatch::Gitcode(patch) => apply_gitcode_patch(config.gitcode.get_or_insert_with(Default::default), patch),
+        ConfigPatch::Gitee(patch) => apply_gitee_patch(config.gitee.get_or_insert_with(Default::default), patch),
+        ConfigPatch::Github(patch) => apply_github_patch(config.github.get_or_insert_with(Default::default), patch),
     }
 }
 
@@ -125,7 +138,31 @@ fn apply_huawei_cloud_patch(config: &mut HuaweiCloudConfig, patch: HuaweiCloudCo
 
 // Code hosting
 
-fn apply_token_patch(config: &mut TokenConfig, patch: TokenConfigPatch) {
+fn apply_gitcode_patch(config: &mut GitcodeConfig, patch: GitcodeConfigPatch) {
+    if let Some(value) = patch.username {
+        config.username = Some(value);
+    }
+
+    if let Some(value) = patch.token {
+        config.token = Some(value);
+    }
+}
+
+fn apply_gitee_patch(config: &mut GiteeConfig, patch: GiteeConfigPatch) {
+    if let Some(value) = patch.username {
+        config.username = Some(value);
+    }
+
+    if let Some(value) = patch.token {
+        config.token = Some(value);
+    }
+}
+
+fn apply_github_patch(config: &mut GithubConfig, patch: GithubConfigPatch) {
+    if let Some(value) = patch.username {
+        config.username = Some(value);
+    }
+
     if let Some(value) = patch.token {
         config.token = Some(value);
     }

@@ -3,6 +3,7 @@ import {listen} from '@tauri-apps/api/event';
 import {useEffect, useState} from 'react';
 import {MainArea} from './components/main-area/MainArea';
 import {Sidebar} from './components/sidebar/Sidebar';
+import {SettingsDialog} from './components/settings/SettingsDialog';
 import {ToolPanel} from './components/tools/ToolPanel';
 import {WindowControls} from './components/window-controls/WindowControls';
 import {useAppLayout} from './hooks/useAppLayout';
@@ -25,6 +26,7 @@ function App() {
   const isWindows = isWindowsPlatform();
   const [deleteTarget, setDeleteTarget] = useState<TreeNode>();
   const [fileActionError, setFileActionError] = useState<string>();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [renameTarget, setRenameTarget] = useState<TreeNode>();
   const [renameValue, setRenameValue] = useState('');
 
@@ -58,6 +60,11 @@ function App() {
       if (event.metaKey && event.key.toLowerCase() === 'w') {
         event.preventDefault();
         closeActiveTab();
+      }
+
+      if ((event.metaKey || event.ctrlKey) && event.key === ',') {
+        event.preventDefault();
+        setIsSettingsOpen(true);
       }
     }
 
@@ -171,6 +178,7 @@ function App() {
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
           onDelete={requestDelete}
+          onOpenSettings={() => setIsSettingsOpen(true)}
           onRename={requestRename}
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('left', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('left', event)}
@@ -257,6 +265,7 @@ function App() {
           </div>
         </div>
       ) : null}
+      {isSettingsOpen ? <SettingsDialog onClose={() => setIsSettingsOpen(false)} /> : null}
     </main>
   );
 }

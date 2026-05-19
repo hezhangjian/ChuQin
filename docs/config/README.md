@@ -8,19 +8,36 @@ Example sections:
 
 ```toml
 [github]
+username = ""
 token = ""
 
-[huawei_cloud]
+[gitee]
+username = ""
+token = ""
+
+[gitcode]
+username = ""
+token = ""
+
+[huaweicloud]
 project_id = ""
 username = ""
 password = ""
 
-[llm]
-provider = ""
+[openai]
 model = ""
 base_url = ""
 api_key = ""
+
+[volcengine]
+ak = ""
+sk = ""
+visual_host = ""
+region = ""
+video_req_key = ""
 ```
+
+Legacy section names `[llm]` and `[huawei_cloud]` are still accepted when reading configuration.
 
 ## Partial Updates
 
