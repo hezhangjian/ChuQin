@@ -92,6 +92,10 @@ pub fn run() {
             }
         })
         .invoke_handler(tauri::generate_handler![
+            commands::config::config_get,
+            commands::config::config_read,
+            commands::config::config_update,
+            commands::config::config_write,
             commands::files::files_delete,
             commands::files::files_list,
             commands::files::files_read_text,

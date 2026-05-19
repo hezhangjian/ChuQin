@@ -14,6 +14,8 @@ pub enum Error {
     InvalidPath(String),
     #[error(transparent)]
     ConfigToml(#[from] toml::de::Error),
+    #[error(transparent)]
+    ConfigTomlSerialize(#[from] toml::ser::Error),
     #[error("unable to determine the current user's home directory")]
     MissingHomeDir,
     #[error("Path not found: {0}")]
