@@ -6,12 +6,13 @@ pub struct AppConfig {
     pub llm: Option<LlmConfig>,
 
     // Cloud
-    pub huaweicloud: Option<HuaweiCloudConfig>,
+    pub aliyun: Option<AliyunConfig>,
+    pub huawei_cloud: Option<HuaweiCloudConfig>,
 
-    // Git
-    pub github: Option<GitHubConfig>,
-    pub gitee: Option<GiteeConfig>,
-    pub gitcode: Option<GitCodeConfig>,
+    // Code hosting
+    pub gitcode: Option<TokenConfig>,
+    pub gitee: Option<TokenConfig>,
+    pub github: Option<TokenConfig>,
 }
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
@@ -25,25 +26,21 @@ pub struct LlmConfig {
 // Cloud
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
+pub struct AliyunConfig {
+    pub access_key_id: Option<String>,
+    pub access_key_secret: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, Deserialize, Serialize)]
 pub struct HuaweiCloudConfig {
+    pub project_id: Option<String>,
     pub username: Option<String>,
     pub password: Option<String>,
-    pub project_id: Option<String>,
 }
 
-// Git
+// Code hosting
 
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
-pub struct GitHubConfig {
-    pub token: Option<String>,
-}
-
-#[derive(Debug, Clone, Default, Deserialize, Serialize)]
-pub struct GiteeConfig {
-    pub token: Option<String>,
-}
-
-#[derive(Debug, Clone, Default, Deserialize, Serialize)]
-pub struct GitCodeConfig {
+pub struct TokenConfig {
     pub token: Option<String>,
 }
