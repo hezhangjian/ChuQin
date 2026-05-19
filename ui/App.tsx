@@ -174,10 +174,12 @@ function App() {
 
       {appLayout.isLeftCollapsed ? null : (
         <Sidebar
+          activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
           directoryStates={fileExplorer.directoryStates}
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
           onDelete={requestDelete}
+          onOpenApp={mainAreaTabs.openApp}
           onOpenSettings={() => setIsSettingsOpen(true)}
           onRename={requestRename}
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('left', event)}

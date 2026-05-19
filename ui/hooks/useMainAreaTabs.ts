@@ -1,7 +1,7 @@
 import {useMemo, useState} from 'react';
 import type {FileNode} from '../types';
 import {getFileOpenMode} from '../lib/fileHandlers';
-import type {MainAreaTab, ToolId} from '../types/mainAreaTabs';
+import type {AppId, MainAreaTab, ToolId} from '../types/mainAreaTabs';
 
 const maxOpenTabs = 10;
 
@@ -10,6 +10,7 @@ export type MainAreaTabsState = {
   activeTabId: string;
   closeTab: (tabId: string) => void;
   closePath: (path: string) => void;
+  openApp: (appId: AppId) => MainAreaTab;
   openFile: (node: FileNode) => MainAreaTab | null;
   openTool: (toolId: ToolId) => MainAreaTab;
   renamePath: (oldPath: string, newPath: string, newName: string) => void;
@@ -30,6 +31,15 @@ function fileNodeToTab(node: FileNode): MainAreaTab | null {
     path: node.path,
     title: node.name,
     type: 'file',
+  };
+}
+
+function appIdToTab(appId: AppId): MainAreaTab {
+  return {
+    appId,
+    id: `app:${appId}`,
+    title: appId === 'code-manager' ? 'Code Manager' : appId,
+    type: 'app',
   };
 }
 
@@ -86,6 +96,12 @@ export function useMainAreaTabs(): MainAreaTabsState {
       openTab(tab);
     }
 
+    return tab;
+  }
+
+  function openApp(appId: AppId) {
+    const tab = appIdToTab(appId);
+    openTab(tab);
     return tab;
   }
 
@@ -163,6 +179,7 @@ export function useMainAreaTabs(): MainAreaTabsState {
     activeTabId,
     closeTab,
     closePath,
+    openApp,
     openFile,
     openTool,
     renamePath,

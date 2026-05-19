@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import type {CSSProperties, KeyboardEvent, MouseEvent, PointerEvent} from 'react';
 import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
 import type {DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
+import type {AppId} from '../../types/mainAreaTabs';
 
 type FileTreeContextMenu = {
   node: TreeNode;
@@ -141,10 +142,12 @@ function FileTreeList({
 }
 
 export function Sidebar({
+  activeAppId,
   directoryStates,
   isLoadingRoot,
   nodes,
   onDelete,
+  onOpenApp,
   onOpenSettings,
   onRename,
   onResizeKeyDown,
@@ -154,10 +157,12 @@ export function Sidebar({
   rootError,
   selectedPath,
 }: {
+  activeAppId?: AppId;
   directoryStates: Record<string, DirectoryState>;
   isLoadingRoot: boolean;
   nodes: TreeNode[];
   onDelete: (node: TreeNode) => void;
+  onOpenApp: (appId: AppId) => void;
   onOpenSettings: () => void;
   onRename: (node: TreeNode) => void;
   onResizeKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
@@ -215,20 +220,42 @@ export function Sidebar({
 
   return (
     <aside className="sidebar" aria-label="Left sidebar">
-      <nav className="file-tree" aria-label="Files">
-        {rootError ? <p className="file-tree-root-message">{rootError}</p> : null}
-        {isLoadingRoot ? <p className="file-tree-root-message">Loading...</p> : null}
-        {!isLoadingRoot && !rootError ? (
-          <FileTreeList
-            depth={0}
-            directoryStates={directoryStates}
-            nodes={nodes}
-            onSelect={onSelect}
-            onShowContextMenu={showContextMenu}
-            selectedPath={selectedPath}
-          />
-        ) : null}
-      </nav>
+      <div className="sidebar-scroll">
+        <nav className="file-tree" aria-label="Files">
+          <h2 className="sidebar-section-title">
+            <span>Files</span>
+          </h2>
+          {rootError ? <p className="file-tree-root-message">{rootError}</p> : null}
+          {isLoadingRoot ? <p className="file-tree-root-message">Loading...</p> : null}
+          {!isLoadingRoot && !rootError ? (
+            <FileTreeList
+              depth={0}
+              directoryStates={directoryStates}
+              nodes={nodes}
+              onSelect={onSelect}
+              onShowContextMenu={showContextMenu}
+              selectedPath={selectedPath}
+            />
+          ) : null}
+        </nav>
+        <nav className="sidebar-apps" aria-label="Apps">
+          <h2 className="sidebar-section-title">
+            <span>Apps</span>
+          </h2>
+          <button
+            className={`sidebar-app-entry${activeAppId === 'code-manager' ? ' active' : ''}`}
+            onClick={() => onOpenApp('code-manager')}
+            type="button"
+          >
+            <svg className="sidebar-app-icon" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="m8 9-4 3 4 3" />
+              <path d="m16 9 4 3-4 3" />
+              <path d="m14 5-4 14" />
+            </svg>
+            <span>Code Manager</span>
+          </button>
+        </nav>
+      </div>
       <div className="sidebar-settings">
         <button className="sidebar-settings-button" onClick={onOpenSettings} type="button">
           <svg className="sidebar-settings-icon" aria-hidden="true" viewBox="0 0 24 24">

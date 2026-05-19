@@ -1,3 +1,4 @@
+import {CodeManagerApp} from './CodeManagerApp';
 import {DigestTool} from './DigestTool';
 import {FileEditor} from './FileEditor';
 import {MainAreaTabs} from './MainAreaTabs';
@@ -22,6 +23,14 @@ function renderTab(tab: MainAreaTab | undefined) {
 
   if (tab.type === 'file') {
     return <FileEditor key={tab.path} path={tab.path} />;
+  }
+
+  if (tab.type === 'app') {
+    if (tab.appId === 'code-manager') {
+      return <CodeManagerApp key={tab.id} />;
+    }
+
+    return null;
   }
 
   if (tab.toolId === 'digest') {

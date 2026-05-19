@@ -49,7 +49,7 @@ export function DigestTool() {
 
   return (
     <div className="digest-tool">
-      <header className="tool-workspace-header">
+      <header className="tool-surface-header">
         <div>
           <h1>摘要计算</h1>
           <p>输入文本后自动计算 MD5 与 SHA 摘要。</p>

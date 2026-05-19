@@ -13,8 +13,8 @@ UI documentation covers the desktop application experience, including the app, w
 
 ChuQin uses a three-component desktop layout:
 
-- **`Sidebar`**: the collapsible left-side workspace navigation area. It is the place for the `CHUQIN_DIR` explorer and other filesystem-oriented context.
-- **`MainArea`**: the central work surface. It owns the primary tabbed/view area for file and folder views, previews, work surfaces, and tool-opened views.
+- **`Sidebar`**: the collapsible left-side workspace navigation area. It is the place for the `CHUQIN_DIR` explorer, apps, and other filesystem-oriented context. App entries open as first-class tabs in `MainArea`.
+- **`MainArea`**: the central work surface. It owns the primary tabbed/view area for file and folder views, previews, app surfaces, work surfaces, and tool-opened views.
 - **`ToolPanel`**: the collapsible right-side tool area. It presents built-in tool entries and tool-specific controls.
 
 `Sidebar` and `ToolPanel` provide supporting context and actions. `MainArea` is the primary interaction surface.

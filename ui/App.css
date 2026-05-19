@@ -154,11 +154,83 @@ button {
   border-right: 1px solid var(--panel-border);
 }
 
-.file-tree {
+.sidebar-scroll {
   min-height: 0;
   overflow: auto;
+}
+
+.file-tree {
   padding: 14px 8px 18px 7px;
   color: #1f1f1f;
+}
+
+.sidebar-section-title {
+  margin: 0;
+  padding: 0 8px 10px 8px;
+  color: #242629;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.sidebar-section-title span {
+  min-width: 0;
+}
+
+.sidebar-apps {
+  display: grid;
+  padding: 12px 8px 18px 7px;
+  border-top: 1px solid #d9dce1;
+  gap: 4px;
+}
+
+.sidebar-app-entry {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 8px 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #202124;
+  gap: 8px;
+  text-align: left;
+}
+
+.sidebar-app-entry:hover,
+.sidebar-app-entry:focus-visible {
+  outline: none;
+  background: #efefef;
+}
+
+.sidebar-app-entry.active {
+  background: #e9efff;
+  color: #244eb6;
+}
+
+.sidebar-app-icon {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.sidebar-app-entry span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .sidebar-settings {
@@ -940,7 +1012,16 @@ button {
   background: #ffffff;
 }
 
-.tool-workspace-header {
+.code-manager-app {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  background: #ffffff;
+}
+
+.tool-surface-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -950,12 +1031,12 @@ button {
   background: #fbfbfc;
 }
 
-.tool-workspace-header h1,
-.tool-workspace-header p {
+.tool-surface-header h1,
+.tool-surface-header p {
   margin: 0;
 }
 
-.tool-workspace-header h1 {
+.tool-surface-header h1 {
   color: #242629;
   font-size: 22px;
   font-weight: 760;
@@ -963,7 +1044,7 @@ button {
   line-height: 1.2;
 }
 
-.tool-workspace-header p {
+.tool-surface-header p {
   margin-top: 5px;
   color: #737982;
   font-size: 13px;

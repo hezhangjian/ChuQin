@@ -1,5 +1,7 @@
 export type FileTabMode = 'edit';
 
+export type AppId = 'code-manager';
+
 export type ToolId = 'digest';
 
 export type FileMainAreaTab = {
@@ -17,4 +19,11 @@ export type ToolMainAreaTab = {
   type: 'tool';
 };
 
-export type MainAreaTab = FileMainAreaTab | ToolMainAreaTab;
+export type AppMainAreaTab = {
+  appId: AppId;
+  id: string;
+  title: string;
+  type: 'app';
+};
+
+export type MainAreaTab = AppMainAreaTab | FileMainAreaTab | ToolMainAreaTab;
