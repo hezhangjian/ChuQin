@@ -4,7 +4,7 @@ This section documents capabilities that belong to the desktop application's too
 
 ## Scope
 
-- Built-in tools exposed through the UI.
+- Tool-panel capabilities exposed through the UI.
 - Tool-specific workflows, parameters, and expected outcomes.
 - Shared conventions for how tools appear and behave inside the desktop experience.
 
