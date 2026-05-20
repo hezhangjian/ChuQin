@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use crate::Result;
 
-use super::model::{AliyunConfig, AppConfig, GiteeConfig, GitcodeConfig, GithubConfig, HuaweiCloudConfig, LlmConfig};
+use super::model::{AliyunConfig, AppConfig, GitcodeConfig, GiteeConfig, GithubConfig, HuaweiCloudConfig, LlmConfig};
 use super::store::{read_config, write_config};
 
 #[derive(Debug, Clone, Deserialize)]

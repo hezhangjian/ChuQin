@@ -1,4 +1,4 @@
-use chuqin_core::ppt::{list_templates, create_ppt, CreateOptions};
+use chuqin_core::ppt::{CreateOptions, create_ppt, list_templates};
 use tauri::State;
 
 use crate::AppState;

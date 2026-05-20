@@ -22,9 +22,9 @@ fn set_widescreen_16x9(pptx: &[u8]) -> Result<Vec<u8>> {
     let mut archive = ZipArchive::new(reader)?;
 
     let presentation_path = "ppt/presentation.xml";
-    let idx = archive.index_for_path(presentation_path).ok_or_else(|| {
-        std::io::Error::new(std::io::ErrorKind::NotFound, "ppt/presentation.xml not found")
-    })?;
+    let idx = archive
+        .index_for_path(presentation_path)
+        .ok_or_else(|| std::io::Error::new(std::io::ErrorKind::NotFound, "ppt/presentation.xml not found"))?;
 
     let mut buffer = Vec::new();
     {

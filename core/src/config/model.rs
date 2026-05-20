@@ -104,12 +104,21 @@ video_req_key = "test-req-key"
 
         assert_eq!(config.llm.and_then(|llm| llm.model).as_deref(), Some("test-model"));
         assert_eq!(
-            config.huawei_cloud.and_then(|huawei_cloud| huawei_cloud.project_id).as_deref(),
+            config
+                .huawei_cloud
+                .and_then(|huawei_cloud| huawei_cloud.project_id)
+                .as_deref(),
             Some("test-project")
         );
-        assert_eq!(config.gitcode.and_then(|gitcode| gitcode.username).as_deref(), Some("test-git-user"));
         assert_eq!(
-            config.volcengine.and_then(|volcengine| volcengine.video_req_key).as_deref(),
+            config.gitcode.and_then(|gitcode| gitcode.username).as_deref(),
+            Some("test-git-user")
+        );
+        assert_eq!(
+            config
+                .volcengine
+                .and_then(|volcengine| volcengine.video_req_key)
+                .as_deref(),
             Some("test-req-key")
         );
     }
@@ -129,7 +138,10 @@ project_id = "legacy-project"
 
         assert_eq!(config.llm.and_then(|llm| llm.model).as_deref(), Some("legacy-model"));
         assert_eq!(
-            config.huawei_cloud.and_then(|huawei_cloud| huawei_cloud.project_id).as_deref(),
+            config
+                .huawei_cloud
+                .and_then(|huawei_cloud| huawei_cloud.project_id)
+                .as_deref(),
             Some("legacy-project")
         );
     }

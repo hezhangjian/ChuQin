@@ -45,10 +45,7 @@ mod tests {
 
     #[test]
     fn sanitize_replaces_invalid_characters() {
-        assert_eq!(
-            sanitize_filename("Engineering/Planning"),
-            "Engineering_Planning"
-        );
+        assert_eq!(sanitize_filename("Engineering/Planning"), "Engineering_Planning");
         assert_eq!(sanitize_filename("   "), "untitled");
     }
 }

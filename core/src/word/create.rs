@@ -2,9 +2,9 @@ use std::fs;
 use std::path::PathBuf;
 
 use super::generator::write_default_docx;
+use crate::Result;
 use crate::context::AppContext;
 use crate::util::paths::{ensure_writable_output, resolve_output_path};
-use crate::Result;
 
 #[derive(Debug, Clone)]
 pub struct CreateOptions {
