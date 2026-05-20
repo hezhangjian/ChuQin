@@ -1,5 +1,5 @@
 import type {KeyboardEvent, PointerEvent} from 'react';
-import type {ToolId} from '../../types/mainAreaTabs';
+import type {ToolId} from '../../types';
 
 export function ToolPanel({
   activeToolId,

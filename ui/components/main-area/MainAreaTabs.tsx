@@ -1,4 +1,4 @@
-import type {MainAreaTab} from '../../types/mainAreaTabs';
+import type {MainAreaTab} from '../../types';
 
 type MainAreaTabsProps = {
   activeTabId: string;

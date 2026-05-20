@@ -2,7 +2,7 @@ import {CodeManagerApp} from './CodeManagerApp';
 import {DigestTool} from './DigestTool';
 import {FileEditor} from './FileEditor';
 import {MainAreaTabs} from './MainAreaTabs';
-import type {MainAreaTab} from '../../types/mainAreaTabs';
+import type {MainAreaTab} from '../../types';
 
 type MainAreaProps = {
   activeTab: MainAreaTab | undefined;
