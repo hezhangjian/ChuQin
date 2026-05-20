@@ -168,11 +168,10 @@ button {
   margin: 0;
   padding: 0 8px 10px 8px;
   color: #242629;
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 740;
   letter-spacing: 0;
-  line-height: 1.2;
-  text-transform: uppercase;
+  line-height: 1.1;
 }
 
 .sidebar-section-title span {
@@ -845,10 +844,16 @@ button {
 .tool-list h2 {
   margin: 0 6px 2px;
   color: #242629;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 740;
   letter-spacing: 0;
   line-height: 1.1;
+}
+
+.tool-list-separator {
+  height: 1px;
+  margin: 2px 0 0;
+  background: #d9dce1;
 }
 
 .tool-entry {

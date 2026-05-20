@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import type {CSSProperties, KeyboardEvent, MouseEvent, PointerEvent} from 'react';
 import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
 import type {CreatableFileKind, DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
-import type {AppId} from '../../types';
 
 type FileTreeContextMenu = {
   canModifyNode: boolean;
@@ -156,13 +155,11 @@ function FileTreeList({
 }
 
 export function Sidebar({
-  activeAppId,
   directoryStates,
   isLoadingRoot,
   nodes,
   onCreateFile,
   onDelete,
-  onOpenApp,
   onOpenSettings,
   onRename,
   onResizeKeyDown,
@@ -172,13 +169,11 @@ export function Sidebar({
   rootError,
   selectedPath,
 }: {
-  activeAppId?: AppId;
   directoryStates: Record<string, DirectoryState>;
   isLoadingRoot: boolean;
   nodes: TreeNode[];
   onCreateFile: (folder: TreeNode, kind: CreatableFileKind) => void;
   onDelete: (node: TreeNode) => void;
-  onOpenApp: (appId: AppId) => void;
   onOpenSettings: () => void;
   onRename: (node: TreeNode) => void;
   onResizeKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
@@ -279,22 +274,10 @@ export function Sidebar({
             />
           ) : null}
         </nav>
-        <nav className="sidebar-apps" aria-label="Apps">
+        <nav className="sidebar-apps" aria-label="Chats">
           <h2 className="sidebar-section-title">
-            <span>Apps</span>
+            <span>Chats</span>
           </h2>
-          <button
-            className={`sidebar-app-entry${activeAppId === 'code-manager' ? ' active' : ''}`}
-            onClick={() => onOpenApp('code-manager')}
-            type="button"
-          >
-            <svg className="sidebar-app-icon" aria-hidden="true" viewBox="0 0 24 24">
-              <path d="m8 9-4 3 4 3" />
-              <path d="m16 9 4 3-4 3" />
-              <path d="m14 5-4 14" />
-            </svg>
-            <span>Code Manager</span>
-          </button>
         </nav>
       </div>
       <div className="sidebar-settings">

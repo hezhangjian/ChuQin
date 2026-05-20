@@ -222,13 +222,11 @@ function App() {
 
       {appLayout.isLeftCollapsed ? null : (
         <Sidebar
-          activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
           directoryStates={fileExplorer.directoryStates}
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
           onCreateFile={requestCreateFile}
           onDelete={requestDelete}
-          onOpenApp={mainAreaTabs.openApp}
           onOpenSettings={() => setIsSettingsOpen(true)}
           onRename={requestRename}
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('left', event)}
@@ -248,7 +246,9 @@ function App() {
       />
       {appLayout.isRightCollapsed ? null : (
         <ToolPanel
+          activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
           activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
+          onOpenApp={mainAreaTabs.openApp}
           onOpenTool={mainAreaTabs.openTool}
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}

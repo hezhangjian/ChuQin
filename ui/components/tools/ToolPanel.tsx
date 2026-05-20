@@ -1,14 +1,18 @@
 import type {KeyboardEvent, PointerEvent} from 'react';
-import type {ToolId} from '../../types';
+import type {AppId, ToolId} from '../../types';
 
 export function ToolPanel({
+  activeAppId,
   activeToolId,
+  onOpenApp,
   onOpenTool,
   onResizeKeyDown,
   onResizePointerDown,
   panelWidth,
 }: {
+  activeAppId: AppId | undefined;
   activeToolId: ToolId | undefined;
+  onOpenApp: (appId: AppId) => void;
   onOpenTool: (toolId: ToolId) => void;
   onResizeKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
   onResizePointerDown: (event: PointerEvent<HTMLElement>) => void;
@@ -17,6 +21,18 @@ export function ToolPanel({
   return (
     <aside className="tool-panel" aria-label="Tool panel">
       <div className="tool-list">
+        <h2>APPs</h2>
+        <button
+          className={`tool-entry${activeAppId === 'code-manager' ? ' active' : ''}`}
+          onClick={() => onOpenApp('code-manager')}
+          type="button"
+        >
+          <span className="tool-entry-icon" aria-hidden="true">
+            &lt;/&gt;
+          </span>
+          <span>Code Manager</span>
+        </button>
+        <div className="tool-list-separator" role="separator" />
         <h2>Tools</h2>
         <button
           className={`tool-entry${activeToolId === 'digest' ? ' active' : ''}`}
