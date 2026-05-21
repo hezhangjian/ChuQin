@@ -16,6 +16,9 @@
 ## Claude Code
 .claude
 
+## OpenCode
+.opencode
+
 # Node
 **/node_modules
 
