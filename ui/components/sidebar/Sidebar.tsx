@@ -2,6 +2,9 @@ import {useEffect, useState} from 'react';
 import type {CSSProperties, KeyboardEvent, MouseEvent, PointerEvent} from 'react';
 import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
 import type {CreatableFileKind, DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
+import type {SidebarNavigationSection, SidebarSection} from '../../config/build';
+import {NavigationSections} from '../navigation/NavigationSections';
+import type {AppId, ToolId} from '../../types';
 
 type FileTreeContextMenu = {
   canModifyNode: boolean;
@@ -155,35 +158,48 @@ function FileTreeList({
 }
 
 export function Sidebar({
+  activeAppId,
+  activeToolId,
   directoryStates,
   isLoadingRoot,
   nodes,
   onCreateFile,
   onDelete,
+  onOpenApp,
   onOpenSettings,
+  onOpenTool,
   onRename,
   onResizeKeyDown,
   onResizePointerDown,
   onSelect,
   panelWidth,
   rootError,
+  sections,
   selectedPath,
 }: {
+  activeAppId: AppId | undefined;
+  activeToolId: ToolId | undefined;
   directoryStates: Record<string, DirectoryState>;
   isLoadingRoot: boolean;
   nodes: TreeNode[];
   onCreateFile: (folder: TreeNode, kind: CreatableFileKind) => void;
   onDelete: (node: TreeNode) => void;
+  onOpenApp: (appId: AppId) => void;
   onOpenSettings: () => void;
+  onOpenTool: (toolId: ToolId) => void;
   onRename: (node: TreeNode) => void;
   onResizeKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
   onResizePointerDown: (event: PointerEvent<HTMLElement>) => void;
   onSelect: (node: TreeNode) => void;
   panelWidth: number;
   rootError?: string;
+  sections: SidebarSection[];
   selectedPath?: string;
 }) {
   const [contextMenu, setContextMenu] = useState<FileTreeContextMenu>();
+  const navigationSections = sections.filter(
+    (section): section is SidebarNavigationSection => section === 'apps' || section === 'tools'
+  );
 
   useEffect(() => {
     if (!contextMenu) {
@@ -257,28 +273,44 @@ export function Sidebar({
   return (
     <aside className="sidebar" aria-label="Left sidebar">
       <div className="sidebar-scroll">
-        <nav className="file-tree" aria-label="Files" onContextMenu={showRootContextMenu}>
-          <h2 className="sidebar-section-title">
-            <span>Files</span>
-          </h2>
-          {rootError ? <p className="file-tree-root-message">{rootError}</p> : null}
-          {isLoadingRoot ? <p className="file-tree-root-message">Loading...</p> : null}
-          {!isLoadingRoot && !rootError ? (
-            <FileTreeList
-              depth={0}
-              directoryStates={directoryStates}
-              nodes={nodes}
-              onSelect={onSelect}
-              onShowContextMenu={showContextMenu}
-              selectedPath={selectedPath}
+        {sections.includes('files') ? (
+          <nav className="file-tree" aria-label="Files" onContextMenu={showRootContextMenu}>
+            <h2 className="sidebar-section-title">
+              <span>Files</span>
+            </h2>
+            {rootError ? <p className="file-tree-root-message">{rootError}</p> : null}
+            {isLoadingRoot ? <p className="file-tree-root-message">Loading...</p> : null}
+            {!isLoadingRoot && !rootError ? (
+              <FileTreeList
+                depth={0}
+                directoryStates={directoryStates}
+                nodes={nodes}
+                onSelect={onSelect}
+                onShowContextMenu={showContextMenu}
+                selectedPath={selectedPath}
+              />
+            ) : null}
+          </nav>
+        ) : null}
+        {navigationSections.length > 0 ? (
+          <nav className="sidebar-navigation" aria-label="Application navigation">
+            <NavigationSections
+              activeAppId={activeAppId}
+              activeToolId={activeToolId}
+              onOpenApp={onOpenApp}
+              onOpenTool={onOpenTool}
+              sections={navigationSections}
+              variant="sidebar"
             />
-          ) : null}
-        </nav>
-        <nav className="sidebar-apps" aria-label="Chats">
-          <h2 className="sidebar-section-title">
-            <span>Chats</span>
-          </h2>
-        </nav>
+          </nav>
+        ) : null}
+        {sections.includes('chats') ? (
+          <nav className="sidebar-apps" aria-label="Chats">
+            <h2 className="sidebar-section-title">
+              <span>Chats</span>
+            </h2>
+          </nav>
+        ) : null}
       </div>
       <div className="sidebar-settings">
         <button className="sidebar-settings-button" onClick={onOpenSettings} type="button">

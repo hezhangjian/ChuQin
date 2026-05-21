@@ -185,7 +185,36 @@ button {
   gap: 4px;
 }
 
-.sidebar-app-entry {
+.sidebar-navigation {
+  display: grid;
+  padding: 12px 8px 18px 7px;
+  border-top: 1px solid #d9dce1;
+  gap: 4px;
+}
+
+.sidebar-nav-section {
+  display: grid;
+  gap: 4px;
+}
+
+.sidebar-nav-title {
+  margin: 0;
+  padding: 0 8px 6px 8px;
+  color: #242629;
+  font-size: 18px;
+  font-weight: 740;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+.sidebar-nav-separator {
+  height: 1px;
+  margin: 8px 0;
+  background: #d9dce1;
+}
+
+.sidebar-app-entry,
+.sidebar-nav-entry {
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr);
   align-items: center;
@@ -201,19 +230,26 @@ button {
 }
 
 .sidebar-app-entry:hover,
-.sidebar-app-entry:focus-visible {
+.sidebar-app-entry:focus-visible,
+.sidebar-nav-entry:hover,
+.sidebar-nav-entry:focus-visible {
   outline: none;
   background: #efefef;
 }
 
-.sidebar-app-entry.active {
+.sidebar-app-entry.active,
+.sidebar-nav-entry.active {
   background: #e9efff;
   color: #244eb6;
 }
 
-.sidebar-app-icon {
+.sidebar-app-icon,
+.sidebar-nav-entry-icon {
   width: 17px;
   height: 17px;
+}
+
+.sidebar-app-icon {
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
@@ -221,7 +257,22 @@ button {
   stroke-width: 2;
 }
 
-.sidebar-app-entry span {
+.sidebar-nav-entry-icon {
+  display: grid;
+  place-items: center;
+  color: currentColor;
+  font:
+    700 13px/1 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    monospace;
+}
+
+.sidebar-app-entry span,
+.sidebar-nav-entry span:last-child {
   min-width: 0;
   overflow: hidden;
   font-size: 15px;
@@ -841,7 +892,12 @@ button {
   gap: 12px;
 }
 
-.tool-list h2 {
+.panel-nav-section {
+  display: grid;
+  gap: 12px;
+}
+
+.panel-nav-title {
   margin: 0 6px 2px;
   color: #242629;
   font-size: 18px;
@@ -850,13 +906,13 @@ button {
   line-height: 1.1;
 }
 
-.tool-list-separator {
+.panel-nav-separator {
   height: 1px;
   margin: 2px 0 0;
   background: #d9dce1;
 }
 
-.tool-entry {
+.panel-nav-entry {
   display: grid;
   grid-template-columns: 30px minmax(0, 1fr);
   align-items: center;
@@ -872,19 +928,19 @@ button {
   text-align: left;
 }
 
-.tool-entry:hover,
-.tool-entry:focus-visible {
+.panel-nav-entry:hover,
+.panel-nav-entry:focus-visible {
   outline: none;
   border-color: #bfc4ce;
   background: #fbfbfc;
 }
 
-.tool-entry.active {
+.panel-nav-entry.active {
   border-color: #3e6ae1;
   box-shadow: 0 0 0 2px #3e6ae1;
 }
 
-.tool-entry-icon {
+.panel-nav-entry-icon {
   display: grid;
   width: 26px;
   height: 26px;
@@ -902,7 +958,7 @@ button {
     monospace;
 }
 
-.tool-entry span:last-child {
+.panel-nav-entry span:last-child {
   min-width: 0;
   overflow: hidden;
   font-size: 15px;

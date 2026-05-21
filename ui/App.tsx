@@ -6,6 +6,7 @@ import {Sidebar} from './components/sidebar/Sidebar';
 import {SettingsDialog} from './components/settings/SettingsDialog';
 import {ToolPanel} from './components/tools/ToolPanel';
 import {WindowControls} from './components/window-controls/WindowControls';
+import {buildConfig} from './config/build';
 import {useAppLayout} from './hooks/useAppLayout';
 import {useFileExplorer} from './hooks/useFileExplorer';
 import type {CreatableFileKind, TreeNode} from './hooks/useFileExplorer';
@@ -39,6 +40,10 @@ function App() {
   const appLayout = useAppLayout();
   const fileExplorer = useFileExplorer();
   const mainAreaTabs = useMainAreaTabs();
+  const isRightSidebarVisible = buildConfig.rightSidebar.visible;
+  const rootStyle = isRightSidebarVisible
+    ? appLayout.rootStyle
+    : ({...appLayout.rootStyle, '--right-panel-width': '0px'} as typeof appLayout.rootStyle);
   const isWindows = isWindowsPlatform();
   const [createTarget, setCreateTarget] = useState<{folder: TreeNode; kind: CreatableFileKind}>();
   const [createValue, setCreateValue] = useState('');
@@ -193,7 +198,7 @@ function App() {
   return (
     <main
       className={`app-layout${isWindows ? ' is-windows' : ''}${appLayout.isResizingPanel ? ' resizing-panel' : ''}`}
-      style={appLayout.rootStyle}
+      style={rootStyle}
     >
       <header className="app-titlebar" data-tauri-drag-region>
         <div className="titlebar-actions left" data-tauri-drag-region>
@@ -208,32 +213,39 @@ function App() {
         </div>
 
         <div className="titlebar-actions right" data-tauri-drag-region>
-          <button
-            aria-label={appLayout.isRightCollapsed ? 'Show tool panel' : 'Hide tool panel'}
-            className="titlebar-toggle"
-            onClick={appLayout.toggleRightCollapsed}
-            type="button"
-          >
-            <span className="sidebar-toggle-icon right" aria-hidden="true" />
-          </button>
+          {isRightSidebarVisible ? (
+            <button
+              aria-label={appLayout.isRightCollapsed ? 'Show tool panel' : 'Hide tool panel'}
+              className="titlebar-toggle"
+              onClick={appLayout.toggleRightCollapsed}
+              type="button"
+            >
+              <span className="sidebar-toggle-icon right" aria-hidden="true" />
+            </button>
+          ) : null}
           {isWindows ? <WindowControls /> : null}
         </div>
       </header>
 
       {appLayout.isLeftCollapsed ? null : (
         <Sidebar
+          activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
+          activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
           directoryStates={fileExplorer.directoryStates}
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
           onCreateFile={requestCreateFile}
           onDelete={requestDelete}
+          onOpenApp={mainAreaTabs.openApp}
           onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenTool={mainAreaTabs.openTool}
           onRename={requestRename}
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('left', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('left', event)}
           onSelect={selectNode}
           panelWidth={appLayout.leftPanelWidth}
           rootError={fileExplorer.rootError}
+          sections={buildConfig.leftSidebar.sections}
           selectedPath={fileExplorer.selectedPath}
         />
       )}
@@ -244,7 +256,7 @@ function App() {
         onSelectTab={mainAreaTabs.selectTab}
         tabs={mainAreaTabs.tabs}
       />
-      {appLayout.isRightCollapsed ? null : (
+      {isRightSidebarVisible && !appLayout.isRightCollapsed ? (
         <ToolPanel
           activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
           activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
@@ -253,8 +265,9 @@ function App() {
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}
           panelWidth={appLayout.rightPanelWidth}
+          sections={buildConfig.rightSidebar.sections}
         />
-      )}
+      ) : null}
       {createTarget ? (
         <div className="file-action-backdrop" role="presentation">
           <form

@@ -19,6 +19,10 @@ ChuQin uses a three-component desktop layout:
 
 `Sidebar` and `ToolPanel` provide supporting context and actions. `MainArea` is the primary interaction surface.
 
+The frontend build configuration in `ui/config/build.ts` controls which sections appear in each sidebar. The left
+sidebar is always part of the app shell and can include `files`, `apps`, `tools`, and `chats`. The right sidebar can be
+disabled for builds that place `apps` and `tools` in the left sidebar.
+
 ## App And Tool Boundary
 
 An **app** is a persistent work surface for creating, editing, managing, or revisiting stateful assets. Apps usually own

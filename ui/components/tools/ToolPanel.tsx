@@ -1,4 +1,6 @@
 import type {KeyboardEvent, PointerEvent} from 'react';
+import {NavigationSections} from '../navigation/NavigationSections';
+import type {SidebarNavigationSection} from '../../config/build';
 import type {AppId, ToolId} from '../../types';
 
 export function ToolPanel({
@@ -9,6 +11,7 @@ export function ToolPanel({
   onResizeKeyDown,
   onResizePointerDown,
   panelWidth,
+  sections,
 }: {
   activeAppId: AppId | undefined;
   activeToolId: ToolId | undefined;
@@ -17,33 +20,19 @@ export function ToolPanel({
   onResizeKeyDown: (event: KeyboardEvent<HTMLElement>) => void;
   onResizePointerDown: (event: PointerEvent<HTMLElement>) => void;
   panelWidth: number;
+  sections: SidebarNavigationSection[];
 }) {
   return (
     <aside className="tool-panel" aria-label="Tool panel">
       <div className="tool-list">
-        <h2>APPs</h2>
-        <button
-          className={`tool-entry${activeAppId === 'code-manager' ? ' active' : ''}`}
-          onClick={() => onOpenApp('code-manager')}
-          type="button"
-        >
-          <span className="tool-entry-icon" aria-hidden="true">
-            &lt;/&gt;
-          </span>
-          <span>Code Manager</span>
-        </button>
-        <div className="tool-list-separator" role="separator" />
-        <h2>Tools</h2>
-        <button
-          className={`tool-entry${activeToolId === 'digest' ? ' active' : ''}`}
-          onClick={() => onOpenTool('digest')}
-          type="button"
-        >
-          <span className="tool-entry-icon" aria-hidden="true">
-            #
-          </span>
-          <span>摘要计算</span>
-        </button>
+        <NavigationSections
+          activeAppId={activeAppId}
+          activeToolId={activeToolId}
+          onOpenApp={onOpenApp}
+          onOpenTool={onOpenTool}
+          sections={sections}
+          variant="panel"
+        />
       </div>
       <div
         aria-label="Resize tool panel"
