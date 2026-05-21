@@ -1,10 +1,4 @@
 export type AppConfig = {
-  openai?: {
-    provider?: string;
-    model?: string;
-    base_url?: string;
-    api_key?: string;
-  };
   llm?: {
     provider?: string;
     model?: string;
@@ -14,11 +8,6 @@ export type AppConfig = {
   aliyun?: {
     access_key_id?: string;
     access_key_secret?: string;
-  };
-  huawei_cloud?: {
-    project_id?: string;
-    username?: string;
-    password?: string;
   };
   huaweicloud?: {
     project_id?: string;
@@ -64,9 +53,9 @@ function stringifyTomlSection(name: string, values: Record<string, string | unde
 
 export function stringifyAppConfig(config: AppConfig) {
   return [
-    stringifyTomlSection('openai', config.llm ?? {}),
+    stringifyTomlSection('llm', config.llm ?? {}),
     stringifyTomlSection('aliyun', config.aliyun ?? {}),
-    stringifyTomlSection('huaweicloud', config.huawei_cloud ?? {}),
+    stringifyTomlSection('huaweicloud', config.huaweicloud ?? {}),
     stringifyTomlSection('volcengine', config.volcengine ?? {}),
     stringifyTomlSection('gitcode', config.gitcode ?? {}),
     stringifyTomlSection('gitee', config.gitee ?? {}),

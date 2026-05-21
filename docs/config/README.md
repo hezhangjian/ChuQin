@@ -24,7 +24,7 @@ project_id = ""
 username = ""
 password = ""
 
-[openai]
+[llm]
 model = ""
 base_url = ""
 api_key = ""
@@ -36,8 +36,6 @@ visual_host = ""
 region = ""
 video_req_key = ""
 ```
-
-Legacy section names `[llm]` and `[huawei_cloud]` are still accepted when reading configuration.
 
 ## Partial Updates
 

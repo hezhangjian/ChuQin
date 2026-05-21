@@ -23,6 +23,9 @@ The frontend build configuration in `ui/config/build.ts` controls which sections
 sidebar is always part of the app shell and can include `files`, `apps`, `tools`, and `chats`. The right sidebar can be
 disabled for builds that place `apps` and `tools` in the left sidebar.
 
+The same build configuration controls which settings sections appear in the settings dialog. Hidden settings sections
+are preserved when visible settings are saved.
+
 ## App And Tool Boundary
 
 An **app** is a persistent work surface for creating, editing, managing, or revisiting stateful assets. Apps usually own

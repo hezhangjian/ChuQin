@@ -1,5 +1,7 @@
 import {invoke} from '@tauri-apps/api/core';
 import {useEffect, useMemo, useState} from 'react';
+import {buildConfig} from '../../config/build';
+import type {SettingsSection} from '../../config/build';
 import {stringifyAppConfig} from '../../lib/config';
 import type {AppConfig} from '../../lib/config';
 
@@ -50,11 +52,11 @@ function valueOrEmpty(value?: string) {
 }
 
 function getLlmConfig(config?: AppConfig | null) {
-  return config?.llm ?? config?.openai;
+  return config?.llm;
 }
 
 function getHuaweiCloudConfig(config?: AppConfig | null) {
-  return config?.huawei_cloud ?? config?.huaweicloud;
+  return config?.huaweicloud;
 }
 
 function configToForm(config?: AppConfig | null): SettingsForm {
@@ -83,48 +85,68 @@ function configToForm(config?: AppConfig | null): SettingsForm {
   };
 }
 
-function getConfigFromForm(form: SettingsForm, currentConfig: AppConfig): AppConfig {
-  return {
-    ...currentConfig,
-    openai: undefined,
-    huaweicloud: undefined,
-    llm: {
+function getConfigFromForm(
+  form: SettingsForm,
+  currentConfig: AppConfig,
+  visibleSections: SettingsSection[]
+): AppConfig {
+  const nextConfig: AppConfig = {...currentConfig};
+
+  if (visibleSections.includes('llm')) {
+    nextConfig.llm = {
       ...getLlmConfig(currentConfig),
       provider: form.llmProvider.trim(),
       model: form.llmModel.trim(),
       base_url: form.llmBaseUrl.trim(),
       api_key: form.llmApiKey.trim(),
-    },
-    huawei_cloud: {
+    };
+  }
+
+  if (visibleSections.includes('huaweiCloud')) {
+    nextConfig.huaweicloud = {
       ...getHuaweiCloudConfig(currentConfig),
       project_id: form.huaweiCloudProjectId.trim(),
       username: form.huaweiCloudUsername.trim(),
       password: form.huaweiCloudPassword.trim(),
-    },
-    volcengine: {
+    };
+  }
+
+  if (visibleSections.includes('volcengine')) {
+    nextConfig.volcengine = {
       ...currentConfig.volcengine,
       ak: form.volcengineAk.trim(),
       sk: form.volcengineSk.trim(),
       visual_host: form.volcengineVisualHost.trim(),
       region: form.volcengineRegion.trim(),
       video_req_key: form.volcengineVideoReqKey.trim(),
-    },
-    gitcode: {
+    };
+  }
+
+  if (visibleSections.includes('gitcode')) {
+    nextConfig.gitcode = {
       ...currentConfig.gitcode,
       username: form.gitcodeUsername.trim(),
       token: form.gitcodeToken.trim(),
-    },
-    gitee: {
+    };
+  }
+
+  if (visibleSections.includes('gitee')) {
+    nextConfig.gitee = {
       ...currentConfig.gitee,
       username: form.giteeUsername.trim(),
       token: form.giteeToken.trim(),
-    },
-    github: {
+    };
+  }
+
+  if (visibleSections.includes('github')) {
+    nextConfig.github = {
       ...currentConfig.github,
       username: form.githubUsername.trim(),
       token: form.githubToken.trim(),
-    },
-  };
+    };
+  }
+
+  return nextConfig;
 }
 
 function SecretInput({
@@ -173,6 +195,7 @@ function SecretInput({
 }
 
 export function SettingsDialog({onClose}: {onClose: () => void}) {
+  const visibleSections = buildConfig.settings.sections;
   const [config, setConfig] = useState<AppConfig>({});
   const [error, setError] = useState<string>();
   const [form, setForm] = useState<SettingsForm>(emptyForm);
@@ -240,7 +263,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
     setError(undefined);
 
     try {
-      const nextConfig = getConfigFromForm(form, config);
+      const nextConfig = getConfigFromForm(form, config, visibleSections);
       await invoke<string>('config_write', {content: stringifyAppConfig(nextConfig)});
       setConfig(nextConfig);
       onClose();
@@ -275,177 +298,189 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
         </div>
 
         <div className="settings-body">
-          <section className="settings-section" aria-label="LLM">
-            <h3>LLM</h3>
-            <label>
-              Provider
-              <input
-                autoFocus
-                disabled={isLoading}
-                onChange={(event) => updateField('llmProvider', event.target.value)}
-                placeholder="openai"
-                value={form.llmProvider}
-              />
-            </label>
-            <label>
-              Model
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('llmModel', event.target.value)}
-                placeholder="gpt-4.1"
-                value={form.llmModel}
-              />
-            </label>
-            <label>
-              Base URL
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('llmBaseUrl', event.target.value)}
-                placeholder="https://api.openai.com/v1"
-                value={form.llmBaseUrl}
-              />
-            </label>
-            <label>
-              API Key
-              <SecretInput
-                disabled={isLoading}
-                onChange={(value) => updateField('llmApiKey', value)}
-                value={form.llmApiKey}
-              />
-            </label>
-          </section>
+          {visibleSections.includes('llm') ? (
+            <section className="settings-section" aria-label="LLM">
+              <h3>LLM</h3>
+              <label>
+                Provider
+                <input
+                  autoFocus
+                  disabled={isLoading}
+                  onChange={(event) => updateField('llmProvider', event.target.value)}
+                  placeholder="openai"
+                  value={form.llmProvider}
+                />
+              </label>
+              <label>
+                Model
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('llmModel', event.target.value)}
+                  placeholder="gpt-4.1"
+                  value={form.llmModel}
+                />
+              </label>
+              <label>
+                Base URL
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('llmBaseUrl', event.target.value)}
+                  placeholder="https://api.openai.com/v1"
+                  value={form.llmBaseUrl}
+                />
+              </label>
+              <label>
+                API Key
+                <SecretInput
+                  disabled={isLoading}
+                  onChange={(value) => updateField('llmApiKey', value)}
+                  value={form.llmApiKey}
+                />
+              </label>
+            </section>
+          ) : null}
 
-          <section className="settings-section" aria-label="Huawei Cloud">
-            <h3>Huawei Cloud</h3>
-            <label>
-              Project ID
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('huaweiCloudProjectId', event.target.value)}
-                value={form.huaweiCloudProjectId}
-              />
-            </label>
-            <label>
-              Username
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('huaweiCloudUsername', event.target.value)}
-                value={form.huaweiCloudUsername}
-              />
-            </label>
-            <label>
-              Password
-              <SecretInput
-                disabled={isLoading}
-                onChange={(value) => updateField('huaweiCloudPassword', value)}
-                value={form.huaweiCloudPassword}
-              />
-            </label>
-          </section>
+          {visibleSections.includes('huaweiCloud') ? (
+            <section className="settings-section" aria-label="Huawei Cloud">
+              <h3>Huawei Cloud</h3>
+              <label>
+                Project ID
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('huaweiCloudProjectId', event.target.value)}
+                  value={form.huaweiCloudProjectId}
+                />
+              </label>
+              <label>
+                Username
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('huaweiCloudUsername', event.target.value)}
+                  value={form.huaweiCloudUsername}
+                />
+              </label>
+              <label>
+                Password
+                <SecretInput
+                  disabled={isLoading}
+                  onChange={(value) => updateField('huaweiCloudPassword', value)}
+                  value={form.huaweiCloudPassword}
+                />
+              </label>
+            </section>
+          ) : null}
 
-          <section className="settings-section" aria-label="Volcengine">
-            <h3>Volcengine</h3>
-            <label>
-              Access Key
-              <SecretInput
-                disabled={isLoading}
-                onChange={(value) => updateField('volcengineAk', value)}
-                value={form.volcengineAk}
-              />
-            </label>
-            <label>
-              Secret Key
-              <SecretInput
-                disabled={isLoading}
-                onChange={(value) => updateField('volcengineSk', value)}
-                value={form.volcengineSk}
-              />
-            </label>
-            <label>
-              Visual Host
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('volcengineVisualHost', event.target.value)}
-                value={form.volcengineVisualHost}
-              />
-            </label>
-            <label>
-              Region
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('volcengineRegion', event.target.value)}
-                value={form.volcengineRegion}
-              />
-            </label>
-            <label>
-              Video Req Key
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('volcengineVideoReqKey', event.target.value)}
-                value={form.volcengineVideoReqKey}
-              />
-            </label>
-          </section>
+          {visibleSections.includes('volcengine') ? (
+            <section className="settings-section" aria-label="Volcengine">
+              <h3>Volcengine</h3>
+              <label>
+                Access Key
+                <SecretInput
+                  disabled={isLoading}
+                  onChange={(value) => updateField('volcengineAk', value)}
+                  value={form.volcengineAk}
+                />
+              </label>
+              <label>
+                Secret Key
+                <SecretInput
+                  disabled={isLoading}
+                  onChange={(value) => updateField('volcengineSk', value)}
+                  value={form.volcengineSk}
+                />
+              </label>
+              <label>
+                Visual Host
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('volcengineVisualHost', event.target.value)}
+                  value={form.volcengineVisualHost}
+                />
+              </label>
+              <label>
+                Region
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('volcengineRegion', event.target.value)}
+                  value={form.volcengineRegion}
+                />
+              </label>
+              <label>
+                Video Req Key
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('volcengineVideoReqKey', event.target.value)}
+                  value={form.volcengineVideoReqKey}
+                />
+              </label>
+            </section>
+          ) : null}
 
-          <section className="settings-section" aria-label="GitCode">
-            <h3>GitCode</h3>
-            <label>
-              Username
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('gitcodeUsername', event.target.value)}
-                value={form.gitcodeUsername}
-              />
-            </label>
-            <label>
-              Token
-              <SecretInput
-                disabled={isLoading}
-                onChange={(value) => updateField('gitcodeToken', value)}
-                value={form.gitcodeToken}
-              />
-            </label>
-          </section>
+          {visibleSections.includes('gitcode') ? (
+            <section className="settings-section" aria-label="GitCode">
+              <h3>GitCode</h3>
+              <label>
+                Username
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('gitcodeUsername', event.target.value)}
+                  value={form.gitcodeUsername}
+                />
+              </label>
+              <label>
+                Token
+                <SecretInput
+                  disabled={isLoading}
+                  onChange={(value) => updateField('gitcodeToken', value)}
+                  value={form.gitcodeToken}
+                />
+              </label>
+            </section>
+          ) : null}
 
-          <section className="settings-section" aria-label="GitHub">
-            <h3>GitHub</h3>
-            <label>
-              Username
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('githubUsername', event.target.value)}
-                value={form.githubUsername}
-              />
-            </label>
-            <label>
-              Token
-              <SecretInput
-                disabled={isLoading}
-                onChange={(value) => updateField('githubToken', value)}
-                value={form.githubToken}
-              />
-            </label>
-          </section>
+          {visibleSections.includes('github') ? (
+            <section className="settings-section" aria-label="GitHub">
+              <h3>GitHub</h3>
+              <label>
+                Username
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('githubUsername', event.target.value)}
+                  value={form.githubUsername}
+                />
+              </label>
+              <label>
+                Token
+                <SecretInput
+                  disabled={isLoading}
+                  onChange={(value) => updateField('githubToken', value)}
+                  value={form.githubToken}
+                />
+              </label>
+            </section>
+          ) : null}
 
-          <section className="settings-section" aria-label="Gitee">
-            <h3>Gitee</h3>
-            <label>
-              Username
-              <input
-                disabled={isLoading}
-                onChange={(event) => updateField('giteeUsername', event.target.value)}
-                value={form.giteeUsername}
-              />
-            </label>
-            <label>
-              Token
-              <SecretInput
-                disabled={isLoading}
-                onChange={(value) => updateField('giteeToken', value)}
-                value={form.giteeToken}
-              />
-            </label>
-          </section>
+          {visibleSections.includes('gitee') ? (
+            <section className="settings-section" aria-label="Gitee">
+              <h3>Gitee</h3>
+              <label>
+                Username
+                <input
+                  disabled={isLoading}
+                  onChange={(event) => updateField('giteeUsername', event.target.value)}
+                  value={form.giteeUsername}
+                />
+              </label>
+              <label>
+                Token
+                <SecretInput
+                  disabled={isLoading}
+                  onChange={(value) => updateField('giteeToken', value)}
+                  value={form.giteeToken}
+                />
+              </label>
+            </section>
+          ) : null}
         </div>
 
         {error ? <p className="settings-error">{error}</p> : null}

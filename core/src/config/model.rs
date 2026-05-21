@@ -3,12 +3,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Default, Deserialize, Serialize)]
 pub struct AppConfig {
     // LLM
-    #[serde(rename = "openai", alias = "llm")]
     pub llm: Option<LlmConfig>,
 
     // Cloud
     pub aliyun: Option<AliyunConfig>,
-    #[serde(rename = "huaweicloud", alias = "huawei_cloud")]
+    #[serde(rename = "huaweicloud")]
     pub huawei_cloud: Option<HuaweiCloudConfig>,
     pub volcengine: Option<VolcengineConfig>,
 
@@ -78,7 +77,7 @@ mod tests {
     fn reads_current_config_section_names() {
         let config = toml::from_str::<AppConfig>(
             r#"
-[openai]
+[llm]
 model = "test-model"
 base_url = "https://example.test/v1"
 api_key = "test-key"
@@ -120,29 +119,6 @@ video_req_key = "test-req-key"
                 .and_then(|volcengine| volcengine.video_req_key)
                 .as_deref(),
             Some("test-req-key")
-        );
-    }
-
-    #[test]
-    fn reads_legacy_config_section_names() {
-        let config = toml::from_str::<AppConfig>(
-            r#"
-[llm]
-model = "legacy-model"
-
-[huawei_cloud]
-project_id = "legacy-project"
-"#,
-        )
-        .expect("legacy config should parse");
-
-        assert_eq!(config.llm.and_then(|llm| llm.model).as_deref(), Some("legacy-model"));
-        assert_eq!(
-            config
-                .huawei_cloud
-                .and_then(|huawei_cloud| huawei_cloud.project_id)
-                .as_deref(),
-            Some("legacy-project")
         );
     }
 }
