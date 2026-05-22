@@ -10,6 +10,8 @@ pub enum Error {
     AlreadyExists(PathBuf),
     #[error("IO error: {0}")]
     Io(#[from] io::Error),
+    #[error("{0}")]
+    InvalidInput(String),
     #[error("Invalid path: {0}")]
     InvalidPath(String),
     #[error(transparent)]
