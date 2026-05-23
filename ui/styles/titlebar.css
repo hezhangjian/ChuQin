@@ -1,0 +1,75 @@
+.app-titlebar {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(96px, 1fr) minmax(96px, 1fr);
+  align-items: center;
+  min-width: 0;
+  border-bottom: 1px solid var(--panel-border);
+  background: var(--panel-background);
+  -webkit-app-region: drag;
+}
+
+.titlebar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.titlebar-actions.left {
+  justify-content: flex-start;
+  padding-left: 78px;
+}
+
+.app-layout.is-windows .titlebar-actions.left {
+  padding-left: 10px;
+}
+
+.titlebar-actions.right {
+  justify-content: flex-end;
+  padding-right: 0;
+}
+
+.titlebar-toggle {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  -webkit-app-region: no-drag;
+  transform: translateY(1px);
+}
+
+.titlebar-toggle:hover {
+  background: #e9e9eb;
+}
+
+.sidebar-toggle-icon {
+  display: block;
+  width: 17px;
+  height: 17px;
+  border: 2px solid #70747a;
+  border-radius: 4px;
+  position: relative;
+}
+
+.sidebar-toggle-icon::before {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 4px;
+  border-radius: 2px;
+  background: #70747a;
+  content: '';
+}
+
+.sidebar-toggle-icon.left::before {
+  left: 2px;
+}
+
+.sidebar-toggle-icon.right::before {
+  right: 2px;
+}

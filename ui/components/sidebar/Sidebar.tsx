@@ -5,6 +5,7 @@ import type {CreatableFileKind, DirectoryState, TreeNode} from '../../hooks/useF
 import type {SidebarNavigationSection, SidebarSection} from '../../config/build';
 import {NavigationSections} from '../navigation/NavigationSections';
 import type {AppId, ToolId} from '../../types';
+import './Sidebar.css';
 
 type FileTreeContextMenu = {
   canModifyNode: boolean;

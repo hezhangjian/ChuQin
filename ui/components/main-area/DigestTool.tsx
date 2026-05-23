@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useState} from 'react';
 import {calculateDigests, type DigestAlgorithm} from '../../lib/digests';
+import './DigestTool.css';
 
 const digestAlgorithms: DigestAlgorithm[] = ['MD5', 'SHA-1', 'SHA-256', 'SHA-384', 'SHA-512'];
 

@@ -4,6 +4,7 @@ import {buildConfig} from '../../config/build';
 import type {SettingsSection} from '../../config/build';
 import {stringifyAppConfig} from '../../lib/config';
 import type {AppConfig} from '../../lib/config';
+import './SettingsDialog.css';
 
 type SettingsForm = {
   gitcodeUsername: string;

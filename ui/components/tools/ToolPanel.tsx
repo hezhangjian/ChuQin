@@ -2,6 +2,7 @@ import type {KeyboardEvent, PointerEvent} from 'react';
 import {NavigationSections} from '../navigation/NavigationSections';
 import type {SidebarNavigationSection} from '../../config/build';
 import type {AppId, ToolId} from '../../types';
+import './ToolPanel.css';
 
 export function ToolPanel({
   activeAppId,

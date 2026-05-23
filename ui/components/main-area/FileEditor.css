@@ -1,0 +1,50 @@
+.file-editor {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 44px;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.file-editor-content {
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 22px 26px;
+  resize: none;
+  border: 0;
+  outline: none;
+  background: #ffffff;
+  color: #242629;
+  font:
+    13px/1.6 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    'Liberation Mono',
+    monospace;
+  letter-spacing: 0;
+  tab-size: 2;
+}
+
+.file-editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+  padding: 0 16px;
+  border-top: 1px solid var(--panel-border);
+  background: #f8f8f9;
+  color: #7a8088;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.file-editor-error {
+  min-width: 0;
+  overflow: hidden;
+  color: #a13f3f;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

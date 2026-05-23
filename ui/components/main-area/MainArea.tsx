@@ -3,6 +3,7 @@ import {DigestTool} from './DigestTool';
 import {FileEditor} from './FileEditor';
 import {MainAreaTabs} from './MainAreaTabs';
 import type {MainAreaTab} from '../../types';
+import './MainArea.css';
 
 type MainAreaProps = {
   activeTab: MainAreaTab | undefined;
