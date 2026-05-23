@@ -23,6 +23,12 @@ Write a UTF-8 text file under the ChuQin root.
 - `path: string` - Relative path
 - `content: string` - File content
 
+## files_create_directory
+
+Create a directory under the ChuQin root.
+
+- `path: string` - Relative path
+
 ## files_delete
 
 Delete a file or directory.

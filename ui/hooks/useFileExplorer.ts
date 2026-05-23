@@ -13,7 +13,7 @@ export type DirectoryState = {
   error?: string;
 };
 
-export type CreatableFileKind = 'excel' | 'markdown' | 'ppt' | 'text' | 'word';
+export type CreatableFileKind = 'folder' | 'excel' | 'markdown' | 'ppt' | 'text' | 'word';
 
 export type FileExplorerState = {
   chuqinRootPath: string;
@@ -90,7 +90,8 @@ function renameDirectoryStates(
   );
 }
 
-const creatableFileExtensions: Record<CreatableFileKind, string> = {
+const creatableFileExtensions: Record<CreatableFileKind, string | undefined> = {
+  folder: undefined,
   excel: 'xlsx',
   markdown: 'md',
   ppt: 'pptx',
@@ -113,11 +114,15 @@ function normalizeCreatableFileName(fileName: string, kind: CreatableFileKind) {
   const extension = creatableFileExtensions[kind];
 
   if (!trimmedName) {
-    throw new Error('请输入文件名。');
+    throw new Error(kind === 'folder' ? '请输入文件夹名。' : '请输入文件名。');
   }
 
   if (trimmedName === '.' || trimmedName === '..' || invalidFileNamePattern.test(trimmedName)) {
-    throw new Error('文件名不能包含路径分隔符或特殊字符。');
+    throw new Error(`${kind === 'folder' ? '文件夹名' : '文件名'}不能包含路径分隔符或特殊字符。`);
+  }
+
+  if (kind === 'folder') {
+    return trimmedName;
   }
 
   if (!trimmedName.includes('.')) {
@@ -230,7 +235,9 @@ export function useFileExplorer(): FileExplorerState {
 
       const path = joinPath(folder.path, normalizedFileName);
 
-      if (kind === 'markdown' || kind === 'text') {
+      if (kind === 'folder') {
+        await invoke<void>('files_create_directory', {path});
+      } else if (kind === 'markdown' || kind === 'text') {
         await invoke<void>('files_write_text', {path, content: ''});
       } else {
         const command = kind === 'ppt' ? 'ppt_create' : kind === 'word' ? 'word_create' : 'excel_create';

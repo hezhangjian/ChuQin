@@ -70,6 +70,19 @@ pub fn files_write_text(state: State<AppState>, path: String, content: String) -
     fs::write(target, content).map_err(|e| e.to_string())
 }
 
+/// Create a directory within the ChuQin root.
+#[tauri::command]
+pub fn files_create_directory(state: State<AppState>, path: String) -> Result<(), String> {
+    let ctx = state.context.lock().map_err(|e| e.to_string())?;
+    let target = resolve_root_path(&ctx, &path)?;
+
+    if target.exists() {
+        return Err(format!("Path already exists: {}", path));
+    }
+
+    fs::create_dir(target).map_err(|e| e.to_string())
+}
+
 /// Delete a file or directory within the ChuQin root.
 ///
 /// # Arguments

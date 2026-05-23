@@ -14,12 +14,13 @@ type FileTreeContextMenu = {
 };
 
 const contextMenuHeight = 76;
-const folderContextMenuHeight = 204;
-const rootContextMenuHeight = 140;
+const folderContextMenuHeight = 236;
+const rootContextMenuHeight = 172;
 const contextMenuWidth = 164;
 const contextMenuViewportMargin = 8;
 
 const primaryCreatableFileMenuItems: Array<{kind: CreatableFileKind; label: string}> = [
+  {kind: 'folder', label: '新建文件夹'},
   {kind: 'markdown', label: '新建 Markdown'},
   {kind: 'text', label: '新建 TXT'},
   {kind: 'ppt', label: '新建 PPT'},

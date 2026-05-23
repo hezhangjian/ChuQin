@@ -17,6 +17,7 @@ import './App.css';
 const closeActiveTabEvent = 'chuqin://close-active-tab';
 
 const creatableFileLabels: Record<CreatableFileKind, string> = {
+  folder: '文件夹',
   excel: 'Excel 表格',
   markdown: 'Markdown',
   ppt: 'PPT',
@@ -25,6 +26,7 @@ const creatableFileLabels: Record<CreatableFileKind, string> = {
 };
 
 const creatableFileDefaultNames: Record<CreatableFileKind, string> = {
+  folder: '未命名文件夹',
   excel: '未命名表格.xlsx',
   markdown: '未命名.md',
   ppt: '未命名演示文稿.pptx',
