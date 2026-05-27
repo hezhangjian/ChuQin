@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-ChuQin is a local-first desktop app for managing a PARA-oriented filesystem root.
+ChuQin is a local-first personal workspace assistant built around a user-owned filesystem root.
 
 The primary product surface is the Tauri desktop app. The CLI is a selective companion surface for capabilities that are
 naturally useful from a terminal, shell script, or automation workflow. It is not expected to expose every desktop
