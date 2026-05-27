@@ -1,3 +1,3 @@
-mod outlook;
+mod backup;
 
-pub use outlook::{BackupPstProgress, backup_pst, backup_pst_with_progress};
+pub use backup::{BackupPstProgress, backup_pst, backup_pst_with_progress};
