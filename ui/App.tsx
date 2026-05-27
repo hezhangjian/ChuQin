@@ -249,6 +249,7 @@ function App() {
           rootError={fileExplorer.rootError}
           sections={buildConfig.leftSidebar.sections}
           selectedPath={fileExplorer.selectedPath}
+          tools={buildConfig.tools}
         />
       )}
       <MainArea
@@ -268,6 +269,7 @@ function App() {
           onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}
           panelWidth={appLayout.rightPanelWidth}
           sections={buildConfig.rightSidebar.sections}
+          tools={buildConfig.tools}
         />
       ) : null}
       {createTarget ? (

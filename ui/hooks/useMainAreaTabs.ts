@@ -1,7 +1,8 @@
 import {useMemo, useState} from 'react';
 import type {FileNode} from '../types';
 import {getFileOpenMode} from '../lib/fileHandlers';
-import type {AppId, MainAreaTab, ToolId} from '../types/mainAreaTabs';
+import {getToolMetadata} from '../lib/tools';
+import type {AppId, MainAreaTab, ToolId} from '../types';
 
 const maxOpenTabs = 10;
 
@@ -44,9 +45,11 @@ function appIdToTab(appId: AppId): MainAreaTab {
 }
 
 function toolIdToTab(toolId: ToolId): MainAreaTab {
+  const tool = getToolMetadata(toolId);
+
   return {
     id: `tool:${toolId}`,
-    title: toolId === 'digest' ? '摘要计算' : toolId,
+    title: tool.label,
     toolId,
     type: 'tool',
   };

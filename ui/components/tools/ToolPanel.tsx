@@ -13,6 +13,7 @@ export function ToolPanel({
   onResizePointerDown,
   panelWidth,
   sections,
+  tools,
 }: {
   activeAppId: AppId | undefined;
   activeToolId: ToolId | undefined;
@@ -22,6 +23,7 @@ export function ToolPanel({
   onResizePointerDown: (event: PointerEvent<HTMLElement>) => void;
   panelWidth: number;
   sections: SidebarNavigationSection[];
+  tools: ToolId[];
 }) {
   return (
     <aside className="tool-panel" aria-label="Tool panel">
@@ -32,6 +34,7 @@ export function ToolPanel({
           onOpenApp={onOpenApp}
           onOpenTool={onOpenTool}
           sections={sections}
+          tools={tools}
           variant="panel"
         />
       </div>

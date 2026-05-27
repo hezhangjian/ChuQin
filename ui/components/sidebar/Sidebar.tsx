@@ -178,6 +178,7 @@ export function Sidebar({
   rootError,
   sections,
   selectedPath,
+  tools,
 }: {
   activeAppId: AppId | undefined;
   activeToolId: ToolId | undefined;
@@ -197,6 +198,7 @@ export function Sidebar({
   rootError?: string;
   sections: SidebarSection[];
   selectedPath?: string;
+  tools: ToolId[];
 }) {
   const [contextMenu, setContextMenu] = useState<FileTreeContextMenu>();
   const navigationSections = sections.filter(
@@ -302,6 +304,7 @@ export function Sidebar({
               onOpenApp={onOpenApp}
               onOpenTool={onOpenTool}
               sections={navigationSections}
+              tools={tools}
               variant="sidebar"
             />
           </nav>
