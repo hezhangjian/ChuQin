@@ -15,11 +15,10 @@ import {useAppLayout} from './hooks/useAppLayout';
 import {useFileExplorer} from './hooks/useFileExplorer';
 import type {CreatableFileKind, TreeNode} from './hooks/useFileExplorer';
 import {useMainAreaTabs} from './hooks/useMainAreaTabs';
+import {appEvents} from './lib/events';
 import {getAbsoluteFilePath, getFileOpenMode} from './lib/fileHandlers';
 import {SidebarSection} from './types';
 import './App.css';
-
-const closeActiveTabEvent = 'chuqin://close-active-tab';
 
 const creatableFileLabels: Record<CreatableFileKind, string> = {
   folder: '文件夹',
@@ -70,7 +69,7 @@ function App() {
     let isDisposed = false;
     let unlisten: (() => void) | undefined;
 
-    listen(closeActiveTabEvent, closeActiveTab).then((dispose) => {
+    listen(appEvents.closeActiveTab, closeActiveTab).then((dispose) => {
       if (isDisposed) {
         dispose();
         return;

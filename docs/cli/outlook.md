@@ -2,13 +2,13 @@
 
 The `outlook` module contains commands for Outlook-related integrations in ChuQin.
 
-## `archive-pst` Command
+## `backup-pst` Command
 
-Scans the default email directory for the current platform, finds `*.pst` files recursively, and compresses them into a dated ZIP archive.
+Scans the default email directory for the current platform, finds `*.pst` files recursively, and compresses them into a dated ZIP backup.
 
 
 ```bash
-chuqin outlook archive-pst
+chuqin outlook backup-pst
 ```
 
 The source directory is fixed by platform:
@@ -18,13 +18,13 @@ macOS: ~/Email
 Windows: D:/Email
 ```
 
-The output archive is written to:
+The output backup is written to:
 
 ```text
 $CHUQIN_DIR/Resources/Email/email-YYYYMMDD.zip
 ```
 
-For example, when the current log date is `20260508`, the generated archive path is:
+For example, when the current log date is `20260508`, the generated backup path is:
 
 ```text
 $CHUQIN_DIR/Resources/Email/email-20260508.zip

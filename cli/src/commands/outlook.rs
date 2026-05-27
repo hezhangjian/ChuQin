@@ -9,16 +9,16 @@ pub struct OutlookCommand {
 
 #[derive(Subcommand, Debug)]
 pub enum OutlookSubcommand {
-    ArchivePst,
+    BackupPst,
 }
 
 pub fn run(ctx: &AppContext, command: OutlookCommand) -> Result<(), Error> {
     match command.command {
-        OutlookSubcommand::ArchivePst => {
-            let summary = chuqin_core::outlook::archive_pst(ctx)?;
+        OutlookSubcommand::BackupPst => {
+            let summary = chuqin_core::outlook::backup_pst(ctx)?;
             println!("Source directory: {}", summary.source_dir.display());
-            println!("Archived {} PST file(s)", summary.file_count);
-            println!("Created ZIP: {}", summary.archive_path.display());
+            println!("Backed up {} PST file(s)", summary.file_count);
+            println!("Created ZIP: {}", summary.backup_path.display());
         }
     }
 

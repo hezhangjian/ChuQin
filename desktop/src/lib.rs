@@ -3,17 +3,22 @@
 //! This module initializes the Tauri application and manages the global state.
 
 mod commands;
+mod events;
 
 use chuqin_core::AppContext;
+use std::collections::HashMap;
+use std::sync::Arc;
 use std::sync::Mutex;
+use std::sync::atomic::{AtomicBool, AtomicU64};
 use tauri::Emitter;
 
-const CLOSE_ACTIVE_TAB_EVENT: &str = "chuqin://close-active-tab";
 const CLOSE_TAB_MENU_ID: &str = "close_active_tab";
 
 /// Global application state shared across all Tauri commands.
 pub struct AppState {
     context: Mutex<AppContext>,
+    outlook_backup_tasks: Mutex<HashMap<String, Arc<AtomicBool>>>,
+    outlook_backup_task_counter: AtomicU64,
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -24,6 +29,8 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .manage(AppState {
             context: Mutex::new(context),
+            outlook_backup_tasks: Mutex::new(HashMap::new()),
+            outlook_backup_task_counter: AtomicU64::new(1),
         })
         .setup(|app| {
             #[cfg(not(target_os = "windows"))]
@@ -88,7 +95,7 @@ pub fn run() {
         })
         .on_menu_event(|app, event| {
             if event.id().as_ref() == CLOSE_TAB_MENU_ID {
-                let _ = app.emit(CLOSE_ACTIVE_TAB_EVENT, ());
+                let _ = app.emit(events::CLOSE_ACTIVE_TAB, ());
             }
         })
         .invoke_handler(tauri::generate_handler![
@@ -104,6 +111,9 @@ pub fn run() {
             commands::files::files_rename,
             commands::files::files_root,
             commands::files::files_write_text,
+            commands::outlook::outlook_backup_pst,
+            commands::outlook::outlook_backup_pst_cancel,
+            commands::outlook::outlook_backup_pst_start,
             commands::ppt::ppt_create,
             commands::ppt::ppt_templates,
             commands::word::word_create,

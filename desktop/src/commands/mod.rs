@@ -6,5 +6,6 @@
 pub mod config;
 pub mod excel;
 pub mod files;
+pub mod outlook;
 pub mod ppt;
 pub mod word;

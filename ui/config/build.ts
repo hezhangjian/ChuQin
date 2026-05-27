@@ -54,5 +54,6 @@ export const buildConfig: BuildConfig = {
   // prettier-ignore
   tools: [
     ToolId.Digest,
+    ToolId.EmailBackup,
   ],
 };
