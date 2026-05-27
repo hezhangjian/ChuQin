@@ -4,7 +4,9 @@ ChuQin CLI provides command-line capabilities outside of the desktop application
 
 It supports direct terminal usage, shell scripting, automation workflows, and lightweight configuration checks without launching the desktop app.
 
-CLI shares the same root directory resolution as the desktop application. By default, paths are resolved from `$CHUQIN_DIR`. If `CHUQIN_DIR` is not set, ChuQin falls back to the current user's home directory.
+CLI shares the same root directory resolution as the desktop application. ChuQin first uses `$CHUQIN_DIR`. If
+`CHUQIN_DIR` is not set, it tries `~/.config/chuqin/config.toml` with a `workdir` value, for example
+`workdir = "/Users/akka/OneDrive"`. If neither is available, ChuQin falls back to the current user's home directory.
 
 ## Overview
 
