@@ -32,7 +32,7 @@ export function AppSidebarSection({
             type="button"
           >
             <span className={`app-sidebar-entry-icon app-sidebar-entry-icon-${variant}`} aria-hidden="true">
-              {app.icon}
+              <app.icon />
             </span>
             <span>{app.label}</span>
           </button>

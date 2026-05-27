@@ -64,10 +64,7 @@ export function JsonFormatterTool() {
         <div className="json-formatter-controls-left">
           <label className="json-indent-label">
             <span>{t('tools.jsonFormatter.indent')}</span>
-            <select
-              value={indent}
-              onChange={(e) => setIndent(Number(e.target.value))}
-            >
+            <select value={indent} onChange={(e) => setIndent(Number(e.target.value))}>
               <option value={2}>2 spaces</option>
               <option value={4}>4 spaces</option>
               <option value={8}>8 spaces</option>
@@ -111,13 +108,7 @@ export function JsonFormatterTool() {
           <label className="json-output-label" htmlFor="json-output">
             {t('tools.jsonFormatter.output')}
           </label>
-          <textarea
-            className="json-output"
-            id="json-output"
-            readOnly
-            spellCheck={false}
-            value={output}
-          />
+          <textarea className="json-output" id="json-output" readOnly spellCheck={false} value={output} />
           {error && <div className="json-error">{error}</div>}
         </div>
       </section>

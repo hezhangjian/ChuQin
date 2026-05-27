@@ -56,18 +56,10 @@ export function UrlEncodeDecodeTool() {
       <div className="url-controls">
         <div className="url-controls-left">
           <div className="url-mode-toggle">
-            <button
-              className={mode === 'encode' ? 'active' : ''}
-              onClick={() => setMode('encode')}
-              type="button"
-            >
+            <button className={mode === 'encode' ? 'active' : ''} onClick={() => setMode('encode')} type="button">
               {t('tools.urlEncodeDecode.encode')}
             </button>
-            <button
-              className={mode === 'decode' ? 'active' : ''}
-              onClick={() => setMode('decode')}
-              type="button"
-            >
+            <button className={mode === 'decode' ? 'active' : ''} onClick={() => setMode('decode')} type="button">
               {t('tools.urlEncodeDecode.decode')}
             </button>
           </div>
@@ -98,7 +90,9 @@ export function UrlEncodeDecodeTool() {
             className="url-input"
             id="url-input"
             onChange={(event) => setInput(event.target.value)}
-            placeholder={mode === 'encode' ? 'https://example.com/path?q=value' : 'https%3A%2F%2Fexample.com%2Fpath%3Fq%3Dvalue'}
+            placeholder={
+              mode === 'encode' ? 'https://example.com/path?q=value' : 'https%3A%2F%2Fexample.com%2Fpath%3Fq%3Dvalue'
+            }
             spellCheck={false}
             value={input}
           />
@@ -108,13 +102,7 @@ export function UrlEncodeDecodeTool() {
           <label className="url-output-label" htmlFor="url-output">
             {t('tools.urlEncodeDecode.output')}
           </label>
-          <textarea
-            className="url-output"
-            id="url-output"
-            readOnly
-            spellCheck={false}
-            value={output}
-          />
+          <textarea className="url-output" id="url-output" readOnly spellCheck={false} value={output} />
           {error && <div className="url-error">{error}</div>}
         </div>
       </section>

@@ -124,9 +124,7 @@ export function TimestampConverterTool() {
           <div className="timestamp-current-value">
             <code>{currentTimestamp}</code>
           </div>
-          <div className="timestamp-current-date">
-            {formatDate(new Date())}
-          </div>
+          <div className="timestamp-current-date">{formatDate(new Date())}</div>
         </div>
 
         <div className="timestamp-input-panel">
@@ -140,10 +138,7 @@ export function TimestampConverterTool() {
           <div className="timestamp-input-controls">
             <label className="timestamp-unit-label">
               <span>{t('tools.timestampConverter.unit')}</span>
-              <select
-                value={inputUnit}
-                onChange={(e) => setInputUnit(e.target.value as TimestampUnit)}
-              >
+              <select value={inputUnit} onChange={(e) => setInputUnit(e.target.value as TimestampUnit)}>
                 <option value="seconds">{t('tools.timestampConverter.seconds')}</option>
                 <option value="milliseconds">{t('tools.timestampConverter.milliseconds')}</option>
                 <option value="microseconds">{t('tools.timestampConverter.microseconds')}</option>
@@ -164,9 +159,7 @@ export function TimestampConverterTool() {
 
           {parsedDate && (
             <div className="timestamp-result">
-              <div className="timestamp-result-label">
-                {t('tools.timestampConverter.dateTime')}
-              </div>
+              <div className="timestamp-result-label">{t('tools.timestampConverter.dateTime')}</div>
               <div className="timestamp-result-value">{parsedDate}</div>
             </div>
           )}

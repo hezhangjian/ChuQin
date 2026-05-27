@@ -32,7 +32,7 @@ export function ToolSidebarSection({
             type="button"
           >
             <span className={`tool-sidebar-entry-icon tool-sidebar-entry-icon-${variant}`} aria-hidden="true">
-              {tool.icon}
+              <tool.icon />
             </span>
             <span>{tool.label}</span>
           </button>

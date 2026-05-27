@@ -102,18 +102,10 @@ export function HexEncodeDecodeTool() {
       <div className="hex-controls">
         <div className="hex-controls-left">
           <div className="hex-mode-toggle">
-            <button
-              className={mode === 'encode' ? 'active' : ''}
-              onClick={() => setMode('encode')}
-              type="button"
-            >
+            <button className={mode === 'encode' ? 'active' : ''} onClick={() => setMode('encode')} type="button">
               {t('tools.hexEncodeDecode.encode')}
             </button>
-            <button
-              className={mode === 'decode' ? 'active' : ''}
-              onClick={() => setMode('decode')}
-              type="button"
-            >
+            <button className={mode === 'decode' ? 'active' : ''} onClick={() => setMode('decode')} type="button">
               {t('tools.hexEncodeDecode.decode')}
             </button>
           </div>
@@ -121,10 +113,7 @@ export function HexEncodeDecodeTool() {
             <>
               <label className="hex-select-label">
                 <span>{t('tools.hexEncodeDecode.separator')}</span>
-                <select
-                  value={separator}
-                  onChange={(e) => setSeparator(e.target.value as typeof separator)}
-                >
+                <select value={separator} onChange={(e) => setSeparator(e.target.value as typeof separator)}>
                   <option value="space">Space</option>
                   <option value="none">None</option>
                   <option value="colon">Colon (:)</option>
@@ -133,10 +122,7 @@ export function HexEncodeDecodeTool() {
               </label>
               <label className="hex-select-label">
                 <span>{t('tools.hexEncodeDecode.case')}</span>
-                <select
-                  value={caseType}
-                  onChange={(e) => setCaseType(e.target.value as typeof caseType)}
-                >
+                <select value={caseType} onChange={(e) => setCaseType(e.target.value as typeof caseType)}>
                   <option value="upper">UPPERCASE</option>
                   <option value="lower">lowercase</option>
                 </select>
@@ -180,13 +166,7 @@ export function HexEncodeDecodeTool() {
           <label className="hex-output-label" htmlFor="hex-output">
             {t('tools.hexEncodeDecode.output')}
           </label>
-          <textarea
-            className="hex-output"
-            id="hex-output"
-            readOnly
-            spellCheck={false}
-            value={output}
-          />
+          <textarea className="hex-output" id="hex-output" readOnly spellCheck={false} value={output} />
           {error && <div className="hex-error">{error}</div>}
         </div>
       </section>
