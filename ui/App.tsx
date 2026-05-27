@@ -1,10 +1,14 @@
 import {openPath} from '@tauri-apps/plugin-opener';
 import {listen} from '@tauri-apps/api/event';
 import {useEffect, useState} from 'react';
+import {AppSidebarSection} from './components/apps/AppSidebarSection';
 import {MainArea} from './components/main-area/MainArea';
+import {ChatSidebarSection} from './components/sidebar/ChatSidebarSection';
+import {RightSidebar} from './components/sidebar/RightSidebar';
 import {Sidebar} from './components/sidebar/Sidebar';
+import {SidebarSections} from './components/sidebar/SidebarSections';
 import {SettingsDialog} from './components/settings/SettingsDialog';
-import {ToolPanel} from './components/tools/ToolPanel';
+import {ToolSidebarSection} from './components/tools/ToolSidebarSection';
 import {WindowControls} from './components/window-controls/WindowControls';
 import {buildConfig} from './config/build';
 import {useAppLayout} from './hooks/useAppLayout';
@@ -12,6 +16,7 @@ import {useFileExplorer} from './hooks/useFileExplorer';
 import type {CreatableFileKind, TreeNode} from './hooks/useFileExplorer';
 import {useMainAreaTabs} from './hooks/useMainAreaTabs';
 import {getAbsoluteFilePath, getFileOpenMode} from './lib/fileHandlers';
+import {SidebarSection} from './types';
 import './App.css';
 
 const closeActiveTabEvent = 'chuqin://close-active-tab';
@@ -197,6 +202,33 @@ function App() {
     }
   }
 
+  function renderRightSidebarSection(section: SidebarSection) {
+    switch (section) {
+      case SidebarSection.Apps:
+        return (
+          <AppSidebarSection
+            activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
+            apps={buildConfig.apps}
+            onOpenApp={mainAreaTabs.openApp}
+            variant="right"
+          />
+        );
+      case SidebarSection.Chats:
+        return <ChatSidebarSection variant="right" />;
+      case SidebarSection.Tools:
+        return (
+          <ToolSidebarSection
+            activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
+            onOpenTool={mainAreaTabs.openTool}
+            tools={buildConfig.tools}
+            variant="right"
+          />
+        );
+      case SidebarSection.Files:
+        return null;
+    }
+  }
+
   return (
     <main
       className={`app-layout${isWindows ? ' is-windows' : ''}${appLayout.isResizingPanel ? ' resizing-panel' : ''}`}
@@ -233,6 +265,7 @@ function App() {
         <Sidebar
           activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
           activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
+          apps={buildConfig.apps}
           directoryStates={fileExplorer.directoryStates}
           isLoadingRoot={fileExplorer.isLoadingRoot}
           nodes={fileExplorer.nodes}
@@ -260,17 +293,17 @@ function App() {
         tabs={mainAreaTabs.tabs}
       />
       {isRightSidebarVisible && !appLayout.isRightCollapsed ? (
-        <ToolPanel
-          activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
-          activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
-          onOpenApp={mainAreaTabs.openApp}
-          onOpenTool={mainAreaTabs.openTool}
+        <RightSidebar
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}
           panelWidth={appLayout.rightPanelWidth}
-          sections={buildConfig.rightSidebar.sections}
-          tools={buildConfig.tools}
-        />
+        >
+          <SidebarSections
+            renderSection={renderRightSidebarSection}
+            sections={buildConfig.rightSidebar.sections}
+            variant="right"
+          />
+        </RightSidebar>
       ) : null}
       {createTarget ? (
         <div className="file-action-backdrop" role="presentation">

@@ -29,109 +29,17 @@
   min-width: 0;
 }
 
-.sidebar-apps {
+.sidebar-sections {
   display: grid;
   padding: 12px 8px 18px 7px;
   border-top: 1px solid #d9dce1;
   gap: 4px;
 }
 
-.sidebar-navigation {
-  display: grid;
-  padding: 12px 8px 18px 7px;
-  border-top: 1px solid #d9dce1;
-  gap: 4px;
-}
-
-.sidebar-nav-section {
-  display: grid;
-  gap: 4px;
-}
-
-.sidebar-nav-title {
-  margin: 0;
-  padding: 0 8px 6px 8px;
-  color: #242629;
-  font-size: 18px;
-  font-weight: 740;
-  letter-spacing: 0;
-  line-height: 1.1;
-}
-
-.sidebar-nav-separator {
+.left-sidebar-section-separator {
   height: 1px;
   margin: 8px 0;
   background: #d9dce1;
-}
-
-.sidebar-app-entry,
-.sidebar-nav-entry {
-  display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
-  align-items: center;
-  width: 100%;
-  min-height: 36px;
-  padding: 0 8px 0 16px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: #202124;
-  gap: 8px;
-  text-align: left;
-}
-
-.sidebar-app-entry:hover,
-.sidebar-app-entry:focus-visible,
-.sidebar-nav-entry:hover,
-.sidebar-nav-entry:focus-visible {
-  outline: none;
-  background: #efefef;
-}
-
-.sidebar-app-entry.active,
-.sidebar-nav-entry.active {
-  background: #e9efff;
-  color: #244eb6;
-}
-
-.sidebar-app-icon,
-.sidebar-nav-entry-icon {
-  width: 17px;
-  height: 17px;
-}
-
-.sidebar-app-icon {
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
-}
-
-.sidebar-nav-entry-icon {
-  display: grid;
-  place-items: center;
-  color: currentColor;
-  font:
-    700 13px/1 ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    'Liberation Mono',
-    monospace;
-}
-
-.sidebar-app-entry span,
-.sidebar-nav-entry span:last-child {
-  min-width: 0;
-  overflow: hidden;
-  font-size: 15px;
-  font-weight: 550;
-  letter-spacing: 0;
-  line-height: 1.25;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .sidebar-settings {

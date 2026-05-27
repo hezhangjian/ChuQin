@@ -2,9 +2,12 @@ import {useEffect, useState} from 'react';
 import type {CSSProperties, KeyboardEvent, MouseEvent, PointerEvent} from 'react';
 import {getDirectoryStateFromRecord} from '../../hooks/useFileExplorer';
 import type {CreatableFileKind, DirectoryState, TreeNode} from '../../hooks/useFileExplorer';
-import type {SidebarNavigationSection, SidebarSection} from '../../config/build';
-import {NavigationSections} from '../navigation/NavigationSections';
+import {SidebarSection} from '../../types';
 import type {AppId, ToolId} from '../../types';
+import {AppSidebarSection} from '../apps/AppSidebarSection';
+import {ToolSidebarSection} from '../tools/ToolSidebarSection';
+import {ChatSidebarSection} from './ChatSidebarSection';
+import {SidebarSections} from './SidebarSections';
 import './Sidebar.css';
 
 type FileTreeContextMenu = {
@@ -162,6 +165,7 @@ function FileTreeList({
 export function Sidebar({
   activeAppId,
   activeToolId,
+  apps,
   directoryStates,
   isLoadingRoot,
   nodes,
@@ -182,6 +186,7 @@ export function Sidebar({
 }: {
   activeAppId: AppId | undefined;
   activeToolId: ToolId | undefined;
+  apps: AppId[];
   directoryStates: Record<string, DirectoryState>;
   isLoadingRoot: boolean;
   nodes: TreeNode[];
@@ -201,8 +206,8 @@ export function Sidebar({
   tools: ToolId[];
 }) {
   const [contextMenu, setContextMenu] = useState<FileTreeContextMenu>();
-  const navigationSections = sections.filter(
-    (section): section is SidebarNavigationSection => section === 'apps' || section === 'tools'
+  const contentSections = sections.filter(
+    (section) => section === SidebarSection.Apps || section === SidebarSection.Chats || section === SidebarSection.Tools
   );
 
   useEffect(() => {
@@ -274,10 +279,23 @@ export function Sidebar({
     setContextMenu(undefined);
   }
 
+  function renderSection(section: SidebarSection) {
+    switch (section) {
+      case SidebarSection.Apps:
+        return <AppSidebarSection activeAppId={activeAppId} apps={apps} onOpenApp={onOpenApp} variant="left" />;
+      case SidebarSection.Chats:
+        return <ChatSidebarSection variant="left" />;
+      case SidebarSection.Tools:
+        return <ToolSidebarSection activeToolId={activeToolId} onOpenTool={onOpenTool} tools={tools} variant="left" />;
+      case SidebarSection.Files:
+        return null;
+    }
+  }
+
   return (
     <aside className="sidebar" aria-label="Left sidebar">
       <div className="sidebar-scroll">
-        {sections.includes('files') ? (
+        {sections.includes(SidebarSection.Files) ? (
           <nav className="file-tree" aria-label="Files" onContextMenu={showRootContextMenu}>
             <h2 className="sidebar-section-title">
               <span>Files</span>
@@ -296,25 +314,10 @@ export function Sidebar({
             ) : null}
           </nav>
         ) : null}
-        {navigationSections.length > 0 ? (
-          <nav className="sidebar-navigation" aria-label="Application navigation">
-            <NavigationSections
-              activeAppId={activeAppId}
-              activeToolId={activeToolId}
-              onOpenApp={onOpenApp}
-              onOpenTool={onOpenTool}
-              sections={navigationSections}
-              tools={tools}
-              variant="sidebar"
-            />
-          </nav>
-        ) : null}
-        {sections.includes('chats') ? (
-          <nav className="sidebar-apps" aria-label="Chats">
-            <h2 className="sidebar-section-title">
-              <span>Chats</span>
-            </h2>
-          </nav>
+        {contentSections.length > 0 ? (
+          <div className="sidebar-sections">
+            <SidebarSections renderSection={renderSection} sections={contentSections} variant="left" />
+          </div>
         ) : null}
       </div>
       <div className="sidebar-settings">

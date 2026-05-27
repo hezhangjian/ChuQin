@@ -1,8 +1,7 @@
+import type {AppId} from './apps';
+import type {ToolId} from './tools';
+
 export type FileTabMode = 'edit';
-
-export type AppId = 'code-manager';
-
-export type ToolId = 'digest';
 
 export type FileMainAreaTab = {
   id: string;

@@ -1,7 +1,8 @@
 import {useMemo, useState} from 'react';
+import {getAppDefinition} from '../components/apps/appDefinitions';
+import {getToolDefinition} from '../components/tools/toolDefinitions';
 import type {FileNode} from '../types';
 import {getFileOpenMode} from '../lib/fileHandlers';
-import {getToolMetadata} from '../lib/tools';
 import type {AppId, MainAreaTab, ToolId} from '../types';
 
 const maxOpenTabs = 10;
@@ -36,16 +37,18 @@ function fileNodeToTab(node: FileNode): MainAreaTab | null {
 }
 
 function appIdToTab(appId: AppId): MainAreaTab {
+  const app = getAppDefinition(appId);
+
   return {
     appId,
     id: `app:${appId}`,
-    title: appId === 'code-manager' ? 'Code Manager' : appId,
+    title: app.label,
     type: 'app',
   };
 }
 
 function toolIdToTab(toolId: ToolId): MainAreaTab {
-  const tool = getToolMetadata(toolId);
+  const tool = getToolDefinition(toolId);
 
   return {
     id: `tool:${toolId}`,

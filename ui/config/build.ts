@@ -1,20 +1,17 @@
-import type {ToolId} from '../types';
-
-export type SidebarSection = 'apps' | 'chats' | 'files' | 'tools';
-export type SidebarNavigationSection = Extract<SidebarSection, 'apps' | 'tools'>;
-export type SettingsSection = 'gitcode' | 'gitee' | 'github' | 'huaweiCloud' | 'llm' | 'volcengine';
+import {AppId, SettingsSection, SidebarSection, ToolId} from '../types';
 
 export type BuildConfig = {
   leftSidebar: {
     sections: SidebarSection[];
   };
   rightSidebar: {
-    sections: SidebarNavigationSection[];
+    sections: SidebarSection[];
     visible: boolean;
   };
   settings: {
     sections: SettingsSection[];
   };
+  apps: AppId[];
   tools: ToolId[];
 };
 
@@ -22,19 +19,15 @@ export const buildConfig: BuildConfig = {
   leftSidebar: {
     // prettier-ignore
     sections: [
-      // Files
-      'files',
-      // Chats
-      'chats',
+      SidebarSection.Files,
+      SidebarSection.Chats,
     ],
   },
   rightSidebar: {
     // prettier-ignore
     sections: [
-      // Apps
-      'apps',
-      // Tools
-      'tools',
+      SidebarSection.Apps,
+      SidebarSection.Tools,
     ],
     visible: true,
   },
@@ -42,19 +35,24 @@ export const buildConfig: BuildConfig = {
     // prettier-ignore
     sections: [
       // LLM
-      'llm',
+      SettingsSection.Llm,
 
       // Cloud
-      'huaweiCloud',
-      'volcengine',
+      SettingsSection.HuaweiCloud,
+      SettingsSection.Volcengine,
 
       // Code hosting
-      'gitcode',
-      'gitee',
-      'github',
+      SettingsSection.GitCode,
+      SettingsSection.Gitee,
+      SettingsSection.GitHub,
     ],
   },
+  // prettier-ignore
+  apps: [
+    AppId.CodeManager,
+  ],
+  // prettier-ignore
   tools: [
-    'digest',
+    ToolId.Digest,
   ],
 };

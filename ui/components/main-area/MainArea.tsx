@@ -1,5 +1,5 @@
-import {CodeManagerApp} from './CodeManagerApp';
-import {DigestTool} from './DigestTool';
+import {getAppDefinition} from '../apps/appDefinitions';
+import {getToolDefinition} from '../tools/toolDefinitions';
 import {FileEditor} from './FileEditor';
 import {MainAreaTabs} from './MainAreaTabs';
 import type {MainAreaTab} from '../../types';
@@ -27,18 +27,12 @@ function renderTab(tab: MainAreaTab | undefined) {
   }
 
   if (tab.type === 'app') {
-    if (tab.appId === 'code-manager') {
-      return <CodeManagerApp key={tab.id} />;
-    }
-
-    return null;
+    const AppSurface = getAppDefinition(tab.appId).Surface;
+    return <AppSurface key={tab.id} />;
   }
 
-  if (tab.toolId === 'digest') {
-    return <DigestTool key={tab.id} />;
-  }
-
-  return null;
+  const ToolSurface = getToolDefinition(tab.toolId).Surface;
+  return <ToolSurface key={tab.id} />;
 }
 
 export function MainArea({activeTab, activeTabId, onCloseTab, onSelectTab, tabs}: MainAreaProps) {

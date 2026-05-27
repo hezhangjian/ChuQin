@@ -1,9 +1,9 @@
 import {invoke} from '@tauri-apps/api/core';
 import {useEffect, useMemo, useState} from 'react';
 import {buildConfig} from '../../config/build';
-import type {SettingsSection} from '../../config/build';
 import {stringifyAppConfig} from '../../lib/config';
 import type {AppConfig} from '../../lib/config';
+import {SettingsSection} from '../../types';
 import './SettingsDialog.css';
 
 type SettingsForm = {
@@ -93,7 +93,7 @@ function getConfigFromForm(
 ): AppConfig {
   const nextConfig: AppConfig = {...currentConfig};
 
-  if (visibleSections.includes('llm')) {
+  if (visibleSections.includes(SettingsSection.Llm)) {
     nextConfig.llm = {
       ...getLlmConfig(currentConfig),
       provider: form.llmProvider.trim(),
@@ -103,7 +103,7 @@ function getConfigFromForm(
     };
   }
 
-  if (visibleSections.includes('huaweiCloud')) {
+  if (visibleSections.includes(SettingsSection.HuaweiCloud)) {
     nextConfig.huaweicloud = {
       ...getHuaweiCloudConfig(currentConfig),
       project_id: form.huaweiCloudProjectId.trim(),
@@ -112,7 +112,7 @@ function getConfigFromForm(
     };
   }
 
-  if (visibleSections.includes('volcengine')) {
+  if (visibleSections.includes(SettingsSection.Volcengine)) {
     nextConfig.volcengine = {
       ...currentConfig.volcengine,
       ak: form.volcengineAk.trim(),
@@ -123,7 +123,7 @@ function getConfigFromForm(
     };
   }
 
-  if (visibleSections.includes('gitcode')) {
+  if (visibleSections.includes(SettingsSection.GitCode)) {
     nextConfig.gitcode = {
       ...currentConfig.gitcode,
       username: form.gitcodeUsername.trim(),
@@ -131,7 +131,7 @@ function getConfigFromForm(
     };
   }
 
-  if (visibleSections.includes('gitee')) {
+  if (visibleSections.includes(SettingsSection.Gitee)) {
     nextConfig.gitee = {
       ...currentConfig.gitee,
       username: form.giteeUsername.trim(),
@@ -139,7 +139,7 @@ function getConfigFromForm(
     };
   }
 
-  if (visibleSections.includes('github')) {
+  if (visibleSections.includes(SettingsSection.GitHub)) {
     nextConfig.github = {
       ...currentConfig.github,
       username: form.githubUsername.trim(),
@@ -299,7 +299,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
         </div>
 
         <div className="settings-body">
-          {visibleSections.includes('llm') ? (
+          {visibleSections.includes(SettingsSection.Llm) ? (
             <section className="settings-section" aria-label="LLM">
               <h3>LLM</h3>
               <label>
@@ -341,7 +341,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
             </section>
           ) : null}
 
-          {visibleSections.includes('huaweiCloud') ? (
+          {visibleSections.includes(SettingsSection.HuaweiCloud) ? (
             <section className="settings-section" aria-label="Huawei Cloud">
               <h3>Huawei Cloud</h3>
               <label>
@@ -371,7 +371,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
             </section>
           ) : null}
 
-          {visibleSections.includes('volcengine') ? (
+          {visibleSections.includes(SettingsSection.Volcengine) ? (
             <section className="settings-section" aria-label="Volcengine">
               <h3>Volcengine</h3>
               <label>
@@ -417,7 +417,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
             </section>
           ) : null}
 
-          {visibleSections.includes('gitcode') ? (
+          {visibleSections.includes(SettingsSection.GitCode) ? (
             <section className="settings-section" aria-label="GitCode">
               <h3>GitCode</h3>
               <label>
@@ -439,7 +439,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
             </section>
           ) : null}
 
-          {visibleSections.includes('github') ? (
+          {visibleSections.includes(SettingsSection.GitHub) ? (
             <section className="settings-section" aria-label="GitHub">
               <h3>GitHub</h3>
               <label>
@@ -461,7 +461,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
             </section>
           ) : null}
 
-          {visibleSections.includes('gitee') ? (
+          {visibleSections.includes(SettingsSection.Gitee) ? (
             <section className="settings-section" aria-label="Gitee">
               <h3>Gitee</h3>
               <label>
