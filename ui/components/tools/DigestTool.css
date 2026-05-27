@@ -208,3 +208,15 @@
   font-size: 13px;
   letter-spacing: 0;
 }
+
+@media (max-width: 900px) {
+  .digest-tool-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .digest-input-panel {
+    min-height: 260px;
+    border-right: 0;
+    border-bottom: 1px solid var(--panel-border);
+  }
+}

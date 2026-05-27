@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  background: transparent;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow: hidden;
+  background: transparent;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+}

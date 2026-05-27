@@ -218,3 +218,9 @@
   color: #8b8f94;
   cursor: default;
 }
+
+@media (max-width: 900px) {
+  .settings-section {
+    grid-template-columns: 1fr;
+  }
+}

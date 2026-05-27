@@ -112,3 +112,9 @@
 .main-area-state.error {
   color: #a13f3f;
 }
+
+@media (max-width: 900px) {
+  .main-area {
+    min-height: 420px;
+  }
+}
