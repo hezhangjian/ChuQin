@@ -1,5 +1,6 @@
 import {invoke} from '@tauri-apps/api/core';
 import {useEffect, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {buildConfig} from '../../config/build';
 import {stringifyAppConfig} from '../../lib/config';
 import type {AppConfig} from '../../lib/config';
@@ -160,6 +161,7 @@ function SecretInput({
   value: string;
 }) {
   const [isVisible, setIsVisible] = useState(false);
+  const {t} = useTranslation();
 
   return (
     <div className="settings-secret-input">
@@ -170,7 +172,7 @@ function SecretInput({
         value={value}
       />
       <button
-        aria-label={isVisible ? 'Hide value' : 'Show value'}
+        aria-label={isVisible ? t('settings.actions.hideValue') : t('settings.actions.showValue')}
         disabled={disabled}
         onClick={() => setIsVisible((currentValue) => !currentValue)}
         type="button"
@@ -196,6 +198,7 @@ function SecretInput({
 }
 
 export function SettingsDialog({onClose}: {onClose: () => void}) {
+  const {t} = useTranslation();
   const visibleSections = buildConfig.settings.sections;
   const [config, setConfig] = useState<AppConfig>({});
   const [error, setError] = useState<string>();
@@ -278,7 +281,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
   return (
     <div className="settings-backdrop" role="presentation">
       <form
-        aria-label="Settings"
+        aria-label={t('settings.labels.aria')}
         className="settings-dialog"
         onSubmit={(event) => {
           event.preventDefault();
@@ -291,9 +294,14 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
       >
         <div className="settings-header">
           <div>
-            <h2>Settings</h2>
+            <h2>{t('settings.labels.title')}</h2>
           </div>
-          <button aria-label="Close settings" className="settings-close" onClick={onClose} type="button">
+          <button
+            aria-label={t('settings.actions.closeSettings')}
+            className="settings-close"
+            onClick={onClose}
+            type="button"
+          >
             x
           </button>
         </div>
@@ -301,37 +309,37 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
         <div className="settings-body">
           {visibleSections.includes(SettingsSection.Llm) ? (
             <section className="settings-section" aria-label="LLM">
-              <h3>LLM</h3>
+              <h3>{t('settings.sections.llm')}</h3>
               <label>
-                Provider
+                {t('settings.fields.provider')}
                 <input
                   autoFocus
                   disabled={isLoading}
                   onChange={(event) => updateField('llmProvider', event.target.value)}
-                  placeholder="openai"
+                  placeholder={t('settings.placeholders.llmProvider')}
                   value={form.llmProvider}
                 />
               </label>
               <label>
-                Model
+                {t('settings.fields.model')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('llmModel', event.target.value)}
-                  placeholder="gpt-4.1"
+                  placeholder={t('settings.placeholders.llmModel')}
                   value={form.llmModel}
                 />
               </label>
               <label>
-                Base URL
+                {t('settings.fields.baseUrl')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('llmBaseUrl', event.target.value)}
-                  placeholder="https://api.openai.com/v1"
+                  placeholder={t('settings.placeholders.llmBaseUrl')}
                   value={form.llmBaseUrl}
                 />
               </label>
               <label>
-                API Key
+                {t('settings.fields.apiKey')}
                 <SecretInput
                   disabled={isLoading}
                   onChange={(value) => updateField('llmApiKey', value)}
@@ -343,9 +351,9 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
 
           {visibleSections.includes(SettingsSection.HuaweiCloud) ? (
             <section className="settings-section" aria-label="Huawei Cloud">
-              <h3>Huawei Cloud</h3>
+              <h3>{t('settings.sections.huaweiCloud')}</h3>
               <label>
-                Project ID
+                {t('settings.fields.projectId')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('huaweiCloudProjectId', event.target.value)}
@@ -353,7 +361,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Username
+                {t('settings.fields.username')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('huaweiCloudUsername', event.target.value)}
@@ -361,7 +369,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Password
+                {t('settings.fields.password')}
                 <SecretInput
                   disabled={isLoading}
                   onChange={(value) => updateField('huaweiCloudPassword', value)}
@@ -373,9 +381,9 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
 
           {visibleSections.includes(SettingsSection.Volcengine) ? (
             <section className="settings-section" aria-label="Volcengine">
-              <h3>Volcengine</h3>
+              <h3>{t('settings.sections.volcengine')}</h3>
               <label>
-                Access Key
+                {t('settings.fields.accessKey')}
                 <SecretInput
                   disabled={isLoading}
                   onChange={(value) => updateField('volcengineAk', value)}
@@ -383,7 +391,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Secret Key
+                {t('settings.fields.secretKey')}
                 <SecretInput
                   disabled={isLoading}
                   onChange={(value) => updateField('volcengineSk', value)}
@@ -391,7 +399,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Visual Host
+                {t('settings.fields.visualHost')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('volcengineVisualHost', event.target.value)}
@@ -399,7 +407,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Region
+                {t('settings.fields.region')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('volcengineRegion', event.target.value)}
@@ -407,7 +415,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Video Req Key
+                {t('settings.fields.videoReqKey')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('volcengineVideoReqKey', event.target.value)}
@@ -419,9 +427,9 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
 
           {visibleSections.includes(SettingsSection.GitCode) ? (
             <section className="settings-section" aria-label="GitCode">
-              <h3>GitCode</h3>
+              <h3>{t('settings.sections.gitcode')}</h3>
               <label>
-                Username
+                {t('settings.fields.username')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('gitcodeUsername', event.target.value)}
@@ -429,7 +437,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Token
+                {t('settings.fields.token')}
                 <SecretInput
                   disabled={isLoading}
                   onChange={(value) => updateField('gitcodeToken', value)}
@@ -441,9 +449,9 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
 
           {visibleSections.includes(SettingsSection.GitHub) ? (
             <section className="settings-section" aria-label="GitHub">
-              <h3>GitHub</h3>
+              <h3>{t('settings.sections.github')}</h3>
               <label>
-                Username
+                {t('settings.fields.username')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('githubUsername', event.target.value)}
@@ -451,7 +459,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Token
+                {t('settings.fields.token')}
                 <SecretInput
                   disabled={isLoading}
                   onChange={(value) => updateField('githubToken', value)}
@@ -463,9 +471,9 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
 
           {visibleSections.includes(SettingsSection.Gitee) ? (
             <section className="settings-section" aria-label="Gitee">
-              <h3>Gitee</h3>
+              <h3>{t('settings.sections.gitee')}</h3>
               <label>
-                Username
+                {t('settings.fields.username')}
                 <input
                   disabled={isLoading}
                   onChange={(event) => updateField('giteeUsername', event.target.value)}
@@ -473,7 +481,7 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
                 />
               </label>
               <label>
-                Token
+                {t('settings.fields.token')}
                 <SecretInput
                   disabled={isLoading}
                   onChange={(value) => updateField('giteeToken', value)}
@@ -488,10 +496,10 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
 
         <div className="settings-actions">
           <button onClick={onClose} type="button">
-            Cancel
+            {t('common.cancel')}
           </button>
           <button className="primary" disabled={!canSave} type="submit">
-            {isSaving ? 'Saving...' : 'Save'}
+            {isSaving ? t('common.saving') : t('common.save')}
           </button>
         </div>
       </form>
