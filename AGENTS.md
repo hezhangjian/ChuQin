@@ -14,7 +14,8 @@ This repository is organized as:
 - `cli/`: selective Rust CLI built with `clap`, depending on `chuqin-core`. Add CLI commands only when the capability
   makes sense outside the GUI.
 - `desktop/`: Tauri v2 desktop backend, depending on `chuqin-core`.
-- `ui/`: React + TypeScript frontend for the desktop app.
+- `ui/`: React + TypeScript frontend for the desktop app. Frontend source files live directly under `ui/` rather than
+  `ui/src/`.
 - `docs/`: product and command documentation.
   - `docs/cli/`: CLI documentation. Update when adding/modifying CLI commands in `cli/src/`.
   - `docs/tauri-commands/`: Tauri command documentation. Update when adding/modifying Tauri commands in `desktop/src/commands/`.
