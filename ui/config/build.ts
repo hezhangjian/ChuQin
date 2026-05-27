@@ -55,5 +55,9 @@ export const buildConfig: BuildConfig = {
   tools: [
     ToolId.Digest,
     ToolId.EmailBackup,
+    ToolId.HexEncodeDecode,
+    ToolId.JsonFormatter,
+    ToolId.TimestampConverter,
+    ToolId.UrlEncodeDecode,
   ],
 };
