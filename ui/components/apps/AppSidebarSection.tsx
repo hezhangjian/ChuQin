@@ -19,8 +19,8 @@ export function AppSidebarSection({
   }
 
   return (
-    <section className={`app-sidebar-section app-sidebar-section-${variant}`} aria-label="APPs">
-      <h2 className={`app-sidebar-section-title app-sidebar-section-title-${variant}`}>APPs</h2>
+    <section className={`app-sidebar-section app-sidebar-section-${variant}`} aria-label="Apps">
+      <h2 className={`app-sidebar-section-title app-sidebar-section-title-${variant}`}>Apps</h2>
       {apps.map((appId) => {
         const app = getAppDefinition(appId);
 
