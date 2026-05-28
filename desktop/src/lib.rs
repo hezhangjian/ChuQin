@@ -90,7 +90,7 @@ pub fn run() {
                     {
                         use tauri::image::Image;
 
-                        let ico_bytes = include_bytes!("../../icons/icon.ico");
+                        let ico_bytes = include_bytes!("../icons/icon.ico");
                         let ico =
                             ico::IconDir::read(std::io::Cursor::new(ico_bytes)).expect("failed to parse icon.ico");
                         let window_icon = ico
@@ -103,7 +103,7 @@ pub fn run() {
                             .map(|img| Image::new_owned(img.rgba_data().to_vec(), img.width(), img.height()));
 
                         if let Some(icon) = window_icon {
-                            window.set_icon(icon?)?;
+                            window.set_icon(icon)?;
                         }
                     }
 
