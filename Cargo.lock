@@ -574,6 +574,7 @@ name = "chuqin"
 version = "0.0.1"
 dependencies = [
  "chuqin-core",
+ "ico",
  "serde",
  "serde_json",
  "tauri",

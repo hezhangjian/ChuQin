@@ -86,6 +86,27 @@ pub fn run() {
                 use tauri::window::{Effect, EffectsBuilder};
 
                 if let Some(window) = app.get_webview_window("main") {
+                    #[cfg(dev)]
+                    {
+                        use tauri::image::Image;
+
+                        let ico_bytes = include_bytes!("../../icons/icon.ico");
+                        let ico =
+                            ico::IconDir::read(std::io::Cursor::new(ico_bytes)).expect("failed to parse icon.ico");
+                        let window_icon = ico
+                            .entries()
+                            .iter()
+                            .filter(|entry| entry.width() >= 48)
+                            .min_by_key(|entry| entry.width())
+                            .or_else(|| ico.entries().last())
+                            .map(|entry| entry.decode().expect("failed to decode icon"))
+                            .map(|img| Image::new_owned(img.rgba_data().to_vec(), img.width(), img.height()));
+
+                        if let Some(icon) = window_icon {
+                            window.set_icon(icon?)?;
+                        }
+                    }
+
                     window.set_decorations(false)?;
                     window.set_shadow(true)?;
                     window.set_effects(EffectsBuilder::new().effect(Effect::MicaLight).build())?;
