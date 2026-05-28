@@ -134,6 +134,8 @@ pub fn run() {
             }
         })
         .invoke_handler(tauri::generate_handler![
+            commands::auth::capture_tokens,
+            commands::auth::open_auth_window,
             commands::config::config_get,
             commands::config::config_read,
             commands::config::config_update,

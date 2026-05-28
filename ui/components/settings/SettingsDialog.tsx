@@ -1,4 +1,5 @@
 import {invoke} from '@tauri-apps/api/core';
+import {listen} from '@tauri-apps/api/event';
 import {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {buildConfig} from '../../config/build';
@@ -6,6 +7,8 @@ import {stringifyAppConfig} from '../../lib/config';
 import type {AppConfig} from '../../lib/config';
 import {SettingsSection} from '../../types';
 import './SettingsDialog.css';
+
+const GITHUB_LOGIN_WINDOW_LABEL = 'github-login';
 
 type SettingsForm = {
   gitcodeUsername: string;
@@ -278,6 +281,41 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
     }
   }
 
+  async function openGithubLogin() {
+    try {
+      await invoke('open_auth_window', {
+        label: GITHUB_LOGIN_WINDOW_LABEL,
+        url: 'https://github.com/login',
+      });
+    } catch (err) {
+      console.error('Failed to open login window:', err);
+    }
+  }
+
+  async function captureGithubTokens() {
+    try {
+      await invoke('capture_tokens', {
+        label: GITHUB_LOGIN_WINDOW_LABEL,
+      });
+    } catch (err) {
+      console.error('Failed to trigger capture:', err);
+    }
+  }
+
+  useEffect(() => {
+    const unlisten = listen('auth-captured', (event) => {
+      const payload = event.payload as any;
+      console.log('Demo: Captured Auth Data', payload);
+      alert(
+        `Demo Capture Success!\n\nURL: ${payload.url}\nCookies Length: ${payload.cookies?.length || 0}\n\n(Not saving to config)`
+      );
+    });
+
+    return () => {
+      unlisten.then((fn) => fn());
+    };
+  }, []);
+
   return (
     <div className="settings-backdrop" role="presentation">
       <form
@@ -450,6 +488,14 @@ export function SettingsDialog({onClose}: {onClose: () => void}) {
           {visibleSections.includes(SettingsSection.GitHub) ? (
             <section className="settings-section" aria-label="GitHub">
               <h3>{t('settings.sections.github')}</h3>
+              <div style={{display: 'flex', gap: '8px', marginBottom: '12px'}}>
+                <button type="button" onClick={openGithubLogin} style={{fontSize: '12px', padding: '4px 8px'}}>
+                  Open GitHub Login
+                </button>
+                <button type="button" onClick={captureGithubTokens} style={{fontSize: '12px', padding: '4px 8px'}}>
+                  Capture Tokens
+                </button>
+              </div>
               <label>
                 {t('settings.fields.username')}
                 <input
