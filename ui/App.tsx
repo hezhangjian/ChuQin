@@ -21,6 +21,8 @@ import {getAbsoluteFilePath, getFileOpenMode} from './lib/fileHandlers';
 import {SidebarSection} from './types';
 import './App.css';
 
+const SIDEBAR_COLLAPSE_ANIMATION_MS = 180;
+
 function isWindowsPlatform() {
   return navigator.userAgent.includes('Windows') && '__TAURI_INTERNALS__' in window;
 }
@@ -36,6 +38,10 @@ function App() {
     : ({...appLayout.rootStyle, '--right-panel-width': '0px'} as typeof appLayout.rootStyle);
   const isWindows = isWindowsPlatform();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isLeftSidebarMounted, setIsLeftSidebarMounted] = useState(!appLayout.isLeftCollapsed);
+  const [isRightSidebarMounted, setIsRightSidebarMounted] = useState(
+    isRightSidebarVisible && !appLayout.isRightCollapsed
+  );
 
   function closeActiveTab() {
     if (mainAreaTabs.activeTab) {
@@ -81,6 +87,41 @@ function App() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [mainAreaTabs.activeTab?.id]);
+
+  useEffect(() => {
+    if (!appLayout.isLeftCollapsed) {
+      setIsLeftSidebarMounted(true);
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setIsLeftSidebarMounted(false);
+    }, SIDEBAR_COLLAPSE_ANIMATION_MS);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [appLayout.isLeftCollapsed]);
+
+  useEffect(() => {
+    if (!isRightSidebarVisible) {
+      setIsRightSidebarMounted(false);
+      return;
+    }
+
+    if (!appLayout.isRightCollapsed) {
+      setIsRightSidebarMounted(true);
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setIsRightSidebarMounted(false);
+    }, SIDEBAR_COLLAPSE_ANIMATION_MS);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [appLayout.isRightCollapsed, isRightSidebarVisible]);
 
   async function selectNode(node: Parameters<typeof fileExplorer.selectNode>[0]) {
     fileExplorer.selectNode(node);
@@ -145,7 +186,7 @@ function App() {
         tabs={mainAreaTabs.tabs}
       />
 
-      {appLayout.isLeftCollapsed ? null : (
+      {isLeftSidebarMounted ? (
         <Sidebar
           activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
           activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
@@ -168,9 +209,9 @@ function App() {
           selectedPath={fileExplorer.selectedPath}
           tools={buildConfig.tools}
         />
-      )}
+      ) : null}
       <MainArea activeTab={mainAreaTabs.activeTab} activeTabId={mainAreaTabs.activeTabId} tabs={mainAreaTabs.tabs} />
-      {isRightSidebarVisible && !appLayout.isRightCollapsed ? (
+      {isRightSidebarVisible && isRightSidebarMounted ? (
         <RightSidebar
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}
           onResizePointerDown={(event) => appLayout.startPanelResize('right', event)}

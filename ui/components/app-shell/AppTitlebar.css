@@ -6,6 +6,7 @@
   min-width: 0;
   border-bottom: 1px solid var(--panel-border);
   background: #f6f6f6;
+  transition: grid-template-columns 180ms ease;
   -webkit-app-region: drag;
 }
 
@@ -43,10 +44,19 @@
   background: transparent;
   -webkit-app-region: no-drag;
   transform: translateY(1px);
+  transition:
+    background-color 140ms ease,
+    transform 140ms ease;
 }
 
 .titlebar-toggle:hover {
   background: #e9e9eb;
+  transform: translateY(1px) scale(1.04);
+}
+
+.titlebar-toggle:active {
+  background: #dedfe3;
+  transform: translateY(1px) scale(0.94);
 }
 
 .sidebar-toggle-icon {
@@ -56,6 +66,9 @@
   height: 17px;
   border: 2px solid #70747a;
   border-radius: 4px;
+  transition:
+    border-color 160ms ease,
+    transform 180ms ease;
 }
 
 .sidebar-toggle-icon::before {
@@ -66,6 +79,9 @@
   border-radius: 2px;
   background: #70747a;
   content: '';
+  transition:
+    background-color 160ms ease,
+    transform 180ms ease;
 }
 
 .sidebar-toggle-icon.left::before {
@@ -74,6 +90,10 @@
 
 .sidebar-toggle-icon.right::before {
   right: 2px;
+}
+
+.titlebar-toggle[data-collapsed='true'] .sidebar-toggle-icon {
+  transform: rotate(180deg);
 }
 
 @media (max-width: 900px) {

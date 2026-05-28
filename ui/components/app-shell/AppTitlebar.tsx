@@ -34,6 +34,7 @@ export function AppTitlebar({
         <button
           aria-label={isLeftCollapsed ? 'Show file explorer' : 'Hide file explorer'}
           className="titlebar-toggle"
+          data-collapsed={isLeftCollapsed}
           onClick={onToggleLeft}
           type="button"
         >
@@ -48,6 +49,7 @@ export function AppTitlebar({
           <button
             aria-label={isRightCollapsed ? 'Show tool panel' : 'Hide tool panel'}
             className="titlebar-toggle"
+            data-collapsed={isRightCollapsed}
             onClick={onToggleRight}
             type="button"
           >
