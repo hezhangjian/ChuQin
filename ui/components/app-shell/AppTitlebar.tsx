@@ -1,22 +1,32 @@
 import {WindowControls} from '../window-controls/WindowControls';
+import {MainAreaTabs} from '../main-area/MainAreaTabs';
+import type {MainAreaTab} from '../main-area/types';
 import './AppTitlebar.css';
 
 type AppTitlebarProps = {
+  activeTabId: string;
   isLeftCollapsed: boolean;
   isRightCollapsed: boolean;
   isRightSidebarVisible: boolean;
   isWindows: boolean;
+  onCloseTab: (tabId: string) => void;
+  onSelectTab: (tabId: string) => void;
   onToggleLeft: () => void;
   onToggleRight: () => void;
+  tabs: MainAreaTab[];
 };
 
 export function AppTitlebar({
+  activeTabId,
   isLeftCollapsed,
   isRightCollapsed,
   isRightSidebarVisible,
   isWindows,
+  onCloseTab,
+  onSelectTab,
   onToggleLeft,
   onToggleRight,
+  tabs,
 }: AppTitlebarProps) {
   return (
     <header className="app-titlebar" data-tauri-drag-region>
@@ -30,6 +40,8 @@ export function AppTitlebar({
           <span className="sidebar-toggle-icon left" aria-hidden="true" />
         </button>
       </div>
+
+      <MainAreaTabs activeTabId={activeTabId} onCloseTab={onCloseTab} onSelectTab={onSelectTab} tabs={tabs} />
 
       <div className="titlebar-actions right" data-tauri-drag-region>
         {isRightSidebarVisible ? (

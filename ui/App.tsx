@@ -133,12 +133,16 @@ function App() {
       style={rootStyle}
     >
       <AppTitlebar
+        activeTabId={mainAreaTabs.activeTabId}
         isLeftCollapsed={appLayout.isLeftCollapsed}
         isRightCollapsed={appLayout.isRightCollapsed}
         isRightSidebarVisible={isRightSidebarVisible}
         isWindows={isWindows}
+        onCloseTab={mainAreaTabs.closeTab}
+        onSelectTab={mainAreaTabs.selectTab}
         onToggleLeft={appLayout.toggleLeftCollapsed}
         onToggleRight={appLayout.toggleRightCollapsed}
+        tabs={mainAreaTabs.tabs}
       />
 
       {appLayout.isLeftCollapsed ? null : (
@@ -165,13 +169,7 @@ function App() {
           tools={buildConfig.tools}
         />
       )}
-      <MainArea
-        activeTab={mainAreaTabs.activeTab}
-        activeTabId={mainAreaTabs.activeTabId}
-        onCloseTab={mainAreaTabs.closeTab}
-        onSelectTab={mainAreaTabs.selectTab}
-        tabs={mainAreaTabs.tabs}
-      />
+      <MainArea activeTab={mainAreaTabs.activeTab} activeTabId={mainAreaTabs.activeTabId} tabs={mainAreaTabs.tabs} />
       {isRightSidebarVisible && !appLayout.isRightCollapsed ? (
         <RightSidebar
           onResizeKeyDown={(event) => appLayout.resizePanelWithKeyboard('right', event)}

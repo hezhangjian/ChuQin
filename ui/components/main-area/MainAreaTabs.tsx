@@ -1,4 +1,5 @@
 import type {MainAreaTab} from './types';
+import './MainAreaTabs.css';
 
 type MainAreaTabsProps = {
   activeTabId: string;

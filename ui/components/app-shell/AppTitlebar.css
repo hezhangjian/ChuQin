@@ -1,11 +1,11 @@
 .app-titlebar {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: minmax(96px, 1fr) minmax(96px, 1fr);
+  grid-template-columns: minmax(78px, var(--left-panel-width)) minmax(0, 1fr) minmax(44px, var(--right-panel-width));
   align-items: center;
   min-width: 0;
   border-bottom: 1px solid var(--panel-border);
-  background: var(--panel-background);
+  background: #f6f6f6;
   -webkit-app-region: drag;
 }
 
@@ -14,6 +14,7 @@
   align-items: center;
   gap: 8px;
   min-width: 0;
+  height: 44px;
   padding: 0 10px;
 }
 
@@ -79,5 +80,6 @@
     position: sticky;
     top: 0;
     z-index: 1;
+    grid-template-columns: auto minmax(0, 1fr) auto;
   }
 }
