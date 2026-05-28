@@ -1,5 +1,6 @@
 import {invoke} from '@tauri-apps/api/core';
 import {useCallback, useEffect, useRef, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import './FileEditor.css';
 
 type FileEditorProps = {
@@ -11,6 +12,7 @@ type SaveStatus = 'saved' | 'pending' | 'saving' | 'error';
 const autoSaveDelayMs = 1000;
 
 export function FileEditor({path}: FileEditorProps) {
+  const {t} = useTranslation();
   const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string>();
@@ -125,28 +127,28 @@ export function FileEditor({path}: FileEditorProps) {
 
   function getSaveStatusLabel() {
     if (saveStatus === 'saving') {
-      return 'Saving...';
+      return t('fileEditor.saving');
     }
 
     if (saveStatus === 'pending') {
-      return 'Pending save';
+      return t('fileEditor.pendingSave');
     }
 
     if (saveStatus === 'error') {
-      return 'Save failed';
+      return t('fileEditor.saveError');
     }
 
-    return 'Saved';
+    return t('fileEditor.saved');
   }
 
   if (isLoading) {
-    return <div className="main-area-state">Loading...</div>;
+    return <div className="main-area-state">{t('fileEditor.loading')}</div>;
   }
 
   if (loadError) {
     return (
       <div className="main-area-state error">
-        <strong>Unable to open file</strong>
+        <strong>{t('fileEditor.loadError')}</strong>
         <span>{loadError}</span>
       </div>
     );

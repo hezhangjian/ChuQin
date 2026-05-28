@@ -1,19 +1,12 @@
-import type {CreatableFileKind} from '../../hooks/useFileExplorer';
+import {useTranslation} from 'react-i18next';
 import type {useFileActions} from './useFileActions';
 import './FileActionDialogs.css';
 
 type FileActions = ReturnType<typeof useFileActions>;
 
-const creatableFileLabels: Record<CreatableFileKind, string> = {
-  excel: 'Excel 表格',
-  folder: '文件夹',
-  markdown: 'Markdown',
-  ppt: 'PPT',
-  text: 'TXT',
-  word: 'Word 文档',
-};
-
 export function FileActionDialogs({fileActions}: {fileActions: FileActions}) {
+  const {t} = useTranslation();
+
   return (
     <>
       {fileActions.createTarget ? (
@@ -27,7 +20,7 @@ export function FileActionDialogs({fileActions}: {fileActions: FileActions}) {
             }}
             role="dialog"
           >
-            <h2>新建{creatableFileLabels[fileActions.createTarget.kind]}</h2>
+            <h2>{t('fileActions.createFile')}</h2>
             <input
               autoFocus
               className="file-action-input"
@@ -38,10 +31,10 @@ export function FileActionDialogs({fileActions}: {fileActions: FileActions}) {
             {fileActions.error ? <p className="file-action-error">{fileActions.error}</p> : null}
             <div className="file-action-buttons">
               <button onClick={fileActions.cancelCreateFile} type="button">
-                取消
+                {t('common.cancel')}
               </button>
               <button className="primary" disabled={!fileActions.createValue.trim()} type="submit">
-                新建
+                {t('fileActions.createFile')}
               </button>
             </div>
           </form>
@@ -58,7 +51,7 @@ export function FileActionDialogs({fileActions}: {fileActions: FileActions}) {
             }}
             role="dialog"
           >
-            <h2>重命名</h2>
+            <h2>{t('fileActions.rename')}</h2>
             <input
               autoFocus
               className="file-action-input"
@@ -68,10 +61,10 @@ export function FileActionDialogs({fileActions}: {fileActions: FileActions}) {
             {fileActions.error ? <p className="file-action-error">{fileActions.error}</p> : null}
             <div className="file-action-buttons">
               <button onClick={fileActions.cancelRename} type="button">
-                取消
+                {t('common.cancel')}
               </button>
               <button className="primary" disabled={!fileActions.renameValue.trim()} type="submit">
-                重命名
+                {t('fileActions.rename')}
               </button>
             </div>
           </form>
@@ -80,18 +73,18 @@ export function FileActionDialogs({fileActions}: {fileActions: FileActions}) {
       {fileActions.deleteTarget ? (
         <div className="file-action-backdrop" role="presentation">
           <div aria-label="Delete item" className="file-action-dialog" role="dialog">
-            <h2>删除</h2>
+            <h2>{t('fileActions.delete')}</h2>
             <p>
-              删除{fileActions.deleteTarget.is_dir ? '文件夹' : '文件'} <strong>{fileActions.deleteTarget.name}</strong>
-              ?
+              {fileActions.deleteTarget.is_dir ? t('fileActions.deleteFolder') : t('fileActions.deleteFile')}{' '}
+              <strong>{fileActions.deleteTarget.name}</strong>?
             </p>
             {fileActions.error ? <p className="file-action-error">{fileActions.error}</p> : null}
             <div className="file-action-buttons">
               <button onClick={fileActions.cancelDelete} type="button">
-                取消
+                {t('common.cancel')}
               </button>
               <button className="danger" onClick={() => void fileActions.deleteNode()} type="button">
-                删除
+                {t('fileActions.delete')}
               </button>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import {useEffect, useMemo, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {calculateDigests, type DigestAlgorithm} from '../../lib/digests';
 import './DigestTool.css';
 
@@ -10,6 +11,7 @@ type DigestResult = {
 };
 
 export function DigestTool() {
+  const {t} = useTranslation();
   const [input, setInput] = useState('');
   const [results, setResults] = useState<DigestResult[]>([]);
   const [selectedAlgorithms, setSelectedAlgorithms] = useState<Set<DigestAlgorithm>>(
@@ -52,22 +54,22 @@ export function DigestTool() {
     <div className="digest-tool">
       <header className="tool-surface-header">
         <div>
-          <h1>摘要计算</h1>
-          <p>输入文本后自动计算 MD5 与 SHA 摘要。</p>
+          <h1>{t('tools.digest.label')}</h1>
+          <p>{t('tools.digest.subtitle')}</p>
         </div>
       </header>
 
       <section className="digest-tool-layout">
         <div className="digest-input-panel">
           <label className="digest-input-label" htmlFor="digest-input">
-            文本
+            {t('tools.digest.input')}
           </label>
           <textarea
             autoFocus
             className="digest-input"
             id="digest-input"
             onChange={(event) => setInput(event.target.value)}
-            placeholder="在这里输入要计算摘要的文本"
+            placeholder={t('tools.digest.placeholder')}
             spellCheck={false}
             value={input}
           />
@@ -99,14 +101,14 @@ export function DigestTool() {
                       }}
                       type="button"
                     >
-                      复制
+                      {t('tools.digest.copy')}
                     </button>
                   </div>
                   <code>{result.value}</code>
                 </div>
               ))
             ) : (
-              <p className="digest-empty">选择至少一种算法。</p>
+              <p className="digest-empty">{t('tools.digest.empty')}</p>
             )}
           </div>
         </div>

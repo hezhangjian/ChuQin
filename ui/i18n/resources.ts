@@ -11,6 +11,32 @@ export const zhCN = {
     save: '保存',
     saving: '保存中...',
   },
+  fileActions: {
+    createFile: '新建文件',
+    createFolder: '新建文件夹',
+    createMarkdown: '新建 Markdown',
+    createMore: '新建更多',
+    createPpt: '新建 PPT',
+    createText: '新建 TXT',
+    defaultExcel: '未命名表格.xlsx',
+    defaultFolder: '未命名文件夹',
+    defaultMarkdown: '未命名.md',
+    defaultPpt: '未命名演示文稿.pptx',
+    defaultText: '未命名.txt',
+    defaultWord: '未命名文档.docx',
+    delete: '删除',
+    deleteFile: '删除文件',
+    deleteFolder: '删除文件夹',
+    rename: '重命名',
+  },
+  fileEditor: {
+    loadError: '无法打开文件',
+    loading: '加载中...',
+    pendingSave: '待保存',
+    saveError: '保存失败',
+    saved: '已保存',
+    saving: '保存中...',
+  },
   settings: {
     actions: {
       closeSettings: '关闭设置',
@@ -52,8 +78,13 @@ export const zhCN = {
   },
   tools: {
     digest: {
+      copy: '复制',
       description: '从粘贴或选中的文本计算本地摘要。',
+      empty: '选择至少一种算法。',
+      input: '文本',
       label: '摘要计算',
+      placeholder: '在这里输入要计算摘要的文本',
+      subtitle: '输入文本后自动计算 MD5 与 SHA 摘要。',
     },
     emailBackup: {
       actions: {
@@ -150,6 +181,32 @@ export const enUS = {
     save: 'Save',
     saving: 'Saving...',
   },
+  fileActions: {
+    createFile: 'Create file',
+    createFolder: 'New folder',
+    createMarkdown: 'New Markdown',
+    createMore: 'Create more',
+    createPpt: 'New PPT',
+    createText: 'New TXT',
+    defaultExcel: 'Untitled Spreadsheet.xlsx',
+    defaultFolder: 'Untitled Folder',
+    defaultMarkdown: 'Untitled.md',
+    defaultPpt: 'Untitled Presentation.pptx',
+    defaultText: 'Untitled.txt',
+    defaultWord: 'Untitled Document.docx',
+    delete: 'Delete',
+    deleteFile: 'Delete file',
+    deleteFolder: 'Delete folder',
+    rename: 'Rename',
+  },
+  fileEditor: {
+    loadError: 'Unable to open file',
+    loading: 'Loading...',
+    pendingSave: 'Pending save',
+    saveError: 'Save failed',
+    saved: 'Saved',
+    saving: 'Saving...',
+  },
   settings: {
     actions: {
       closeSettings: 'Close settings',
@@ -191,8 +248,13 @@ export const enUS = {
   },
   tools: {
     digest: {
+      copy: 'Copy',
       description: 'Compute local text digests from pasted or selected content.',
+      empty: 'Select at least one algorithm.',
+      input: 'Text',
       label: 'Digest',
+      placeholder: 'Enter text to compute digest',
+      subtitle: 'MD5 and SHA digests are computed automatically as you type.',
     },
     emailBackup: {
       actions: {

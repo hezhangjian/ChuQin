@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {i18next} from '../../i18n';
 import type {CreatableFileKind, FileExplorerState, TreeNode} from '../../hooks/useFileExplorer';
 import type {MainAreaTabsState} from '../../hooks/useMainAreaTabs';
 
@@ -7,13 +8,13 @@ export type CreateFileAction = {
   kind: CreatableFileKind;
 };
 
-const creatableFileDefaultNames: Record<CreatableFileKind, string> = {
-  excel: '未命名表格.xlsx',
-  folder: '未命名文件夹',
-  markdown: '未命名.md',
-  ppt: '未命名演示文稿.pptx',
-  text: '未命名.txt',
-  word: '未命名文档.docx',
+const creatableFileDefaultNames: Record<CreatableFileKind, () => string> = {
+  excel: () => i18next.t('fileActions.defaultExcel'),
+  folder: () => i18next.t('fileActions.defaultFolder'),
+  markdown: () => i18next.t('fileActions.defaultMarkdown'),
+  ppt: () => i18next.t('fileActions.defaultPpt'),
+  text: () => i18next.t('fileActions.defaultText'),
+  word: () => i18next.t('fileActions.defaultWord'),
 };
 
 export function useFileActions(fileExplorer: FileExplorerState, mainAreaTabs: MainAreaTabsState) {
@@ -31,7 +32,7 @@ export function useFileActions(fileExplorer: FileExplorerState, mainAreaTabs: Ma
   function requestCreateFile(folder: TreeNode, kind: CreatableFileKind) {
     clearError();
     setCreateTarget({folder, kind});
-    setCreateValue(creatableFileDefaultNames[kind]);
+    setCreateValue(creatableFileDefaultNames[kind]());
   }
 
   function cancelCreateFile() {

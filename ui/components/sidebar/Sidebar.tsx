@@ -24,16 +24,16 @@ const rootContextMenuHeight = 172;
 const contextMenuWidth = 164;
 const contextMenuViewportMargin = 8;
 
-const primaryCreatableFileMenuItems: Array<{kind: CreatableFileKind; label: string}> = [
-  {kind: 'folder', label: '新建文件夹'},
-  {kind: 'markdown', label: '新建 Markdown'},
-  {kind: 'text', label: '新建 TXT'},
-  {kind: 'ppt', label: '新建 PPT'},
+const primaryCreatableFileMenuItems: Array<{kind: CreatableFileKind; labelKey: string}> = [
+  {kind: 'folder', labelKey: 'fileActions.createFolder'},
+  {kind: 'markdown', labelKey: 'fileActions.createMarkdown'},
+  {kind: 'text', labelKey: 'fileActions.createText'},
+  {kind: 'ppt', labelKey: 'fileActions.createPpt'},
 ];
 
 const secondaryCreatableFileMenuItems: Array<{kind: CreatableFileKind; label: string}> = [
-  {kind: 'excel', label: 'Excel 表格'},
-  {kind: 'word', label: 'Word 文档'},
+  {kind: 'excel', label: 'Excel'},
+  {kind: 'word', label: 'Word'},
 ];
 
 function getFileNameParts(node: TreeNode) {
@@ -348,12 +348,12 @@ export function Sidebar({
                   role="menuitem"
                   type="button"
                 >
-                  {item.label}
+                  {t(item.labelKey)}
                 </button>
               ))}
               <div className="file-tree-context-submenu">
                 <button aria-haspopup="menu" role="menuitem" type="button">
-                  <span>新建更多</span>
+                  <span>{t('fileActions.createMore')}</span>
                   <span aria-hidden="true" className="file-tree-context-submenu-arrow" />
                 </button>
                 <div className="file-tree-context-menu nested" role="menu">
@@ -382,7 +382,7 @@ export function Sidebar({
                 role="menuitem"
                 type="button"
               >
-                重命名
+                {t('fileActions.rename')}
               </button>
               <button
                 onClick={() => {
@@ -392,7 +392,7 @@ export function Sidebar({
                 role="menuitem"
                 type="button"
               >
-                删除
+                {t('fileActions.delete')}
               </button>
             </>
           ) : null}
