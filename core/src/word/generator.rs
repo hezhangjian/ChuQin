@@ -9,7 +9,6 @@ pub fn write_default_docx(output_path: &Path, title: &str) -> Result<()> {
         .add_paragraph(Paragraph::new().add_run(Run::new().add_text(title).size(48)))
         .build();
     let mut file = std::fs::File::create(output_path)?;
-    docx.pack(&mut file)
-        .map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
+    docx.pack(&mut file).map_err(io::Error::other)?;
     Ok(())
 }
