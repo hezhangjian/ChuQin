@@ -4,6 +4,7 @@
 
 mod commands;
 mod events;
+mod window_state;
 
 use chuqin_core::AppContext;
 use std::collections::HashMap;
@@ -91,7 +92,20 @@ pub fn run() {
                 }
             }
 
+            {
+                use tauri::Manager;
+
+                if let Some(window) = app.get_webview_window("main") {
+                    window_state::restore_main_window(&window);
+                }
+            }
+
             Ok(())
+        })
+        .on_window_event(|window, event| {
+            if window.label() == "main" {
+                window_state::save_main_window_on_event(window, event);
+            }
         })
         .on_menu_event(|app, event| {
             if event.id().as_ref() == CLOSE_TAB_MENU_ID {
