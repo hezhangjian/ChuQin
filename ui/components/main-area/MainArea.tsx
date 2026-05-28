@@ -2,7 +2,7 @@ import {getAppDefinition} from '../apps/appDefinitions';
 import {getToolDefinition} from '../tools/toolDefinitions';
 import {FileEditor} from './FileEditor';
 import {MainAreaTabs} from './MainAreaTabs';
-import type {MainAreaTab} from '../../types';
+import type {MainAreaTab} from './types';
 import './MainArea.css';
 
 type MainAreaProps = {

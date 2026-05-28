@@ -1,9 +1,10 @@
 import {useMemo, useState} from 'react';
 import {getAppDefinition} from '../components/apps/appDefinitions';
 import {getToolDefinition} from '../components/tools/toolDefinitions';
+import type {MainAreaTab} from '../components/main-area/types';
 import type {FileNode} from '../types';
 import {getFileOpenMode} from '../lib/fileHandlers';
-import type {AppId, MainAreaTab, ToolId} from '../types';
+import type {AppId, ToolId} from '../types';
 
 const maxOpenTabs = 10;
 

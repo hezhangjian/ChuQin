@@ -1,5 +1,6 @@
 import type {FileNode} from '../types';
-import type {FileTabMode} from '../types/mainAreaTabs';
+
+export type FileTabMode = 'edit';
 
 export type FileOpenMode = FileTabMode | 'external';
 
