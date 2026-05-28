@@ -62,9 +62,23 @@ function App() {
       unlisten = dispose;
     });
 
+    function handleKeyDown(e: KeyboardEvent) {
+      if ((e.ctrlKey || e.metaKey) && e.key === "w") {
+        e.preventDefault();
+        closeActiveTab()
+      }
+    }
+
+    if (isWindows) {
+      document.addEventListener('keydown', handleKeyDown);
+    }
+
     return () => {
       isDisposed = true;
       unlisten?.();
+      if (isWindows) {
+        document.removeEventListener('keydown', handleKeyDown);
+      }
     };
   }, [mainAreaTabs.activeTab?.id]);
 
