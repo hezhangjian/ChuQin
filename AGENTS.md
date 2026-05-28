@@ -46,3 +46,11 @@ This repository is organized as:
   necessary for a staged transition.
 - When the user explicitly asks not to preserve compatibility aliases during a rename or migration, remove the old names
   across code, docs, command surfaces, and tests instead of keeping transitional aliases.
+
+## Frontend
+
+- Keep CSS at the same abstraction level as the UI it describes. Document/window baseline rules belong in a tiny global
+  file such as `ui/window.css`; app shell layout, shell-scoped variables, panel backgrounds, borders, and resize handles
+  belong in `App.css`; component visuals and component-specific responsive rules belong next to that component. Do not
+  use `App.css` or vague shared `styles/` files as import aggregators or dumping grounds for lower-level component
+  styles. When moving styles to their owning layer, delete obsolete shared files instead of keeping empty buckets.
