@@ -284,11 +284,11 @@ export function Sidebar({
   function renderSection(section: SidebarSection) {
     switch (section) {
       case SidebarSection.Apps:
-        return <AppSidebarSection activeAppId={activeAppId} apps={apps} onOpenApp={onOpenApp} variant="left" />;
+        return <AppSidebarSection activeAppId={activeAppId} apps={apps} onOpenApp={onOpenApp} />;
       case SidebarSection.Chats:
         return <ChatSidebarSection variant="left" />;
       case SidebarSection.Tools:
-        return <ToolSidebarSection activeToolId={activeToolId} onOpenTool={onOpenTool} tools={tools} variant="left" />;
+        return <ToolSidebarSection activeToolId={activeToolId} onOpenTool={onOpenTool} tools={tools} />;
       case SidebarSection.Files:
         return null;
     }

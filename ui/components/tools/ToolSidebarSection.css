@@ -1,14 +1,9 @@
-.tool-sidebar-section-left {
-  display: grid;
-  gap: 4px;
-}
-
-.tool-sidebar-section-right {
+.tool-sidebar-section {
   display: grid;
   gap: 12px;
 }
 
-.tool-sidebar-section-title-left {
+.tool-sidebar-section-title {
   margin: 0;
   padding: 0 8px 6px 8px;
   color: #242629;
@@ -18,35 +13,11 @@
   line-height: 1.1;
 }
 
-.tool-sidebar-section-title-right {
-  margin: 0 6px 2px;
-  color: #242629;
-  font-size: 18px;
-  font-weight: 740;
-  letter-spacing: 0;
-  line-height: 1.1;
-}
-
 .tool-sidebar-entry {
   display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
   align-items: center;
   width: 100%;
-  text-align: left;
-}
-
-.tool-sidebar-entry-left {
-  grid-template-columns: 22px minmax(0, 1fr);
-  min-height: 36px;
-  padding: 0 8px 0 16px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: #202124;
-  gap: 8px;
-}
-
-.tool-sidebar-entry-right {
-  grid-template-columns: 30px minmax(0, 1fr);
   min-height: 54px;
   padding: 0 12px;
   border: 1px solid #d9dbe0;
@@ -55,77 +26,44 @@
   color: #242629;
   box-shadow: 0 1px 3px rgb(20 22 26 / 10%);
   gap: 10px;
+  text-align: left;
 }
 
-.tool-sidebar-entry-left:hover,
-.tool-sidebar-entry-left:focus-visible {
-  outline: none;
-  background: #efefef;
-}
-
-.tool-sidebar-entry-left.active {
-  background: #e9efff;
-  color: #244eb6;
-}
-
-.tool-sidebar-entry-right:hover,
-.tool-sidebar-entry-right:focus-visible {
+.tool-sidebar-entry:hover,
+.tool-sidebar-entry:focus-visible {
   outline: none;
   border-color: #bfc4ce;
   background: #fbfbfc;
 }
 
-.tool-sidebar-entry-right.active {
+.tool-sidebar-entry.active {
   border-color: #3e6ae1;
   box-shadow: 0 0 0 2px #3e6ae1;
 }
 
 .tool-sidebar-entry-icon {
   display: grid;
-  place-items: center;
-}
-
-.tool-sidebar-entry-icon-left {
-  width: 17px;
-  height: 17px;
-  color: currentColor;
-}
-
-.tool-sidebar-entry-icon-left svg {
-  width: 100%;
-  height: 100%;
-}
-
-.tool-sidebar-entry-icon-right {
   width: 26px;
   height: 26px;
+  place-items: center;
   border-radius: 6px;
   background: #edf1ff;
   color: #3e6ae1;
 }
 
-.tool-sidebar-entry-icon-right svg {
-  width: 16px;
-  height: 16px;
+.tool-sidebar-entry-icon svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 2;
 }
 
 .tool-sidebar-entry span:last-child {
   min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tool-sidebar-entry-left span:last-child {
-  font-size: 15px;
-  font-weight: 550;
-  letter-spacing: 0;
-  line-height: 1.25;
-}
-
-.tool-sidebar-entry-right span:last-child {
   font-size: 15px;
   font-weight: 680;
   letter-spacing: 0;
   line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

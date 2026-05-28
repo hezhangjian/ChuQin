@@ -110,7 +110,6 @@ function App() {
             activeAppId={mainAreaTabs.activeTab?.type === 'app' ? mainAreaTabs.activeTab.appId : undefined}
             apps={buildConfig.apps}
             onOpenApp={mainAreaTabs.openApp}
-            variant="right"
           />
         );
       case SidebarSection.Chats:
@@ -121,7 +120,6 @@ function App() {
             activeToolId={mainAreaTabs.activeTab?.type === 'tool' ? mainAreaTabs.activeTab.toolId : undefined}
             onOpenTool={mainAreaTabs.openTool}
             tools={buildConfig.tools}
-            variant="right"
           />
         );
       case SidebarSection.Files:
