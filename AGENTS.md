@@ -44,3 +44,5 @@ This repository is organized as:
   than preserving the old structure by default. Refactor boldly: move responsibilities to the right layer, delete
   redundant code, split or merge modules where it clarifies ownership, and leave compatibility shims only when they are
   necessary for a staged transition.
+- When the user explicitly asks not to preserve compatibility aliases during a rename or migration, remove the old names
+  across code, docs, command surfaces, and tests instead of keeping transitional aliases.
