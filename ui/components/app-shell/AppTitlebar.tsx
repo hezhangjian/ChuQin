@@ -1,3 +1,5 @@
+import {getCurrentWindow} from '@tauri-apps/api/window';
+import type {PointerEvent} from 'react';
 import {WindowControls} from '../window-controls/WindowControls';
 import {MainAreaTabs} from '../main-area/MainAreaTabs';
 import type {MainAreaTab} from '../main-area/types';
@@ -28,8 +30,23 @@ export function AppTitlebar({
   onToggleRight,
   tabs,
 }: AppTitlebarProps) {
+  function startWindowDrag(event: PointerEvent<HTMLElement>) {
+    if (event.button !== 0) {
+      return;
+    }
+
+    const target = event.target as HTMLElement;
+    if (target.closest('button, a, input, select, textarea, [role="tab"]')) {
+      return;
+    }
+
+    getCurrentWindow().startDragging().catch((error: unknown) => {
+      console.error('Failed to start window drag', error);
+    });
+  }
+
   return (
-    <header className="app-titlebar" data-tauri-drag-region>
+    <header className="app-titlebar" data-tauri-drag-region onPointerDown={startWindowDrag}>
       <div className="titlebar-actions left" data-tauri-drag-region>
         <button
           aria-label={isLeftCollapsed ? 'Show file explorer' : 'Hide file explorer'}
