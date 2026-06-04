@@ -30,15 +30,8 @@ pub fn list_directory(ctx: &AppContext, path: Option<&str>) -> Result<Vec<FileNo
 
     let entries = fs::read_dir(&target_path)?;
     let mut entries: Vec<_> = entries.filter_map(|e| e.ok()).collect();
-    entries.sort_by(|a, b| {
-        let a_is_dir = a.path().is_dir();
-        let b_is_dir = b.path().is_dir();
-        match (a_is_dir, b_is_dir) {
-            (true, false) => std::cmp::Ordering::Less,
-            (false, true) => std::cmp::Ordering::Greater,
-            _ => a.file_name().cmp(&b.file_name()),
-        }
-    });
+    entries.sort_by_key(|entry| entry.file_name());
+    entries.sort_by_key(|entry| !entry.path().is_dir());
 
     for entry in entries {
         let entry_path = entry.path();
