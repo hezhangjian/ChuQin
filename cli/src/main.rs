@@ -2,7 +2,7 @@ mod commands;
 
 use clap::{Parser, Subcommand};
 
-use commands::{excel, outlook, pdf, ppt, word};
+use commands::{excel, gitee, outlook, pdf, ppt, word};
 
 #[derive(Parser, Debug)]
 #[command(
@@ -21,6 +21,7 @@ enum Command {
     // Keep `version` first as the universal metadata command; sort feature commands alphabetically.
     Version,
     Excel(excel::ExcelCommand),
+    Gitee(gitee::GiteeCommand),
     Outlook(outlook::OutlookCommand),
     Pdf(pdf::PdfCommand),
     Ppt(ppt::PptCommand),

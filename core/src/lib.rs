@@ -3,6 +3,7 @@ mod context;
 mod error;
 pub mod excel;
 mod fs;
+pub mod gitee;
 pub mod outlook;
 pub mod ppt;
 mod util;

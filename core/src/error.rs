@@ -20,6 +20,8 @@ pub enum Error {
     ConfigTomlSerialize(#[from] toml::ser::Error),
     #[error("unable to determine the current user's home directory")]
     MissingHomeDir,
+    #[error("HTTP error: {0}")]
+    Http(#[from] reqwest::Error),
     #[error("Path not found: {0}")]
     PathNotFound(String),
     #[error("PPTX generation error: {0}")]
