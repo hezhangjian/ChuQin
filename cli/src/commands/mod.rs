@@ -1,4 +1,5 @@
 pub mod excel;
+pub mod gitcode;
 pub mod gitee;
 pub mod outlook;
 pub mod pdf;
@@ -16,6 +17,7 @@ pub fn run(command: Command) -> Result<(), Error> {
             println!("{}", env!("CARGO_PKG_VERSION"));
         }
         Command::Excel(command) => excel::run(&ctx, command)?,
+        Command::Gitcode(command) => gitcode::run(&ctx, command)?,
         Command::Gitee(command) => gitee::run(&ctx, command)?,
         Command::Outlook(command) => outlook::run(&ctx, command)?,
         Command::Pdf(command) => pdf::run(&ctx, command)?,
