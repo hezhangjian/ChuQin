@@ -1,6 +1,7 @@
 .sidebar {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-columns: 76px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   grid-column: 1;
   border-right: 1px solid var(--panel-border);
 }
@@ -292,4 +293,48 @@
 
 .file-tree-root-message {
   padding: 0 8px;
+}
+
+.primary-navigation {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 6px;
+  border-right: 1px solid var(--panel-border);
+  background: var(--panel-background);
+}
+.primary-navigation-items {
+  display: grid;
+  gap: 8px;
+}
+.primary-navigation-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 66px;
+  width: 100%;
+  padding: 8px 2px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #646a73;
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.primary-navigation-entry:hover {
+  background: #e9e9eb;
+}
+.primary-navigation-entry.active {
+  background: #e2e5eb;
+  color: #242629;
+}
+.primary-navigation-entry:focus-visible {
+  outline: 2px solid #8d9299;
+  outline-offset: -2px;
+}
+.sidebar-sections {
+  border-top: 0;
 }

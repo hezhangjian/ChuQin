@@ -5,7 +5,7 @@
 
   display: grid;
   grid-template-rows: 44px minmax(0, 1fr);
-  grid-template-columns: var(--left-panel-width) minmax(420px, 1fr) var(--right-panel-width);
+  grid-template-columns: calc(76px + var(--left-panel-width)) minmax(420px, 1fr) var(--right-panel-width);
   height: 100vh;
   overflow: hidden;
   background: var(--main-area-background);

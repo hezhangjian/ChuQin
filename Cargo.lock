@@ -590,14 +590,18 @@ dependencies = [
 name = "chuqin"
 version = "0.0.1"
 dependencies = [
+ "anyhow",
  "chuqin-core",
+ "dirs",
  "ico",
+ "libc",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-opener",
  "toml 1.1.2+spec-1.1.0",
+ "uuid",
 ]
 
 [[package]]

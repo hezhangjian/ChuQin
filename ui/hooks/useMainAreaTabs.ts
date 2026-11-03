@@ -13,6 +13,7 @@ export type MainAreaTabsState = {
   activeTabId: string;
   closeTab: (tabId: string) => void;
   closePath: (path: string) => void;
+  openChat: (id: string, title: string) => void;
   openApp: (appId: AppId) => MainAreaTab;
   openFile: (node: FileNode) => MainAreaTab | null;
   openTool: (toolId: ToolId) => MainAreaTab;
@@ -186,6 +187,7 @@ export function useMainAreaTabs(): MainAreaTabsState {
     activeTabId,
     closeTab,
     closePath,
+    openChat: (id, title) => openTab({id: `chat:${id}`, sessionId: id, title, type: 'chat'}),
     openApp,
     openFile,
     openTool,

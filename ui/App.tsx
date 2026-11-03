@@ -1,3 +1,4 @@
+import {useChats} from './components/chat/chatStore';
 import {openPath} from '@tauri-apps/plugin-opener';
 import {listen} from '@tauri-apps/api/event';
 import {useEffect, useState} from 'react';
@@ -31,6 +32,15 @@ function App() {
   const appLayout = useAppLayout();
   const fileExplorer = useFileExplorer();
   const mainAreaTabs = useMainAreaTabs();
+  const chats = useChats();
+  useEffect(() => {
+    function handleOpenChat(event: Event) {
+      const {id, title} = (event as CustomEvent<{id: string; title: string}>).detail;
+      mainAreaTabs.openChat(id, title);
+    }
+    window.addEventListener('chuqin:open-chat', handleOpenChat);
+    return () => window.removeEventListener('chuqin:open-chat', handleOpenChat);
+  }, [chats, mainAreaTabs.openChat]);
   const fileActions = useFileActions(fileExplorer, mainAreaTabs);
   const isRightSidebarVisible = buildConfig.rightSidebar.visible;
   const rootStyle = isRightSidebarVisible
@@ -63,9 +73,9 @@ function App() {
     });
 
     function handleKeyDown(e: KeyboardEvent) {
-      if ((e.ctrlKey || e.metaKey) && e.key === "w") {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'w') {
         e.preventDefault();
-        closeActiveTab()
+        closeActiveTab();
       }
     }
 
@@ -197,7 +207,11 @@ function App() {
         onSelectTab={mainAreaTabs.selectTab}
         onToggleLeft={appLayout.toggleLeftCollapsed}
         onToggleRight={appLayout.toggleRightCollapsed}
-        tabs={mainAreaTabs.tabs}
+        tabs={mainAreaTabs.tabs.map((tab) =>
+          tab.type === 'chat'
+            ? {...tab, title: chats.find((chat) => chat.id === tab.sessionId)?.title ?? tab.title}
+            : tab
+        )}
       />
 
       {isLeftSidebarMounted ? (

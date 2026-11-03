@@ -1,0 +1,75 @@
+.review-tool {
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 28px;
+  background: #fff;
+  color: #242931;
+}
+.review-tool > * {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.review-tool h1 {
+  font-size: 24px;
+  margin-top: 0;
+}
+.review-tool h2 {
+  font-size: 18px;
+}
+.review-tool p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #626b78;
+}
+.review-tool-status {
+  padding: 12px;
+  background: #f3f5f8;
+  border-radius: 8px;
+}
+.review-tool form,
+.review-tool label {
+  display: grid;
+  gap: 8px;
+}
+.review-tool form {
+  gap: 18px;
+}
+.review-tool label {
+  font-size: 13px;
+  font-weight: 600;
+}
+.review-tool input,
+.review-tool select,
+.review-tool textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d6dbe2;
+  border-radius: 6px;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+}
+.review-tool textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+.review-tool button {
+  justify-self: start;
+  padding: 9px 16px;
+  border: 1px solid #c6ced9;
+  border-radius: 6px;
+  background: #edf2fb;
+  color: #243c66;
+  cursor: pointer;
+}
+.review-tool button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.review-tool :focus-visible {
+  outline: 2px solid #547bc4;
+  outline-offset: 2px;
+}

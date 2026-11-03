@@ -1,3 +1,4 @@
+import {ChatSurface} from '../chat/ChatSurface';
 import {getAppDefinition} from '../apps/appDefinitions';
 import {getToolDefinition} from '../tools/toolDefinitions';
 import {FileEditor} from './FileEditor';
@@ -11,6 +12,7 @@ type MainAreaProps = {
 };
 
 function renderTab(tab: MainAreaTab) {
+  if (tab.type === 'chat') return <ChatSurface id={tab.sessionId} />;
   if (tab.type === 'file') {
     return <FileEditor path={tab.path} />;
   }

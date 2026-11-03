@@ -1,7 +1,7 @@
 .app-titlebar {
   display: grid;
   grid-column: 1 / -1;
-  grid-template-columns: minmax(78px, var(--left-panel-width)) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(78px, calc(76px + var(--left-panel-width))) minmax(0, 1fr) auto;
   align-items: center;
   min-width: 0;
   border-bottom: 1px solid var(--panel-border);

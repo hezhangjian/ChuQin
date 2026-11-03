@@ -9,3 +9,5 @@ pub mod files;
 pub mod outlook;
 pub mod ppt;
 pub mod word;
+
+pub mod chat;

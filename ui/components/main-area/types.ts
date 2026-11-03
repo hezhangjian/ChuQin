@@ -23,4 +23,6 @@ export type AppMainAreaTab = {
   type: 'app';
 };
 
-export type MainAreaTab = AppMainAreaTab | FileMainAreaTab | ToolMainAreaTab;
+export type ChatMainAreaTab = {id: string; sessionId: string; title: string; type: 'chat'};
+
+export type MainAreaTab = ChatMainAreaTab | AppMainAreaTab | FileMainAreaTab | ToolMainAreaTab;

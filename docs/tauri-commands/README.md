@@ -2,6 +2,7 @@
 
 ## Modules
 
+- [chat](./chat.md) - Agent conversation execution and cancellation
 - [config](./config.md) - Root configuration operations
 - [excel](./excel.md) - Excel workbook operations
 - [files](./files.md) - File system operations

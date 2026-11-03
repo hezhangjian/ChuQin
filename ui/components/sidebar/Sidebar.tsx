@@ -1,3 +1,4 @@
+import {LayoutGrid, FolderOpen, MessageSquare, Settings, Wrench} from 'lucide-react';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import type {CSSProperties, KeyboardEvent, MouseEvent, PointerEvent} from 'react';
@@ -208,9 +209,14 @@ export function Sidebar({
 }) {
   const {t} = useTranslation();
   const [contextMenu, setContextMenu] = useState<FileTreeContextMenu>();
-  const contentSections = sections.filter(
-    (section) => section === SidebarSection.Apps || section === SidebarSection.Chats || section === SidebarSection.Tools
-  );
+  const [activeSection, setActiveSection] = useState(SidebarSection.Files);
+  const primarySections = [
+    {id: SidebarSection.Files, label: 'Projects', Icon: FolderOpen},
+    {id: SidebarSection.Chats, label: 'Chats', Icon: MessageSquare},
+    {id: SidebarSection.Apps, label: 'Apps', Icon: LayoutGrid},
+    {id: SidebarSection.Tools, label: 'Tools', Icon: Wrench},
+  ].filter((section) => sections.includes(section.id));
+  const contentSections = sections.filter((section) => section === activeSection && section !== SidebarSection.Files);
 
   useEffect(() => {
     if (!contextMenu) {
@@ -296,8 +302,28 @@ export function Sidebar({
 
   return (
     <aside className="sidebar" aria-label="Left sidebar">
+      <nav className="primary-navigation" aria-label="Workspace">
+        <div className="primary-navigation-items">
+          {primarySections.map(({id, label, Icon}) => (
+            <button
+              aria-current={activeSection === id ? 'page' : undefined}
+              className={`primary-navigation-entry${activeSection === id ? ' active' : ''}`}
+              key={id}
+              onClick={() => setActiveSection(id)}
+              type="button"
+            >
+              <Icon size={21} aria-hidden="true" />
+              <span>{label}</span>
+            </button>
+          ))}
+        </div>
+        <button className="primary-navigation-entry" onClick={onOpenSettings} type="button">
+          <Settings size={21} aria-hidden="true" />
+          <span>{t('settings.labels.title')}</span>
+        </button>
+      </nav>
       <div className="sidebar-scroll">
-        {sections.includes(SidebarSection.Files) ? (
+        {activeSection === SidebarSection.Files && sections.includes(SidebarSection.Files) ? (
           <nav className="file-tree" aria-label="Files" onContextMenu={showRootContextMenu}>
             <h2 className="sidebar-section-title">
               <span>Files</span>
@@ -321,15 +347,6 @@ export function Sidebar({
             <SidebarSections renderSection={renderSection} sections={contentSections} variant="left" />
           </div>
         ) : null}
-      </div>
-      <div className="sidebar-settings">
-        <button className="sidebar-settings-button" onClick={onOpenSettings} type="button">
-          <svg className="sidebar-settings-icon" aria-hidden="true" viewBox="0 0 24 24">
-            <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z" />
-            <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9L4.2 7A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 .9-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5.9h.1a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
-          </svg>
-          <span>{t('settings.labels.title')}</span>
-        </button>
       </div>
       {contextMenu ? (
         <div

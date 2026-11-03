@@ -2,6 +2,7 @@
 //!
 //! This module initializes the Tauri application and manages the global state.
 
+mod agent;
 mod commands;
 mod events;
 mod window_state;
@@ -18,6 +19,7 @@ const CLOSE_TAB_MENU_ID: &str = "close_active_tab";
 /// Global application state shared across all Tauri commands.
 pub struct AppState {
     context: Mutex<AppContext>,
+    chat_runs: Mutex<HashMap<String, Arc<AtomicBool>>>,
     outlook_backup_tasks: Mutex<HashMap<String, Arc<AtomicBool>>>,
     outlook_backup_task_counter: AtomicU64,
 }
@@ -30,6 +32,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .manage(AppState {
             context: Mutex::new(context),
+            chat_runs: Mutex::new(HashMap::new()),
             outlook_backup_tasks: Mutex::new(HashMap::new()),
             outlook_backup_task_counter: AtomicU64::new(1),
         })
@@ -126,6 +129,8 @@ pub fn run() {
             }
         })
         .invoke_handler(tauri::generate_handler![
+            commands::chat::chat_run,
+            commands::chat::chat_stop,
             commands::config::config_get,
             commands::config::config_read,
             commands::config::config_update,

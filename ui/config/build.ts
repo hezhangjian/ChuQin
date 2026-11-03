@@ -21,6 +21,8 @@ export const buildConfig: BuildConfig = {
     sections: [
       SidebarSection.Files,
       SidebarSection.Chats,
+      SidebarSection.Apps,
+      SidebarSection.Tools,
     ],
   },
   rightSidebar: {
@@ -29,7 +31,7 @@ export const buildConfig: BuildConfig = {
       SidebarSection.Apps,
       SidebarSection.Tools,
     ],
-    visible: true,
+    visible: false,
   },
   settings: {
     // prettier-ignore
@@ -50,6 +52,7 @@ export const buildConfig: BuildConfig = {
   // prettier-ignore
   apps: [
     AppId.CodeManager,
+    AppId.Review,
   ],
   // prettier-ignore
   tools: [
